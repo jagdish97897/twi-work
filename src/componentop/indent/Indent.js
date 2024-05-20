@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { RiEdit2Line, RiDeleteBinLine } from 'react-icons/ri';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 function Indent() {
   const navigate = useNavigate();
@@ -20,9 +22,24 @@ function Indent() {
     employee: '',
     source: '',
     destination: '',
-    additem:'',
-    total:''
-    
+    additem: '',
+    other: {
+      consignor: '',
+      consignee: '',
+      remarks: '',
+    },
+    total: {
+      pkgs: 0,
+      weight: 0,
+      fright: 0,
+      advance: 0,
+      balance: 0,
+      noOfVehicle: 0,
+      status: 'open',
+      approvedComment: '',
+      remark: ''
+    }
+
   });
 
   const [items, setItems] = useState([]);
@@ -43,10 +60,43 @@ function Indent() {
     REMARKS: ''
   });
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name.includes('.')) {
+      const [fieldName, nestedFieldName] = name.split('.');
+      setFormData({
+        ...formData,
+        [fieldName]: {
+          ...formData[fieldName],
+          [nestedFieldName]: value
+        }
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
   };
+
+  const handleOtherChange = (e) => {
+    const { name, value } = e.target;
+    const [parentField, fieldName] = name.split('.');
+    setFormData({
+      ...formData,
+      [parentField]: {
+        ...formData[parentField],
+        [fieldName]: value
+      }
+    });
+  };
+
 
   const handleItemChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +106,7 @@ function Indent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/indents',  { ...formData, additem: items });
+      const response = await axios.post('http://localhost:5000/indents', { ...formData, additem: items });
       setResponseMessage(`Indent created successfully. Indent ID: ${response.data._id}`);
       setFormData({
         indentNo: '',
@@ -73,9 +123,25 @@ function Indent() {
         employee: '',
         source: '',
         destination: '',
-        additem:'',
-        total:''
-       
+        additem: '',
+        other: {
+          consignor: '',
+          consignee: '',
+          remarks: '',
+        },
+
+        total: {
+          pkgs: 0,
+          weight: 0,
+          fright: 0,
+          advance: 0,
+          balance: 0,
+          noOfVehicle: 0,
+          status: 'open',
+          approvedComment: '',
+          remark: ''
+
+        }
       });
       setItems([]);
     } catch (error) {
@@ -87,8 +153,6 @@ function Indent() {
   const handleListClick = () => {
     navigate('/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewindents');
   };
-
-
 
   useEffect(() => {
     const fetchCustomer = async () => {
@@ -108,6 +172,39 @@ function Indent() {
       setCustomer([]);
     }
   }, [formData.customer]);
+
+
+  const [consignorData, setConsignorData] = useState([]);
+  const [consigneeData, setConsigneeData] = useState([]);
+
+  useEffect(() => {
+    const fetchConsignorAndConsignee = async () => {
+      try {
+        if (formData.other.consignor) {
+          const consignorResponse = await axios.get('http://localhost:5000/getcustomer2', {
+            params: { name: formData.other.consignor }
+          });
+          setConsignorData(consignorResponse.data);
+        } else {
+          setConsignorData([]);
+        }
+
+        if (formData.other.consignee) {
+          const consigneeResponse = await axios.get('http://localhost:5000/getcustomer2', {
+            params: { name: formData.other.consignee }
+          });
+          setConsigneeData(consigneeResponse.data);
+        } else {
+          setConsigneeData([]);
+        }
+      } catch (error) {
+        console.error('Error fetching consignor and consignee:', error);
+      }
+    };
+
+    fetchConsignorAndConsignee();
+  }, [formData.other.consignor, formData.other.consignee]);
+
 
   const handleAddItem = () => {
     setItems([...items, newItem]);
@@ -136,151 +233,183 @@ function Indent() {
     setItems(updatedItems);
   };
 
+  useEffect(() => {
+    calculateTotals();
+  }, [items]);
+
   const loadTypes = [
-    'FTCLOSE BODY', 'FT CONTAINER', 'FT DALA BODY', 'FT LPT', 'FT CONTAINER', 
-    'FT CONTAINER', 'FT CONTAINER MXL', 'FT CONTAINER SXL', 'FT TROLLA', 
-    'FT CONTAINER', 'PRIME MOVER', 'FT TRAILER XXXL', 'BY HAND PICKUP', 
-    'CANTER', 'CLOSE TRURAS', 'CLOSED BODY TRUCK', 'FTL', 'HIGH BED TRAILER', 
+    'FTCLOSE BODY', 'FT CONTAINER', 'FT DALA BODY', 'FT LPT', 'FT CONTAINER',
+    'FT CONTAINER', 'FT CONTAINER MXL', 'FT CONTAINER SXL', 'FT TROLLA',
+    'FT CONTAINER', 'PRIME MOVER', 'FT TRAILER XXXL', 'BY HAND PICKUP',
+    'CANTER', 'CLOSE TRURAS', 'CLOSED BODY TRUCK', 'FTL', 'HIGH BED TRAILER',
     'JCB'
   ];
 
   const rateCalculateOnOptions = ['FIXED', 'PKGS', 'WEIGHT'];
 
+  const calculateTotals = () => {
+    let pkgs = 0;
+    let weight = 0;
+    let fright = 0;
+    let advance = 0;
+    let balance = 0;
+    let noOfVehicle = 0;
+
+    items.forEach(item => {
+      pkgs += parseInt(item.PKGS) || 0;
+      weight += parseInt(item.WEIGHT) || 0;
+      fright += parseInt(item.FREIGHT) || 0;
+      advance += parseInt(item.ADVANCE) || 0;
+      balance += parseInt(item.BALANCE) || 0;
+      noOfVehicle += parseInt(item.NO_OF_VEHICLE) || 0;
+    });
+
+    setFormData(prevState => ({
+      ...prevState,
+      total: {
+        pkgs,
+        weight,
+        fright,
+        advance,
+        balance,
+        noOfVehicle
+      }
+    }));
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
       <div className='flex justify-between'>
         <h2 className="text-2xl font-bold mb-4">Indent/Create</h2>
-        
       </div>
       <form onSubmit={handleSubmit} >
 
-
-      <div className="mt-1 mb-4 flex justify-between">
-  <button
-    type="submit"
-    className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-  >
-    Submit
-  </button>
-  <button
-    type="button"
-    onClick={handleListClick}
-    className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600"
-  >
-    List view
-  </button>
-</div>
-
-
-        <div className="space-y-4 bg-[#FFFFFF] p-2  sm:flex sm:flex-wrap gap-2">
-            
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="indentNo">Indent Number</label>
-          <input type="text" id="indentNo" name="indentNo" value={formData.indentNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="date">Date</label>
-          <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="customer" className="text-sm mb-1">Customer</label>
-          <input
-            type="text"
-            id="customer"
-            name="customer"
-            value={formData.customer}
-            onChange={handleChange}
-            list="customer1Suggestions"
-            className="input w-full border border-black shadow-md"
-          />
-          <datalist id="customer1Suggestions">
-            {customer.map((customer1) => (
-              <option key={customer1._id} value={customer1.name} />
-            ))}
-          </datalist>
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="balance">Balance</label>
-          <input type="number" id="balance" name="balance" value={formData.balance} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="orderNo">Order No.</label>
-          <input type="text" id="orderNo" name="orderNo" value={formData.orderNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="orderDate">Order Date</label>
-          <input type="date" id="orderDate" name="orderDate" value={formData.orderDate} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="orderMode">Order Mode</label>
-          <select id="orderMode" name="orderMode" value={formData.orderMode} onChange={handleChange} required className="input w-full border border-black shadow-md">
-            <option value="">Select Order Mode</option>
-            <option value="MAIL">Mail</option>
-            <option value="PHONE">Phone</option>
-            <option value="IN_PERSON">In Person</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="serviceMode">Service Mode</label>
-          <select id="serviceMode" name="serviceMode" value={formData.serviceMode} onChange={handleChange} required className="input w-full border border-black shadow-md">
-            <option value="">Select Service Mode</option>
-            <option value="AIR">Air</option>
-            <option value="SEA">Sea</option>
-            <option value="LAND">Land</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="rfq">RFQ</label>
-          <input type="text" id="rfq" name="rfq" value={formData.rfq} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="orderType">Order Type</label>
-          <select id="orderType" name="orderType" value={formData.orderType} onChange={handleChange} required className="input w-full border border-black shadow-md">
-            <option value="">Select Order Type</option>
-            <option value="NORMAL">Normal</option>
-            <option value="URGENT">Urgent</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="expectedDate">Expected Date</label>
-          <input type="date" id="expectedDate" name="expectedDate" value={formData.expectedDate} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="employee">Employee</label>
-          <input type="text" id="employee" name="employee" value={formData.employee} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="source">Source</label>
-          <input type="text" id="source" name="source" value={formData.source} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-        </div>
-        <div className="mb-4">
-          <label className="text-sm mb-1" htmlFor="destination">Destination</label>
-          <input type="text" id="destination" name="destination" value={formData.destination} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+        <div className="mt-1 mb-4 flex justify-between">
+          <button
+            type="submit"
+            className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            onClick={handleListClick}
+            className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600"
+          >
+            List view
+          </button>
         </div>
 
+        <div className="space-y-4 bg-[#FFFFFF] p-2 sm:flex sm:flex-wrap gap-2">
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="indentNo">Indent Number</label>
+            <input type="text" id="indentNo" name="indentNo" value={formData.indentNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="date">Date</label>
+            <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="customer" className="text-sm mb-1">Customer</label>
+            <input
+              type="text"
+              id="customer"
+              name="customer"
+              value={formData.customer}
+              onChange={handleChange}
+              list="customer1Suggestions"
+              className="input w-full border border-black shadow-md"
+            />
+            <datalist id="customer1Suggestions">
+              {customer.map((customer1) => (
+                <option key={customer1._id} value={customer1.name} />
+              ))}
+            </datalist>
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="balance">Balance</label>
+            <input type="number" id="balance" name="balance" value={formData.balance} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="orderNo">Order No.</label>
+            <input type="text" id="orderNo" name="orderNo" value={formData.orderNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="orderDate">Order Date</label>
+            <input type="date" id="orderDate" name="orderDate" value={formData.orderDate} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="orderMode">Order Mode</label>
+            <select id="orderMode" name="orderMode" value={formData.orderMode} onChange={handleChange} required className="input w-full border border-black shadow-md">
+              <option value="">Select Order Mode</option>
+              <option value="MAIL">Mail</option>
+              <option value="PHONE">Phone</option>
+              <option value="IN_PERSON">In Person</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="serviceMode">Service Mode</label>
+            <select id="serviceMode" name="serviceMode" value={formData.serviceMode} onChange={handleChange} required className="input w-full border border-black shadow-md">
+              <option value="">Select Service Mode</option>
+              <option value="AIR">Air</option>
+              <option value="SEA">Sea</option>
+              <option value="LAND">Land</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="rfq">RFQ</label>
+            <input type="text" id="rfq" name="rfq" value={formData.rfq} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="orderType">Order Type</label>
+            <select id="orderType" name="orderType" value={formData.orderType} onChange={handleChange} required className="input w-full border border-black shadow-md">
+              <option value="">Select Order Type</option>
+              <option value="NORMAL">Normal</option>
+              <option value="URGENT">Urgent</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="expectedDate">Expected Date</label>
+            <input type="date" id="expectedDate" name="expectedDate" value={formData.expectedDate} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="employee">Employee</label>
+            <input type="text" id="employee" name="employee" value={formData.employee} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="source">Source</label>
+            <input type="text" id="source" name="source" value={formData.source} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
+          <div className="mb-4">
+            <label className="text-sm mb-1" htmlFor="destination">Destination</label>
+            <input type="text" id="destination" name="destination" value={formData.destination} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          </div>
         </div>
 
+        <div className=" bg-[#FFFFFF] p-2   gap-2">
+          <button
+            type="button"
+            onClick={() => setShowModal(true)}
+            className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+          >
+            Add Item
+          </button>
+        </div>
 
-        <div className="mb-4  bg-[#FFFFFF] p-2   gap-2">
-          <button type="button" onClick={() => setShowModal(true)} className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600 mb-4">Add Item</button>
-          
-
-                <div >
-        <div className="overflow-x-auto">
-          <table className="table-auto w-full border border-black">
+        <div className="bg-[#FFFFFF] p-2">
+          <table className="table-auto w-full">
             <thead>
               <tr>
                 <th className="border border-black px-4 py-2">Load Type</th>
                 <th className="border border-black px-4 py-2">PKGS</th>
-                <th className="border border-black px-4 py-2">Weight</th>
+                <th className="border border-black px-4 py-2">WEIGHT</th>
                 <th className="border border-black px-4 py-2">Rate Calculate On</th>
-                <th className="border border-black px-4 py-2">Rate</th>
-                <th className="border border-black px-4 py-2">Freight</th>
-                <th className="border border-black px-4 py-2">No. of Vehicle</th>
-                <th className="border border-black px-4 py-2">Advance</th>
-                <th className="border border-black px-4 py-2">Balance</th>
-                <th className="border border-black px-4 py-2">Remarks</th>
+                <th className="border border-black px-4 py-2">RATE</th>
+                <th className="border border-black px-4 py-2">FREIGHT</th>
+                <th className="border border-black px-4 py-2">No. of Vehicles</th>
+                <th className="border border-black px-4 py-2">ADVANCE</th>
+                <th className="border border-black px-4 py-2">BALANCE</th>
+                <th className="border border-black px-4 py-2">REMARKS</th>
                 <th className="border border-black px-4 py-2">Actions</th>
               </tr>
             </thead>
@@ -298,91 +427,683 @@ function Indent() {
                   <td className="border border-black px-4 py-2">{item.BALANCE}</td>
                   <td className="border border-black px-4 py-2">{item.REMARKS}</td>
                   <td className="border border-black px-4 py-2">
-                    <button onClick={() => handleEditItem(index)} className="btn text-blue-500 mx-1">
+                    <button type="button" onClick={() => handleEditItem(index)} className="text-blue-600 hover:text-blue-900">
                       <RiEdit2Line />
                     </button>
-                    <button onClick={() => handleDeleteItem(index)} className="btn text-red-500 mx-1">
+                    <button type="button" onClick={() => handleDeleteItem(index)} className="text-red-600 hover:text-red-900 ml-2">
                       <RiDeleteBinLine />
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
-           
           </table>
-        </div>
-      </div>
-        </div>
-        {responseMessage && <p className="mt-4">{responseMessage}</p>}
-      </form>
+          <Tabs className="bg-[#FFFFFF] pt-2">
+            <TabList className="flex flex-wrap border-b border-gray-200">
+              <Tab className="bg-blue-300 py-2 px-4 cursor-pointer hover:bg-gray-100 w-full sm:w-auto">TOTAL</Tab>
+              <Tab className="bg-blue-300 py-2 px-4 cursor-pointer hover:bg-gray-100 w-full sm:w-auto">OTHER</Tab>
+            </TabList>
+            
+            <TabPanel>
 
-      
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded shadow-md w-11/12 sm:w-3/4 md:w-1/2">
-            <h3 className="text-lg font-semibold mb-4">Add Item</h3>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="loadtype">Load Type</label>
-              <select id="loadtype" name="loadtype" value={newItem.loadtype} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
-                <option value="">Select Load Type</option>
-                {loadTypes.map((type, index) => (
-                  <option key={index} value={type}>{type}</option>
-                ))}
-              </select>
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="PKGS">PKGS</label>
-              <input type="number" id="PKGS" name="PKGS" value={newItem.PKGS} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="WEIGHT">Weight</label>
-              <input type="number" id="WEIGHT" name="WEIGHT" value={newItem.WEIGHT} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="RATE_CALCULATE_ON">Rate Calculate On</label>
-              <select id="RATE_CALCULATE_ON" name="RATE_CALCULATE_ON" value={newItem.RATE_CALCULATE_ON} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
-                <option value="">Select Rate Calculate On</option>
-                {rateCalculateOnOptions.map((option, index) => (
-                  <option key={index} value={option}>{option}</option>
-                ))}
-              </select>
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="RATE">Rate</label>
-              <input type="number" id="RATE" name="RATE" value={newItem.RATE} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="FREIGHT">Freight</label>
-              <input type="number" id="FREIGHT" name="FREIGHT" value={newItem.FREIGHT} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="NO_OF_VEHICLE">No. of Vehicle</label>
-              <input type="number" id="NO_OF_VEHICLE" name="NO_OF_VEHICLE" value={newItem.NO_OF_VEHICLE} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="ADVANCE">Advance</label>
-              <input type="number" id="ADVANCE" name="ADVANCE" value={newItem.ADVANCE} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="BALANCE">Balance</label>
-              <input type="number" id="BALANCE" name="BALANCE" value={newItem.BALANCE} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
-            </div>
-            <div className="mb-4">
-              <label className="block text-sm mb-1" htmlFor="REMARKS">Remarks</label>
-              <input type="text" id="REMARKS" name="REMARKS" value={newItem.REMARKS} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
-            </div>
-            <div className="flex justify-end">
-              <button onClick={() => setShowModal(false)} className="btn bg-red-500 text-white py-2 px-4 border border-black hover:bg-red-600 mr-2">Cancel</button>
-              <button onClick={handleAddItem} className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600">Add Item</button>
+              <div className="mt-4">
+                <h3 className="text-lg font-semibold">Totals</h3>
+                <div className="grid grid-cols-6 gap-6 p-2">
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="totalPkgs">Total PKGS</label>
+                    <input type="number" id="totalPkgs" value={formData.total.pkgs} readOnly className="input w-full border border-black shadow-md" />
+                  </div>
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="totalWeight">Total WEIGHT</label>
+                    <input type="number" id="totalWeight" value={formData.total.weight} readOnly className="input w-full border border-black shadow-md" />
+                  </div>
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="totalFright">Total FREIGHT</label>
+                    <input type="number" id="totalFright" value={formData.total.fright} readOnly className="input w-full border border-black shadow-md" />
+                  </div>
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="totalAdvance">Total ADVANCE</label>
+                    <input type="number" id="totalAdvance" value={formData.total.advance} readOnly className="input w-full border border-black shadow-md" />
+                  </div>
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="totalBalance">Total BALANCE</label>
+                    <input type="number" id="totalBalance" value={formData.total.balance} readOnly className="input w-full border border-black shadow-md" />
+                  </div>
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="totalNoOfVehicle">Total No. of Vehicles</label>
+                    <input type="number" id="totalNoOfVehicle" value={formData.total.noOfVehicle} readOnly className="input w-full border border-black shadow-md" />
+                  </div>
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="status">Status</label>
+                    <select id="status" value={formData.total.status} onChange={handleChange} className="input w-full border border-black shadow-md">
+                      <option value="Open">Open</option>
+                      <option value="Close">Close</option>
+                    </select>
+                  </div>
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="approvedComment">Approved Comment</label>
+                    <input type="text" id="approvedComment" value={formData.total.approvedComment} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                  </div>
+                  <div className="mb-4">
+                    <label className="text-sm mb-1" htmlFor="remark">Remark</label>
+                    <input type="text" id="remark" value={formData.total.remark} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                  </div>
+                </div>
+              </div>
+            </TabPanel>
+
+            <TabPanel>
+              <div className="grid grid-cols-6 gap-6 p-2">
+
+                <div className="mb-4">
+                  <label htmlFor="other.consignor" className="text-sm mb-1">consignor</label>
+                  <input
+                    type="text"
+                    id="other.consignor"
+                    name="other.consignor"
+                    value={formData.other.consignor}
+                    onChange={handleChange}
+                    list="consignorSuggestions"
+                    className="input w-full border border-black shadow-md"
+                  />
+                  <datalist id="consignorSuggestions">
+                    {consignorData.map((customer2) => (
+                      <option key={customer2._id} value={customer2.name} />
+                    ))}
+                  </datalist>
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="other.consignor" className="text-sm mb-1">consignee</label>
+                  <input
+                    type="text"
+                    id="other.consignee"
+                    name="other.consignee"
+                    value={formData.other.consignee}
+                    onChange={handleChange}
+                    list="consignorSuggestions"
+                    className="input w-full border border-black shadow-md"
+                  />
+                  <datalist id="consignorSuggestions">
+                    {consigneeData.map((customer2) => (
+                      <option key={customer2._id} value={customer2.name} />
+                    ))}
+                  </datalist>
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="other.remark" className="block text-sm font-medium text-gray-700">remark</label>
+                  <input type="text" id="other.remark" name="other.remark" value={formData.other.remark} onChange={handleOtherChange} className="input w-full border border-black shadow-md" />
+                </div>
+
+
+              </div>
+            </TabPanel>
+          </Tabs>
+        </div>
+
+        {showModal && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+            <div className="bg-white p-4 rounded-lg shadow-lg">
+              <h2 className="text-xl font-bold mb-4">Add Item</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="loadtype">Load Type</label>
+                  <select id="loadtype" name="loadtype" value={newItem.loadtype} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
+                    <option value="">Select</option>
+                    {loadTypes.map((type, index) => (
+                      <option key={index} value={type}>{type}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="PKGS">PKGS</label>
+                  <input type="number" id="PKGS" name="PKGS" value={newItem.PKGS} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="WEIGHT">WEIGHT</label>
+                  <input type="number" id="WEIGHT" name="WEIGHT" value={newItem.WEIGHT} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="RATE_CALCULATE_ON">Rate Calculate On</label>
+                  <select id="RATE_CALCULATE_ON" name="RATE_CALCULATE_ON" value={newItem.RATE_CALCULATE_ON} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
+                    <option value="">Select</option>
+                    {rateCalculateOnOptions.map((option, index) => (
+                      <option key={index} value={option}>{option}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="RATE">RATE</label>
+                  <input type="number" id="RATE" name="RATE" value={newItem.RATE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="FREIGHT">FREIGHT</label>
+                  <input type="number" id="FREIGHT" name="FREIGHT" value={newItem.FREIGHT} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="NO_OF_VEHICLE">No. of Vehicles</label>
+                  <input type="number" id="NO_OF_VEHICLE" name="NO_OF_VEHICLE" value={newItem.NO_OF_VEHICLE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="ADVANCE">ADVANCE</label>
+                  <input type="number" id="ADVANCE" name="ADVANCE" value={newItem.ADVANCE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="BALANCE">BALANCE</label>
+                  <input type="number" id="BALANCE" name="BALANCE" value={newItem.BALANCE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4 col-span-2">
+                  <label className="text-sm mb-1" htmlFor="REMARKS">REMARKS</label>
+                  <input type="text" id="REMARKS" name="REMARKS" value={newItem.REMARKS} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+                </div>
+              </div>
+              <div className="mt-4 flex justify-end">
+                <button
+                  type="button"
+                  onClick={handleAddItem}
+                  className="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                >
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="ml-4 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {responseMessage && <p className="mt-4">{responseMessage}</p>}
+      </form>
     </div>
   );
-};
+}
 
 export default Indent;
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+// import { RiEdit2Line, RiDeleteBinLine } from 'react-icons/ri';
+// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+// import 'react-tabs/style/react-tabs.css';
+
+// function Indent() {
+//   const navigate = useNavigate();
+//   const [formData, setFormData] = useState({
+//     indentNo: '',
+//     date: '',
+//     customer: '',
+//     balance: '',
+//     orderNo: '',
+//     orderDate: '',
+//     orderMode: '',
+//     serviceMode: '',
+//     rfq: '',
+//     orderType: '',
+//     expectedDate: '',
+//     employee: '',
+//     source: '',
+//     destination: '',
+//     additem:'',
+//     total:''
+    
+//   });
+
+//   const [items, setItems] = useState([]);
+//   const [responseMessage, setResponseMessage] = useState('');
+//   const [customer, setCustomer] = useState([]);
+//   const [showModal, setShowModal] = useState(false);
+
+//   const [newItem, setNewItem] = useState({
+//     loadtype: '',
+//     PKGS: 0,
+//     WEIGHT: 0,
+//     RATE_CALCULATE_ON: '',
+//     RATE: 0,
+//     FREIGHT: 0,
+//     NO_OF_VEHICLE: 0,
+//     ADVANCE: 0,
+//     BALANCE: 0,
+//     REMARKS: ''
+//   });
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({ ...formData, [name]: value });
+//   };
+
+//   const handleItemChange = (e) => {
+//     const { name, value } = e.target;
+//     setNewItem({ ...newItem, [name]: value });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await axios.post('http://localhost:5000/indents',  { ...formData, additem: items });
+//       setResponseMessage(`Indent created successfully. Indent ID: ${response.data._id}`);
+//       setFormData({
+//         indentNo: '',
+//         date: '',
+//         customer: '',
+//         balance: '',
+//         orderNo: '',
+//         orderDate: '',
+//         orderMode: '',
+//         serviceMode: '',
+//         rfq: '',
+//         orderType: '',
+//         expectedDate: '',
+//         employee: '',
+//         source: '',
+//         destination: '',
+//         additem:'',
+//         total:''
+       
+//       });
+//       setItems([]);
+//     } catch (error) {
+//       setResponseMessage('Error creating indent. Please try again.');
+//       console.error(error);
+//     }
+//   };
+
+//   const handleListClick = () => {
+//     navigate('/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewindents');
+//   };
+
+
+
+//   useEffect(() => {
+//     const fetchCustomer = async () => {
+//       try {
+//         const response = await axios.get('http://localhost:5000/getcustomer1', {
+//           params: { name: formData.customer }
+//         });
+//         setCustomer(response.data);
+//       } catch (error) {
+//         console.error('Error fetching customers:', error);
+//       }
+//     };
+
+//     if (formData.customer) {
+//       fetchCustomer();
+//     } else {
+//       setCustomer([]);
+//     }
+//   }, [formData.customer]);
+
+//   const handleAddItem = () => {
+//     setItems([...items, newItem]);
+//     setNewItem({
+//       loadtype: '',
+//       PKGS: 0,
+//       WEIGHT: 0,
+//       RATE_CALCULATE_ON: '',
+//       RATE: 0,
+//       FREIGHT: 0,
+//       NO_OF_VEHICLE: 0,
+//       ADVANCE: 0,
+//       BALANCE: 0,
+//       REMARKS: ''
+//     });
+//     setShowModal(false);
+//   };
+
+//   const handleEditItem = (index) => {
+//     setNewItem(items[index]);
+//     setShowModal(true);
+//   };
+
+//   const handleDeleteItem = (index) => {
+//     const updatedItems = items.filter((_, i) => i !== index);
+//     setItems(updatedItems);
+//   };
+
+//   const loadTypes = [
+//     'FTCLOSE BODY', 'FT CONTAINER', 'FT DALA BODY', 'FT LPT', 'FT CONTAINER', 
+//     'FT CONTAINER', 'FT CONTAINER MXL', 'FT CONTAINER SXL', 'FT TROLLA', 
+//     'FT CONTAINER', 'PRIME MOVER', 'FT TRAILER XXXL', 'BY HAND PICKUP', 
+//     'CANTER', 'CLOSE TRURAS', 'CLOSED BODY TRUCK', 'FTL', 'HIGH BED TRAILER', 
+//     'JCB'
+//   ];
+
+//   const rateCalculateOnOptions = ['FIXED', 'PKGS', 'WEIGHT'];
+
+
+
+//   const calculateTotals = () => {
+//     let pkgs = 0;
+//     let weight = 0;
+//     let fright = 0;
+//     let advance = 0;
+//     let balance = 0;
+//     let noOfVehicle = 0;
+  
+//     items.forEach(item => {
+//       pkgs += parseInt(item.PKGS) || 0;
+//       weight += parseInt(item.WEIGHT) || 0;
+//       fright += parseInt(item.FREIGHT) || 0;
+//       advance += parseInt(item.ADVANCE) || 0;
+//       balance += parseInt(item.BALANCE) || 0;
+//       noOfVehicle += parseInt(item.NO_OF_VEHICLE) || 0;
+//     });
+  
+//     setFormData(prevState => ({
+//       ...prevState,
+//       total: {
+//         pkgs,
+//         weight,
+//         fright,
+//         advance,
+//         balance,
+//         noOfVehicle
+//       }
+//     }));
+//   };
+  
+
+//   return (
+//     <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
+//       <div className='flex justify-between'>
+//         <h2 className="text-2xl font-bold mb-4">Indent/Create</h2>
+        
+//       </div>
+//       <form onSubmit={handleSubmit} >
+
+
+//       <div className="mt-1 mb-4 flex justify-between">
+//   <button
+//     type="submit"
+//     className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+//   >
+//     Submit
+//   </button>
+//   <button
+//     type="button"
+//     onClick={handleListClick}
+//     className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600"
+//   >
+//     List view
+//   </button>
+// </div>
+
+//         <div className="space-y-4 bg-[#FFFFFF] p-2  sm:flex sm:flex-wrap gap-2">
+            
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="indentNo">Indent Number</label>
+//           <input type="text" id="indentNo" name="indentNo" value={formData.indentNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="date">Date</label>
+//           <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label htmlFor="customer" className="text-sm mb-1">Customer</label>
+//           <input
+//             type="text"
+//             id="customer"
+//             name="customer"
+//             value={formData.customer}
+//             onChange={handleChange}
+//             list="customer1Suggestions"
+//             className="input w-full border border-black shadow-md"
+//           />
+//           <datalist id="customer1Suggestions">
+//             {customer.map((customer1) => (
+//               <option key={customer1._id} value={customer1.name} />
+//             ))}
+//           </datalist>
+
+
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="balance">Balance</label>
+//           <input type="number" id="balance" name="balance" value={formData.balance} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="orderNo">Order No.</label>
+//           <input type="text" id="orderNo" name="orderNo" value={formData.orderNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="orderDate">Order Date</label>
+//           <input type="date" id="orderDate" name="orderDate" value={formData.orderDate} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="orderMode">Order Mode</label>
+//           <select id="orderMode" name="orderMode" value={formData.orderMode} onChange={handleChange} required className="input w-full border border-black shadow-md">
+//             <option value="">Select Order Mode</option>
+//             <option value="MAIL">Mail</option>
+//             <option value="PHONE">Phone</option>
+//             <option value="IN_PERSON">In Person</option>
+//           </select>
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="serviceMode">Service Mode</label>
+//           <select id="serviceMode" name="serviceMode" value={formData.serviceMode} onChange={handleChange} required className="input w-full border border-black shadow-md">
+//             <option value="">Select Service Mode</option>
+//             <option value="AIR">Air</option>
+//             <option value="SEA">Sea</option>
+//             <option value="LAND">Land</option>
+//           </select>
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="rfq">RFQ</label>
+//           <input type="text" id="rfq" name="rfq" value={formData.rfq} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="orderType">Order Type</label>
+//           <select id="orderType" name="orderType" value={formData.orderType} onChange={handleChange} required className="input w-full border border-black shadow-md">
+//             <option value="">Select Order Type</option>
+//             <option value="NORMAL">Normal</option>
+//             <option value="URGENT">Urgent</option>
+//           </select>
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="expectedDate">Expected Date</label>
+//           <input type="date" id="expectedDate" name="expectedDate" value={formData.expectedDate} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="employee">Employee</label>
+//           <input type="text" id="employee" name="employee" value={formData.employee} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="source">Source</label>
+//           <input type="text" id="source" name="source" value={formData.source} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="text-sm mb-1" htmlFor="destination">Destination</label>
+//           <input type="text" id="destination" name="destination" value={formData.destination} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+//         </div>
+
+//         </div>
+
+
+//         <div className="mb-4  bg-[#FFFFFF] p-2   gap-2">
+//           <button type="button" onClick={() => setShowModal(true)} className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600 mb-4">Add Item</button>
+          
+
+//                 <div >
+//         <div className="overflow-x-auto">
+//           <table className="table-auto w-full border border-black">
+//             <thead>
+//               <tr>
+//                 <th className="border border-black px-4 py-2">Load Type</th>
+//                 <th className="border border-black px-4 py-2">PKGS</th>
+//                 <th className="border border-black px-4 py-2">Weight</th>
+//                 <th className="border border-black px-4 py-2">Rate Calculate On</th>
+//                 <th className="border border-black px-4 py-2">Rate</th>
+//                 <th className="border border-black px-4 py-2">Freight</th>
+//                 <th className="border border-black px-4 py-2">No. of Vehicle</th>
+//                 <th className="border border-black px-4 py-2">Advance</th>
+//                 <th className="border border-black px-4 py-2">Balance</th>
+//                 <th className="border border-black px-4 py-2">Remarks</th>
+//                 <th className="border border-black px-4 py-2">Actions</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {items.map((item, index) => (
+//                 <tr key={index}>
+//                   <td className="border border-black px-4 py-2">{item.loadtype}</td>
+//                   <td className="border border-black px-4 py-2">{item.PKGS}</td>
+//                   <td className="border border-black px-4 py-2">{item.WEIGHT}</td>
+//                   <td className="border border-black px-4 py-2">{item.RATE_CALCULATE_ON}</td>
+//                   <td className="border border-black px-4 py-2">{item.RATE}</td>
+//                   <td className="border border-black px-4 py-2">{item.FREIGHT}</td>
+//                   <td className="border border-black px-4 py-2">{item.NO_OF_VEHICLE}</td>
+//                   <td className="border border-black px-4 py-2">{item.ADVANCE}</td>
+//                   <td className="border border-black px-4 py-2">{item.BALANCE}</td>
+//                   <td className="border border-black px-4 py-2">{item.REMARKS}</td>
+//                   <td className="border border-black px-4 py-2">
+//                     <button onClick={() => handleEditItem(index)} className="btn text-blue-500 mx-1">
+//                       <RiEdit2Line />
+//                     </button>
+//                     <button onClick={() => handleDeleteItem(index)} className="btn text-red-500 mx-1">
+//                       <RiDeleteBinLine />
+//                     </button>
+//                   </td>
+//                 </tr>
+//               ))}
+//             </tbody>
+           
+//           </table>
+
+
+       
+
+//           <Tabs className="bg-[#FFFFFF] pt-2">
+//                             <TabList className="flex flex-wrap border-b border-gray-200">
+//                                 <Tab className="bg-blue-300 py-2 px-4 cursor-pointer hover:bg-gray-100 w-full sm:w-auto">TOTAL</Tab>
+//                                 <Tab className="bg-blue-300 py-2 px-4 cursor-pointer hover:bg-gray-100 w-full sm:w-auto">OTHER</Tab>
+
+//                             </TabList>
+                                                       
+//                             <TabPanel>
+//                                 <div className="grid grid-cols-6 gap-6 p-2">
+                                   
+                            
+
+//                                 <div className="mb-4">
+//                                 <label className="text-sm mb-1" htmlFor="pkgs">pkgs</label>
+//                                <input type="text" id="pkgs" name="pkgs" value={formData.total.pkgs}  required className="input w-full border border-black shadow-md" />
+//                                  </div>
+//                                 <div className="mb-4">
+//                                 <label className="text-sm mb-1" htmlFor="weight">weight</label>
+//                                <input type="text" id="weight" name="weight" value={formData.total.weight}  required className="input w-full border border-black shadow-md" />
+//                                  </div>
+//                                 <div className="mb-4">
+//                                 <label className="text-sm mb-1" htmlFor="fright">fright</label>
+//                                <input type="text" id="fright" name="fright" value={formData.total.fright}  required className="input w-full border border-black shadow-md" />
+//                                  </div>
+//                                 <div className="mb-4">
+//                                 <label className="text-sm mb-1" htmlFor="advance">advance</label>
+//                                <input type="text" id="advance" name="advance" value={formData.total.advance}  required className="input w-full border border-black shadow-md" />
+//                                  </div>
+//                                 <div className="mb-4">
+//                                 <label className="text-sm mb-1" htmlFor="balance">balance</label>
+//                                <input type="text" id="balance" name="balance" value={formData.total.balance}  required className="input w-full border border-black shadow-md" />
+//                                  </div>
+//                                 <div className="mb-4">
+//                                 <label className="text-sm mb-1" htmlFor="noOfVehicle">noOfVehicle</label>
+//                                <input type="text" id="noOfVehicle" name="noOfVehicle" value={formData.total.noOfVehicle}  required className="input w-full border border-black shadow-md" />
+//                                  </div>
+
+//                                 </div>
+
+//                             </TabPanel>
+
+//                             <TabPanel>
+//                                 <div className="grid grid-cols-6 gap-6 p-2">
+                                   
+//                                 OTHER TABLE
+//                                 </div>
+
+//                             </TabPanel>
+//                             </Tabs>
+//         </div>
+//       </div>
+//         </div>
+//         {responseMessage && <p className="mt-4">{responseMessage}</p>}
+
+
+        
+//       </form>
+
+      
+//       {showModal && (
+//         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+//           <div className="bg-white p-6 rounded shadow-md w-11/12 sm:w-3/4 md:w-1/2">
+//             <h3 className="text-lg font-semibold mb-4">Add Item</h3>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="loadtype">Load Type</label>
+//               <select id="loadtype" name="loadtype" value={newItem.loadtype} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
+//                 <option value="">Select Load Type</option>
+//                 {loadTypes.map((type, index) => (
+//                   <option key={index} value={type}>{type}</option>
+//                 ))}
+//               </select>
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="PKGS">PKGS</label>
+//               <input type="number" id="PKGS" name="PKGS" value={newItem.PKGS} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="WEIGHT">Weight</label>
+//               <input type="number" id="WEIGHT" name="WEIGHT" value={newItem.WEIGHT} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="RATE_CALCULATE_ON">Rate Calculate On</label>
+//               <select id="RATE_CALCULATE_ON" name="RATE_CALCULATE_ON" value={newItem.RATE_CALCULATE_ON} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
+//                 <option value="">Select Rate Calculate On</option>
+//                 {rateCalculateOnOptions.map((option, index) => (
+//                   <option key={index} value={option}>{option}</option>
+//                 ))}
+//               </select>
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="RATE">Rate</label>
+//               <input type="number" id="RATE" name="RATE" value={newItem.RATE} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="FREIGHT">Freight</label>
+//               <input type="number" id="FREIGHT" name="FREIGHT" value={newItem.FREIGHT} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="NO_OF_VEHICLE">No. of Vehicle</label>
+//               <input type="number" id="NO_OF_VEHICLE" name="NO_OF_VEHICLE" value={newItem.NO_OF_VEHICLE} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="ADVANCE">Advance</label>
+//               <input type="number" id="ADVANCE" name="ADVANCE" value={newItem.ADVANCE} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="BALANCE">Balance</label>
+//               <input type="number" id="BALANCE" name="BALANCE" value={newItem.BALANCE} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-sm mb-1" htmlFor="REMARKS">Remarks</label>
+//               <input type="text" id="REMARKS" name="REMARKS" value={newItem.REMARKS} onChange={handleItemChange} className="input w-full border border-black shadow-md" />
+//             </div>
+//             <div className="flex justify-end">
+//               <button onClick={() => setShowModal(false)} className="btn bg-red-500 text-white py-2 px-4 border border-black hover:bg-red-600 mr-2">Cancel</button>
+//               <button onClick={handleAddItem} className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600">Add Item</button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Indent;
 
 
 

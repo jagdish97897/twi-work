@@ -11,17 +11,13 @@ function Indent() {
     indentNo: '',
     date: '',
     customer: '',
-    balance: '',
     orderNo: '',
     orderDate: '',
     orderMode: '',
     serviceMode: '',
     rfq: '',
-    orderType: '',
     expectedDate: '',
     employee: '',
-    source: '',
-    destination: '',
     additem: '',
     other: {
       consignor: '',
@@ -29,12 +25,10 @@ function Indent() {
       remarks: '',
     },
     total: {
-      pkgs: 0,
       weight: 0,
-      fright: 0,
-      advance: 0,
-      balance: 0,
-      noOfVehicle: 0,
+      quantumrate: 0,
+      effectiverate: 0,
+      cost: 0,
       status: 'open',
       approvedComment: '',
       remark: ''
@@ -48,22 +42,17 @@ function Indent() {
   const [showModal, setShowModal] = useState(false);
 
   const [newItem, setNewItem] = useState({
-    loadtype: '',
-    PKGS: 0,
+    from:'',
+    to:'',
+    vehicletype: '',
+    DIMENSIONS:'',
     WEIGHT: 0,
-    RATE_CALCULATE_ON: '',
-    RATE: 0,
-    FREIGHT: 0,
-    NO_OF_VEHICLE: 0,
-    ADVANCE: 0,
-    BALANCE: 0,
+    QUANTUMRATE: '',
+    EFFECTIVERATE: 0,
+    COST: 0,
     REMARKS: ''
   });
 
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
 
 
   const handleChange = (e) => {
@@ -103,6 +92,8 @@ function Indent() {
     setNewItem({ ...newItem, [name]: value });
   };
 
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -112,17 +103,13 @@ function Indent() {
         indentNo: '',
         date: '',
         customer: '',
-        balance: '',
         orderNo: '',
         orderDate: '',
         orderMode: '',
         serviceMode: '',
         rfq: '',
-        orderType: '',
         expectedDate: '',
         employee: '',
-        source: '',
-        destination: '',
         additem: '',
         other: {
           consignor: '',
@@ -131,12 +118,10 @@ function Indent() {
         },
 
         total: {
-          pkgs: 0,
           weight: 0,
-          fright: 0,
-          advance: 0,
-          balance: 0,
-          noOfVehicle: 0,
+          quantumrate: 0,
+          effectiverate: 0,
+          cost: 0,
           status: 'open',
           approvedComment: '',
           remark: ''
@@ -209,15 +194,14 @@ function Indent() {
   const handleAddItem = () => {
     setItems([...items, newItem]);
     setNewItem({
-      loadtype: '',
-      PKGS: 0,
+      from:'',
+      to:'',
+      vehicletype: '',
+      DIMENSIONS:'',
       WEIGHT: 0,
-      RATE_CALCULATE_ON: '',
-      RATE: 0,
-      FREIGHT: 0,
-      NO_OF_VEHICLE: 0,
-      ADVANCE: 0,
-      BALANCE: 0,
+      QUANTUMRATE: 0,
+      EFFECTIVERATE: 0,
+      COST: 0,
       REMARKS: ''
     });
     setShowModal(false);
@@ -237,42 +221,33 @@ function Indent() {
     calculateTotals();
   }, [items]);
 
-  const loadTypes = [
-    'FTCLOSE BODY', 'FT CONTAINER', 'FT DALA BODY', 'FT LPT', 'FT CONTAINER',
-    'FT CONTAINER', 'FT CONTAINER MXL', 'FT CONTAINER SXL', 'FT TROLLA',
-    'FT CONTAINER', 'PRIME MOVER', 'FT TRAILER XXXL', 'BY HAND PICKUP',
-    'CANTER', 'CLOSE TRURAS', 'CLOSED BODY TRUCK', 'FTL', 'HIGH BED TRAILER',
-    'JCB'
+  const vehicletype = [
+    'TRUCK','TROLLEY', 'BUS', 'CAR', 'TWO WHEELER', 'CONTAINER', 'TANKER', 'OTHER' 
   ];
 
-  const rateCalculateOnOptions = ['FIXED', 'PKGS', 'WEIGHT'];
 
   const calculateTotals = () => {
-    let pkgs = 0;
     let weight = 0;
-    let fright = 0;
-    let advance = 0;
-    let balance = 0;
-    let noOfVehicle = 0;
+    let quantumrate = 0;
+    let cost = 0;
+    let effectiverate = 0;
+
 
     items.forEach(item => {
-      pkgs += parseInt(item.PKGS) || 0;
       weight += parseInt(item.WEIGHT) || 0;
-      fright += parseInt(item.FREIGHT) || 0;
-      advance += parseInt(item.ADVANCE) || 0;
-      balance += parseInt(item.BALANCE) || 0;
-      noOfVehicle += parseInt(item.NO_OF_VEHICLE) || 0;
+      quantumrate += parseInt(item.QUANTUMRATE) || 0;
+      effectiverate += parseInt(item.EFFECTIVERATE) || 0;
+      cost += parseInt(item.COST) || 0;
     });
 
     setFormData(prevState => ({
       ...prevState,
       total: {
-        pkgs,
         weight,
-        fright,
-        advance,
-        balance,
-        noOfVehicle
+        quantumrate,
+        effectiverate,
+        cost
+
       }
     }));
   };
@@ -326,10 +301,7 @@ function Indent() {
               ))}
             </datalist>
           </div>
-          <div className="mb-4">
-            <label className="text-sm mb-1" htmlFor="balance">Balance</label>
-            <input type="number" id="balance" name="balance" value={formData.balance} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-          </div>
+
           <div className="mb-4">
             <label className="text-sm mb-1" htmlFor="orderNo">Order No.</label>
             <input type="text" id="orderNo" name="orderNo" value={formData.orderNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
@@ -360,14 +332,7 @@ function Indent() {
             <label className="text-sm mb-1" htmlFor="rfq">RFQ</label>
             <input type="text" id="rfq" name="rfq" value={formData.rfq} onChange={handleChange} required className="input w-full border border-black shadow-md" />
           </div>
-          <div className="mb-4">
-            <label className="text-sm mb-1" htmlFor="orderType">Order Type</label>
-            <select id="orderType" name="orderType" value={formData.orderType} onChange={handleChange} required className="input w-full border border-black shadow-md">
-              <option value="">Select Order Type</option>
-              <option value="NORMAL">Normal</option>
-              <option value="URGENT">Urgent</option>
-            </select>
-          </div>
+
           <div className="mb-4">
             <label className="text-sm mb-1" htmlFor="expectedDate">Expected Date</label>
             <input type="date" id="expectedDate" name="expectedDate" value={formData.expectedDate} onChange={handleChange} required className="input w-full border border-black shadow-md" />
@@ -376,14 +341,7 @@ function Indent() {
             <label className="text-sm mb-1" htmlFor="employee">Employee</label>
             <input type="text" id="employee" name="employee" value={formData.employee} onChange={handleChange} required className="input w-full border border-black shadow-md" />
           </div>
-          <div className="mb-4">
-            <label className="text-sm mb-1" htmlFor="source">Source</label>
-            <input type="text" id="source" name="source" value={formData.source} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-          </div>
-          <div className="mb-4">
-            <label className="text-sm mb-1" htmlFor="destination">Destination</label>
-            <input type="text" id="destination" name="destination" value={formData.destination} onChange={handleChange} required className="input w-full border border-black shadow-md" />
-          </div>
+
         </div>
 
         <div className=" bg-[#FFFFFF] p-2   gap-2">
@@ -400,31 +358,29 @@ function Indent() {
           <table className="table-auto w-full">
             <thead>
               <tr>
-                <th className="border border-black px-4 py-2">Load Type</th>
-                <th className="border border-black px-4 py-2">PKGS</th>
-                <th className="border border-black px-4 py-2">WEIGHT</th>
-                <th className="border border-black px-4 py-2">Rate Calculate On</th>
-                <th className="border border-black px-4 py-2">RATE</th>
-                <th className="border border-black px-4 py-2">FREIGHT</th>
-                <th className="border border-black px-4 py-2">No. of Vehicles</th>
-                <th className="border border-black px-4 py-2">ADVANCE</th>
-                <th className="border border-black px-4 py-2">BALANCE</th>
-                <th className="border border-black px-4 py-2">REMARKS</th>
-                <th className="border border-black px-4 py-2">Actions</th>
+                <th className="border border-black px-4 py-2">FROM</th>
+                <th className="border border-black px-4 py-2">TO</th>
+                <th className="border border-black px-4 py-2">VEHICLE TYPE</th>
+                <th className="border border-black px-4 py-2">DIMENSIONS</th>
+                <th className="border border-black px-4 py-2">WEIGHT(T)</th>
+                <th className="border border-black px-4 py-2">QUANTUMRATE(P/T)</th>
+                <th className="border border-black px-4 py-2">EFFECTIVE RATE(P/T)</th>
+                <th className="border border-black px-4 py-2">COST</th>
+                <th className="border border-black px-4 py-2">REMARK</th>
+                <th className="border border-black px-4 py-2">ACTIONS</th>
               </tr>
             </thead>
             <tbody>
               {items.map((item, index) => (
                 <tr key={index}>
-                  <td className="border border-black px-4 py-2">{item.loadtype}</td>
-                  <td className="border border-black px-4 py-2">{item.PKGS}</td>
+                  <td className="border border-black px-4 py-2">{item.from}</td>
+                  <td className="border border-black px-4 py-2">{item.to}</td>
+                  <td className="border border-black px-4 py-2">{item.vehicletype}</td>
+                  <td className="border border-black px-4 py-2">{item.DIMENSIONS}</td>
                   <td className="border border-black px-4 py-2">{item.WEIGHT}</td>
-                  <td className="border border-black px-4 py-2">{item.RATE_CALCULATE_ON}</td>
-                  <td className="border border-black px-4 py-2">{item.RATE}</td>
-                  <td className="border border-black px-4 py-2">{item.FREIGHT}</td>
-                  <td className="border border-black px-4 py-2">{item.NO_OF_VEHICLE}</td>
-                  <td className="border border-black px-4 py-2">{item.ADVANCE}</td>
-                  <td className="border border-black px-4 py-2">{item.BALANCE}</td>
+                  <td className="border border-black px-4 py-2">{item.QUANTUMRATE}</td>
+                  <td className="border border-black px-4 py-2">{item.EFFECTIVERATE}</td>
+                  <td className="border border-black px-4 py-2">{item.COST}</td>
                   <td className="border border-black px-4 py-2">{item.REMARKS}</td>
                   <td className="border border-black px-4 py-2">
                     <button type="button" onClick={() => handleEditItem(index)} className="text-blue-600 hover:text-blue-900">
@@ -445,34 +401,28 @@ function Indent() {
             </TabList>
             
             <TabPanel>
-
               <div className="mt-4">
                 <h3 className="text-lg font-semibold">Totals</h3>
                 <div className="grid grid-cols-6 gap-6 p-2">
-                  <div className="mb-4">
-                    <label className="text-sm mb-1" htmlFor="totalPkgs">Total PKGS</label>
-                    <input type="number" id="totalPkgs" value={formData.total.pkgs} readOnly className="input w-full border border-black shadow-md" />
-                  </div>
                   <div className="mb-4">
                     <label className="text-sm mb-1" htmlFor="totalWeight">Total WEIGHT</label>
                     <input type="number" id="totalWeight" value={formData.total.weight} readOnly className="input w-full border border-black shadow-md" />
                   </div>
                   <div className="mb-4">
-                    <label className="text-sm mb-1" htmlFor="totalFright">Total FREIGHT</label>
-                    <input type="number" id="totalFright" value={formData.total.fright} readOnly className="input w-full border border-black shadow-md" />
+                    <label className="text-sm mb-1" htmlFor="totalquantumrate">Total Quantumrate</label>
+                    <input type="number" id="totalquantumrate" value={formData.total.quantumrate} readOnly className="input w-full border border-black shadow-md" />
                   </div>
+
                   <div className="mb-4">
-                    <label className="text-sm mb-1" htmlFor="totalAdvance">Total ADVANCE</label>
-                    <input type="number" id="totalAdvance" value={formData.total.advance} readOnly className="input w-full border border-black shadow-md" />
+                    <label className="text-sm mb-1" htmlFor="totaleffectiverate">Total Effective Rate</label>
+                    <input type="number" id="totaleffectiverate" value={formData.total.effectiverate} readOnly className="input w-full border border-black shadow-md" />
                   </div>
+
                   <div className="mb-4">
-                    <label className="text-sm mb-1" htmlFor="totalBalance">Total BALANCE</label>
-                    <input type="number" id="totalBalance" value={formData.total.balance} readOnly className="input w-full border border-black shadow-md" />
+                    <label className="text-sm mb-1" htmlFor="totalcost">Total Cost</label>
+                    <input type="number" id="totalcost" value={formData.total.cost} readOnly className="input w-full border border-black shadow-md" />
                   </div>
-                  <div className="mb-4">
-                    <label className="text-sm mb-1" htmlFor="totalNoOfVehicle">Total No. of Vehicles</label>
-                    <input type="number" id="totalNoOfVehicle" value={formData.total.noOfVehicle} readOnly className="input w-full border border-black shadow-md" />
-                  </div>
+              
                   <div className="mb-4">
                     <label className="text-sm mb-1" htmlFor="status">Status</label>
                     <select id="status" value={formData.total.status} onChange={handleChange} className="input w-full border border-black shadow-md">
@@ -535,7 +485,6 @@ function Indent() {
                   <input type="text" id="other.remark" name="other.remark" value={formData.other.remark} onChange={handleOtherChange} className="input w-full border border-black shadow-md" />
                 </div>
 
-
               </div>
             </TabPanel>
           </Tabs>
@@ -547,51 +496,45 @@ function Indent() {
               <h2 className="text-xl font-bold mb-4">Add Item</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div className="mb-4">
-                  <label className="text-sm mb-1" htmlFor="loadtype">Load Type</label>
-                  <select id="loadtype" name="loadtype" value={newItem.loadtype} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
+                  <label className="text-sm mb-1" htmlFor="vehicletype">vehicletype</label>
+                  <select id="vehicletype" name="vehicletype" value={newItem.vehicletype} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
                     <option value="">Select</option>
-                    {loadTypes.map((type, index) => (
+                    {vehicletype.map((type, index) => (
                       <option key={index} value={type}>{type}</option>
                     ))}
                   </select>
                 </div>
                 <div className="mb-4">
-                  <label className="text-sm mb-1" htmlFor="PKGS">PKGS</label>
-                  <input type="number" id="PKGS" name="PKGS" value={newItem.PKGS} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                  <label className="text-sm mb-1" htmlFor="from">from</label>
+                  <input type="text" id="from" name="from" value={newItem.from} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="to">from</label>
+                  <input type="text" id="to" name="to" value={newItem.to} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                </div>
+                <div className="mb-4">
+                  <label className="text-sm mb-1" htmlFor="DIMENSIONS">dimensions</label>
+                  <input type="string" id="DIMENSIONS" name="DIMENSIONS" value={newItem.DIMENSIONS} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
                 </div>
                 <div className="mb-4">
                   <label className="text-sm mb-1" htmlFor="WEIGHT">WEIGHT</label>
                   <input type="number" id="WEIGHT" name="WEIGHT" value={newItem.WEIGHT} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
                 </div>
+
                 <div className="mb-4">
-                  <label className="text-sm mb-1" htmlFor="RATE_CALCULATE_ON">Rate Calculate On</label>
-                  <select id="RATE_CALCULATE_ON" name="RATE_CALCULATE_ON" value={newItem.RATE_CALCULATE_ON} onChange={handleItemChange} required className="input w-full border border-black shadow-md">
-                    <option value="">Select</option>
-                    {rateCalculateOnOptions.map((option, index) => (
-                      <option key={index} value={option}>{option}</option>
-                    ))}
-                  </select>
+                  <label className="text-sm mb-1" htmlFor="QUANTUMRATE">QUANTUMRATE</label>
+                  <input type="number" id="QUANTUMRATE" name="QUANTUMRATE" value={newItem.QUANTUMRATE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
                 </div>
                 <div className="mb-4">
-                  <label className="text-sm mb-1" htmlFor="RATE">RATE</label>
-                  <input type="number" id="RATE" name="RATE" value={newItem.RATE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                  <label className="text-sm mb-1" htmlFor="EFFECTIVERATE">EFFECTIVERATE</label>
+                  <input type="number" id="EFFECTIVERATE" name="EFFECTIVERATE" value={newItem.EFFECTIVERATE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
                 </div>
                 <div className="mb-4">
-                  <label className="text-sm mb-1" htmlFor="FREIGHT">FREIGHT</label>
-                  <input type="number" id="FREIGHT" name="FREIGHT" value={newItem.FREIGHT} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
+                  <label className="text-sm mb-1" htmlFor="COST">COST</label>
+                  <input type="number" id="COST" name="COST" value={newItem.COST} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
                 </div>
-                <div className="mb-4">
-                  <label className="text-sm mb-1" htmlFor="NO_OF_VEHICLE">No. of Vehicles</label>
-                  <input type="number" id="NO_OF_VEHICLE" name="NO_OF_VEHICLE" value={newItem.NO_OF_VEHICLE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
-                </div>
-                <div className="mb-4">
-                  <label className="text-sm mb-1" htmlFor="ADVANCE">ADVANCE</label>
-                  <input type="number" id="ADVANCE" name="ADVANCE" value={newItem.ADVANCE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
-                </div>
-                <div className="mb-4">
-                  <label className="text-sm mb-1" htmlFor="BALANCE">BALANCE</label>
-                  <input type="number" id="BALANCE" name="BALANCE" value={newItem.BALANCE} onChange={handleItemChange} required className="input w-full border border-black shadow-md" />
-                </div>
+
+
                 <div className="mb-4 col-span-2">
                   <label className="text-sm mb-1" htmlFor="REMARKS">REMARKS</label>
                   <input type="text" id="REMARKS" name="REMARKS" value={newItem.REMARKS} onChange={handleItemChange} className="input w-full border border-black shadow-md" />

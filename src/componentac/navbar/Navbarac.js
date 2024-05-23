@@ -39,7 +39,7 @@ function Navbarac() {
                                 alt="Logo"
                             />
                         </a>
-                        <div className="relative flex items-center mx-24 bg-red-500 ">
+                        <div className="relative flex items-center mx-24 bg-gradient-to-b from-yellow-300 to-green-500">
                         <button
                             onClick={toggleDropdown}
                             className="text-white hover:text-white px-2 py-2 rounded-md text-sm font-medium focus:outline-none flex items-center"
@@ -48,7 +48,7 @@ function Navbarac() {
                         </button>
                         {isDropdownOpen && (
                             <div ref={dropdownRef} className="origin-top-right absolute left-8 mt-16 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <div className="py-1">
+                                <div className="py-1 bg-gradient-to-b from-gray-50 to-green-500">
                                     <a href="/protected/component/sidebar/Sidebar" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">MASTER</a>
                                     <a href="/protected/componentop/sidebarop/Sidebarop" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">OPERATIONS</a>
                                     <a href="/protected/componentac/sidebarac/Sidebarac" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">ACCOUNTS</a>

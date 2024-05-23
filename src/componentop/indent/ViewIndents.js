@@ -44,15 +44,14 @@ function ViewIndents() {
 
     const itemsTemplate = indent.additem.map(item => `
       <tr>
-        <td class="border px-2 py-1 text-xs">${item.loadtype}</td>
-        <td class="border px-2 py-1 text-xs">${item.PKGS}</td>
+        <td class="border px-2 py-1 text-xs">${item.from}</td>
+        <td class="border px-2 py-1 text-xs">${item.to}</td>
+        <td class="border px-2 py-1 text-xs">${item.vehicletype}</td>
+        <td class="border px-2 py-1 text-xs">${item.DIMENSIONS}</td>
         <td class="border px-2 py-1 text-xs">${item.WEIGHT}</td>
-        <td class="border px-2 py-1 text-xs">${item.RATE_CALCULATE_ON}</td>
-        <td class="border px-2 py-1 text-xs">${item.RATE}</td>
-        <td class="border px-2 py-1 text-xs">${item.FREIGHT}</td>
-        <td class="border px-2 py-1 text-xs">${item.NO_OF_VEHICLE}</td>
-        <td class="border px-2 py-1 text-xs">${item.ADVANCE}</td>
-        <td class="border px-2 py-1 text-xs">${item.BALANCE}</td>
+        <td class="border px-2 py-1 text-xs">${item.QUANTUMRATE}</td>
+        <td class="border px-2 py-1 text-xs">${item.EFFECTIVERATE}</td>
+        <td class="border px-2 py-1 text-xs">${item.COST}</td>
         <td class="border px-2 py-1 text-xs">${item.REMARKS}</td>
       </tr>
     `).join('');
@@ -84,18 +83,16 @@ function ViewIndents() {
               <p><strong class="font-bold">Employee:</strong> ${indent.employee}</p>
               <p><strong class="font-bold">Order No:</strong> ${indent.orderNo}</p>
               <p><strong class="font-bold">Order Mode:</strong> ${indent.orderMode}</p>
-              <p><strong class="font-bold">Balance:</strong> ${indent.balance}</p>
-              <p><strong class="font-bold">Source:</strong> ${indent.source}</p>
+
             </div>
           </div>
           <div class="flex flex-col text-black border border-black pb-4 h-full w-1/2">
             <div class="w-full pl-2">
               <p><strong class="font-bold">Expected Date:</strong> ${new Date(indent.expectedDate).toLocaleDateString()}</p>
               <p><strong class="font-bold">Customer:</strong> ${indent.customer}</p>
-              <p><strong class="font-bold">Order Type:</strong> ${indent.orderType}</p>
               <p><strong class="font-bold">Service Mode:</strong> ${indent.serviceMode}</p>
               <p><strong class="font-bold">RFQ:</strong> ${indent.rfq}</p>
-              <p><strong class="font-bold">Destination:</strong> ${indent.destination}</p>
+
             </div>
           </div>
         </div>
@@ -105,16 +102,15 @@ function ViewIndents() {
         <table class="min-w-full divide-y divide-black-200">
           <thead class="bg-black-50">
             <tr>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">Load Type</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">PKGS</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">Weight</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">Rate Calculate On</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">Rate</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">Freight</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">No of Vehicle</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">Advance</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">Balance</th>
-              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">Remarks</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">FROM</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">TO</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">VEHICLE TYPE</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">DIMENSIONS</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">WEIGHT(T)</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">QUANTUMRATE(P/T)</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">EFFECTIVE RATE(P/T)</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">COST</th>
+              <th class="px-2 py-1 text-left text-xs font-small text-black-500 uppercase">REMARK</th>
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-black-200">
@@ -124,19 +120,17 @@ function ViewIndents() {
       </div>
       <div class="bg-black-300 p-4 w-full">
         <h3 class="text-xl font-bold text-black mb-4">Total</h3>
-        <p><strong class="font-bold">Total Packages:</strong> ${indent.total.pkgs}</p>
-        <p><strong class="font-bold">Total Weight:</strong> ${indent.total.weight}</p>
-        <p><strong class="font-bold">Total Freight:</strong> ${indent.total.freight}</p>
-        <p><strong class="font-bold">Total Advance:</strong> ${indent.total.advance}</p>
-        <p><strong class="font-bold">Total Balance:</strong> ${indent.total.balance}</p>
-        <p><strong class="font-bold">Total Vehicles:</strong> ${indent.total.noOfVehicle}</p>
+        <p><strong class="font-bold">Total weight:</strong> ${indent.total.weight}</p>
+        <p><strong class="font-bold">Total quantumrate:</strong> ${indent.total.quantumrate}</p>
+        <p><strong class="font-bold">Total effectiverate:</strong> ${indent.total.effectiverate}</p>
+        <p><strong class="font-bold">Total cost:</strong> ${indent.total.cost}</p>
       </div>
 
 
 
 
         <div class="bg-black-300 flex justify-between items-end h-40 w-full">
-          <div class="text-left mb-4 ml-4">Remark: ${indent.other.remark}</div>
+          <div class="text-left mb-4 ml-4">Remark: </div>
         </div>
         <div class="bg-black-300 p-4 h-64 w-full flex flex-col justify-between border-t border-black">
           <div class="text-right">TRANSPORT WINGS (CAL) PVT LTD</div>
@@ -163,17 +157,13 @@ function ViewIndents() {
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Indent No</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Date</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Customer</th>
-              <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Balance</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Order No</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Order Date</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Order Mode</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Service Mode</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">RFQ</th>
-              <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Order Type</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Expected Date</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Employee</th>
-              <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Source</th>
-              <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Destination</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-small text-black-500 uppercase">Action</th>
             </tr>
           </thead>
@@ -183,17 +173,13 @@ function ViewIndents() {
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.indentNo}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{new Date(indent.date).toLocaleDateString()}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.customer}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.balance}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.orderNo}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{new Date(indent.orderDate).toLocaleDateString()}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.orderMode}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.serviceMode}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.rfq}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.orderType}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{new Date(indent.expectedDate).toLocaleDateString()}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.employee}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.source}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{indent.destination}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">
                   <button onClick={() => handleEdit(indent._id)} className="text-indigo-600 hover:text-indigo-900">Edit</button>
                   <button onClick={() => handlePrint(indent._id)} className="ml-4 text-green-600 hover:text-green-900">Print</button>

@@ -44,6 +44,7 @@ import BrokerReport from './component/brokerreport/BrokerReport';
 import Sidebarop from './componentop/sidebarop/Sidebarop';
 import Rateslab from './componentop/rateslab/Rateslab';
 import Freightrate from './componentop/freightrate/Freightrate';
+import ViewFreightRates from './componentop/freightrate/ViewFreightRates';
 import DocumentIssue from './componentop/documentissue/DocumentIssue';
 import DocumentCancel from './componentop/documentcancel/DocumentCancel';
 import Indent from './componentop/indent/Indent';
@@ -52,7 +53,6 @@ import UpdateIndent from './componentop/indent/UpdateIndent';
 import JobOrder from './componentop/joborder/JobOrder';
 import VehiclePlacement from './componentop/vehicleplacement/VehiclePlacement';
 import Consignment from './componentop/consignment/Consignment';
-import Manifest from './componentop/manifest/Manifest';
 import VehicleHire from './componentop/vehiclehire/VehicleHire';
 import Unloading from './componentop/unloading/Unloading';
 import Pod from './componentop/pod/Pod';
@@ -73,7 +73,7 @@ import Sidebarac from './componentac/sidebarac/Sidebarac';
 import Groups from './componentac/groups/Groups';
 import Account from './componentac/account/Account';
 import Type from './componentac/type/Type';
-import ViewFreightRates from './componentop/freightrate/ViewFreightRates';
+
 
 
 
@@ -171,7 +171,6 @@ function App() {
 
               <Route path="bookingoperation">
                <Route path="consignment" element={<Protected Component={Consignment} />}/>
-               <Route path="manifest" element={<Protected Component={Manifest} />}/>
                <Route path="vehiclehire" element={<Protected Component={VehicleHire} />}/>
               </Route>
 

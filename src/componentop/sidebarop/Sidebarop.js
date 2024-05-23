@@ -97,18 +97,18 @@ function Sidebarop() {
             <div className="flex flex-col flex-grow overflow-y-auto">
               <ul className="flex flex-col py-4">
                 <li className="px-4">
-                  <div className="flex items-center py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={toggleDropdownContract}>
+                  <div className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer" onClick={toggleDropdownContract}>
                     <GiDividedSquare/>
                     <span className="ml-2">Contract</span>
                   </div>
                   {/* Render the Home dropdown content if isOpenHome is true */}
                   {isOpenContract && (
                     <div className="ml-6">
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/contract/rateslab" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/contract/rateslab" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                       <FaRegCircle/>
                         <span className="ml-2">Rate Slab</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/contract/freightrate" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/contract/freightrate" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Freight Rate</span>
                       </Link>
@@ -117,18 +117,18 @@ function Sidebarop() {
                   )}
                 </li>
                 <li className="px-4">
-                  <div className="flex items-center py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={toggleDropdownManageDocument}>
+                  <div className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer" onClick={toggleDropdownManageDocument}>
                     <GiDividedSquare/>
                     <span className="ml-2">Manage Document</span>
                   </div>
                   {/* Render the History dropdown content if isOpenHistory is true */}
                   {isOpenManageDocument && (
                     <div className="ml-6">
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/managedocument/documentissue" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/managedocument/documentissue" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Document Issue</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/managedocument/documentcancel" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/managedocument/documentcancel" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Document Cancel</span>
                       </Link>
@@ -137,46 +137,42 @@ function Sidebarop() {
                   )}
                 </li>
                 <li className="px-4">
-                  <div className="flex items-center py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={toggleDropdownOrderManagement}>
+                  <div className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer" onClick={toggleDropdownOrderManagement}>
                     <GiDividedSquare/>
                     <span className="ml-2">Order Management</span>
                   </div>
                   {/* Render the Order Management dropdown content if isOpenOrderManagement is true */}
                   {isOpenOrderManagement && (
                     <div className="ml-6">
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/ordermanagement/indent" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/ordermanagement/indent" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Indent</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/ordermanagement/joborder" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/ordermanagement/joborder" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Job order</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/ordermanagement/vahicleplacement" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/ordermanagement/vahicleplacement" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Vahicle placement</span>
                       </Link>
-                      {/* Add more Order Management sublinks as needed */}
+                     
                     </div>
                   )}
                 </li>
                 <li className="px-4">
-                  <div className="flex items-center py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={toggleDropdownBookingoperation}>
+                  <div className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer" onClick={toggleDropdownBookingoperation}>
                     <GiDividedSquare/>
                     <span className="ml-2">Booking Operation</span>
                   </div>
                   {/* Render the Order Management dropdown content if isOpenOrderManagement is true */}
                   {isOpenBookingoperation && (
                     <div className="ml-6">
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/bookingoperation/consignment" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/bookingoperation/consignment" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Consignment</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/bookingoperation/manifest" className="flex items-center py-2 text-white hover:bg-gray-700">
-                        <FaRegCircle/>
-                        <span className="ml-2">Manifest</span>
-                      </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/bookingoperation/vehiclehire" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/bookingoperation/vehiclehire" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Vehicle hire</span>
                       </Link>
@@ -185,91 +181,88 @@ function Sidebarop() {
                   )}
                 </li>
                 <li className="px-4">
-                  <div className="flex items-center py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={toggleDropdownDeliveryoperation}>
+                  <div className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer" onClick={toggleDropdownDeliveryoperation}>
                    <GiDividedSquare/>
                     <span className="ml-2">Delivery operation</span>
                   </div>
                   {/* Render the Order Management dropdown content if isOpenOrderManagement is true */}
                   {isOpenDeliveryoperation && (
                     <div className="ml-6">
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/deliveryoperation/unloading" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/deliveryoperation/unloading" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Unloading</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/deliveryoperation/pod" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/deliveryoperation/pod" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">POD</span>
                       </Link>
                    
-                      {/* Add more Order Management sublinks as needed */}
+
                     </div>
                   )}
                 </li>
                 <li className="px-4">
-                  <div className="flex items-center py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={toggleDropdownEnquiry}>
+                  <div className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer" onClick={toggleDropdownEnquiry}>
                     <GiDividedSquare/>
                     <span className="ml-2">Enquiry</span>
                   </div>
-                  {/* Render the Order Management dropdown content if isOpenOrderManagement is true */}
+
                   {isOpenEnquiry && (
                     <div className="ml-6">
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/enquiry/byconsignment" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/enquiry/byconsignment" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">By consignment</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/enquiry/multiple" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/enquiry/multiple" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Multiple</span>
                       </Link>
                    
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/enquiry/bill" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/enquiry/bill" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Bill</span>
                       </Link>
                    
-                      {/* Add more Order Management sublinks as needed */}
                     </div>
                   )}
                 </li>
                 <li className="px-4">
-                  <div className="flex items-center py-2 text-white hover:bg-gray-700 cursor-pointer" onClick={toggleDropdownReports}>
+                  <div className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer" onClick={toggleDropdownReports}>
                     <GiDividedSquare/>
                     <span className="ml-2">Reports</span>
                   </div>
-                  {/* Render the Order Management dropdown content if isOpenOrderManagement is true */}
                   {isOpenReports && (
                     <div className="ml-6">
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/registerreport" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/registerreport" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Registers report</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/analysisreport" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/analysisreport" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Analysis report</span>
                       </Link>
                    
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/stockreport" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/stockreport" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Stock report</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/misreport" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/misreport" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">MIS report</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/pendingreport" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/pendingreport" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Pending Report</span>
                       </Link>
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/costingreport" className="flex items-center py-2 text-white hover:bg-gray-700">
+                      <Link to="/protected/componentop/sidebarop/Sidebarop/reports/costingreport" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">Costing report</span>
                       </Link>
                    
-                      {/* Add more Order Management sublinks as needed */}
                     </div>
                   )}
                 </li>
-                {/* Add more sidebar links as needed */}
+
               </ul>
             </div>
           </div>

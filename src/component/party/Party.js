@@ -851,9 +851,6 @@ const Party = () => {
                                 </div>
                             </TabPanel>
 
-
-
-
                         </Tabs>
 
                         {/* Submit button */}

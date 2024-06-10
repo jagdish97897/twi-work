@@ -57,7 +57,8 @@ const SupplyChainPartner = () => {
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
             {!submitted ? (
                 <>
-            <h1 className="bg-gradient-to-b from-gray-50 to-red-500 text-3xl font-bold rounded-md text-center shadow-lg shadow-red-700/50">SUPPLY CHAIN PARTNER/CREATE</h1>
+            {/* <h1 className="bg-gradient-to-b from-gray-50 to-red-500 text-3xl font-bold rounded-md text-center shadow-lg shadow-red-700/50">SUPPLY CHAIN PARTNER/CREATE</h1> */}
+            <h1 className="text-3xl font-bold mb-4">SUPPLY CHAIN PARTNER/CREATE</h1>
 
                     <form onSubmit={handleSubmit}>
                         <div className="mt-6 mb-4">

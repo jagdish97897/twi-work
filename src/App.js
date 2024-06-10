@@ -51,6 +51,8 @@ import Indent from './componentop/indent/Indent';
 import ViewIndents from './componentop/indent/ViewIndents';
 import UpdateIndent from './componentop/indent/UpdateIndent';
 import JobOrder from './componentop/joborder/JobOrder';
+import ViewJobOrders from './componentop/joborder/ViewJobOrders';
+import UpdateJobOrder from './componentop/joborder/UpdateJobOrder';
 import VehiclePlacement from './componentop/vehicleplacement/VehiclePlacement';
 import Consignment from './componentop/consignment/Consignment';
 import VehicleHire from './componentop/vehiclehire/VehicleHire';
@@ -73,13 +75,21 @@ import Sidebarac from './componentac/sidebarac/Sidebarac';
 import Groups from './componentac/groups/Groups';
 import Account from './componentac/account/Account';
 import Type from './componentac/type/Type';
-
-
-
-
-
-
-
+import OpeningBlance from './componentac/openingblance/OpeningBlance';
+import Cheque from './componentac/cheque/Cheque';
+import ReceiptVoucher from './componentac/receiptvoucher/ReceiptVoucher';
+import PaymentVoucher from './componentac/paymentvoucher/PaymentVoucher';
+import BillPassing from './componentac/billpassing/BillPassing';
+import ContraVoucher from './componentac/contravoucher/ContraVoucher';
+import JournalVoucher from './componentac/journalvoucher/JournalVoucher';
+import BillDeducation from './componentac/billdeduction/BillDeducation';
+import ChequeDeposit from './componentac/chequedeposit/ChequeDeposit';
+import BillAc from './componentac/billac/BillAc.js';
+import NonFreightbill from './componentac/nonfreightbill/NonFreightbill';
+import BillSubmission from './componentac/billsubmission/BillSubmission';
+import BankReconciliation from './componentac/bankreconciliation/BankReconciliation';
+import PIbr from './componentac/pandingibr/PIbr.js';
+import Branchreconciliation from './componentac/branchreconciliation/Branchreconciliation.js';
 
 
 
@@ -166,6 +176,8 @@ function App() {
                <Route path="viewindents" element={<Protected Component={ViewIndents} />}/>
                <Route path="updateindent/:id" element={<Protected Component={UpdateIndent} />}/>
                <Route path="joborder" element={<Protected Component={JobOrder} />}/>
+               <Route path="viewjoborders" element={<Protected Component={ViewJobOrders} />}/>
+               <Route path="updateJobOrder/:id" element={<Protected Component={UpdateJobOrder} />}/>
                <Route path="vahicleplacement" element={<Protected Component={VehiclePlacement} />}/>
               </Route>
 
@@ -204,7 +216,32 @@ function App() {
                <Route path="groups" element={<Protected Component={Groups} />}/>
                <Route path="account" element={<Protected Component={Account} />}/>
                <Route path="type" element={<Protected Component={Type} />}/>
-              </Route>
+               <Route path="openingbalance" element={<Protected Component={OpeningBlance} />}/>
+               <Route path="cheque" element={<Protected Component={Cheque} />}/>
+            </Route>
+            <Route path="voucher">
+               <Route path="receiptvoucher" element={<Protected Component={ReceiptVoucher} />}/>
+               <Route path="paymentvoucher" element={<Protected Component={PaymentVoucher} />}/>
+               <Route path="billpassing" element={<Protected Component={BillPassing} />}/>
+               <Route path="contravoucher" element={<Protected Component={ContraVoucher} />}/>
+               <Route path="journalvoucher" element={<Protected Component={JournalVoucher} />}/>
+               <Route path="billdeduction" element={<Protected Component={BillDeducation} />}/>
+               <Route path="chequedeposit" element={<Protected Component={ChequeDeposit} />}/>
+           
+            </Route>
+            <Route path="billing">
+               <Route path="bill" element={<Protected Component={BillAc} />}/>
+               <Route path="nonfreightbill" element={<Protected Component={NonFreightbill} />}/>
+               <Route path="billsubmission" element={<Protected Component={BillSubmission} />}/>
+            </Route>
+            <Route path="reconciliation">
+               <Route path="bankreconciliation" element={<Protected Component={BankReconciliation} />}/>
+               <Route path="pandingibr" element={<Protected Component={PIbr} />}/>
+               <Route path="branchreconciliation" element={<Protected Component={Branchreconciliation} />}/>
+              
+            </Route>
+
+
             </Route>
 
 {/* 

@@ -39,8 +39,11 @@ const MultipleEnquiry = () => {
                     <label htmlFor="wise" className="block mb-2 font-semibold">Wise</label>
                     <select id="wise" name="wise" className="w-full p-2 border border-gray-300 rounded">
                         <option value="select">Select</option>
-                        <option value="wise1">Wise 1</option>
-                        <option value="wise2">Wise 2</option>
+                        <option value="wise1">Consignor</option>
+                        <option value="wise2">Consignee</option>
+                        <option value="wise2">Source</option>
+                        <option value="wise2">Destinattion</option>
+                        <option value="wise2">Billing Party</option>
                     </select>
                 </div>
             </div>

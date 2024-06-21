@@ -225,19 +225,11 @@ const VehicleHire = () => {
 
 
 
-    const copyDataToCorrectAddress = () => {
-        // Copy data from contact to correctAddress
-        setFormData(prevState => ({
-            ...prevState,
-            correctAddress: { ...prevState.contact }
-        }));
-    };
-
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
             {!submitted ? ( // Render form only if not submitted
                 <>
-                    <h1 className="text-3xl font-bold mb-4">Vehicle Hire</h1>
+                    <h1 className="text-3xl font-bold mb-4 text-indigo-800">Vehicle Hire</h1>
 
                     <form onSubmit={handleSubmit} >
                         <div className="mt-6 mb-4">
@@ -245,11 +237,12 @@ const VehicleHire = () => {
                                 submit
                             </button>
                         </div>
-                        <div className="space-y-4 bg-[#FFFFFF] p-2 sm:flex sm:flex-wrap gap-2">
+                        <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg">
+                         <div className='sm:flex sm:flex-wrap gap-4'>
     {/* Document Type */}
     <div className="mb-4">
         <label htmlFor="document_type" className="block text-sm font-medium text-gray-700">Document Type</label>
-        <select id="document_type" name="document_type" value={formData.document_type} onChange={handleChange} className="input w-full border border-black shadow-md" required>
+        <select id="document_type" name="document_type" value={formData.document_type} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" required>
             <option value="">Select Document Type</option>
             {/* Add options based on DocumentTypeEnum */}
         </select>
@@ -258,8 +251,8 @@ const VehicleHire = () => {
     {/* Type */}
     <div className="mb-4">
         <label htmlFor="type" className="block text-sm font-medium text-gray-700">Type</label>
-        <select id="type" name="type" value={formData.type} onChange={handleChange} className="input w-full border border-black shadow-md" required>
-            <option value="">Select Type</option>
+        <select id="type" name="type" value={formData.type} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+            <option value="">Select Vehicle Type</option>
             {/* Add options based on TypeEnum */}
         </select>
     </div>
@@ -267,37 +260,37 @@ const VehicleHire = () => {
     {/* Broker Name */}
     <div className="mb-4">
         <label htmlFor="broker_name" className="block text-sm font-medium text-gray-700">Broker Name</label>
-        <input type="text" id="broker_name" name="broker_name" value={formData.broker_name} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="text" id="broker_name" name="broker_name" value={formData.broker_name} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Vehicle Number */}
     <div className="mb-4">
         <label htmlFor="vehicle_number" className="block text-sm font-medium text-gray-700">Vehicle Number</label>
-        <input type="text" id="vehicle_number" name="vehicle_number" value={formData.vehicle_number} onChange={handleChange} className="input w-full border border-black shadow-md" required />
+        <input type="text" id="vehicle_number" name="vehicle_number" value={formData.vehicle_number} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" required />
     </div>
     
     {/* Date */}
     <div className="mb-4">
         <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
-        <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="date" id="date" name="date" value={formData.date} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Source */}
     <div className="mb-4">
         <label htmlFor="source" className="block text-sm font-medium text-gray-700">Source</label>
-        <input type="text" id="source" name="source" value={formData.source} onChange={handleChange} className="input w-full border border-black shadow-md" required />
+        <input type="text" id="source" name="source" value={formData.source} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" required />
     </div>
     
     {/* Destination */}
     <div className="mb-4">
         <label htmlFor="destination" className="block text-sm font-medium text-gray-700">Destination</label>
-        <input type="text" id="destination" name="destination" value={formData.destination} onChange={handleChange} className="input w-full border border-black shadow-md" required />
+        <input type="text" id="destination" name="destination" value={formData.destination} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" required />
     </div>
     
     {/* Via */}
     <div className="mb-4">
         <label htmlFor="via" className="block text-sm font-medium text-gray-700">Via</label>
-        <input type="text" id="via" name="via" value={formData.via} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="text" id="via" name="via" value={formData.via} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Multiple Delivery Point */}
@@ -305,10 +298,10 @@ const VehicleHire = () => {
     <label className="block text-sm font-medium text-gray-700">Multiple Delivery Point</label>
     <div className="flex items-center">
 
-        <input type="radio" id="multiple_delivery_point_yes" name="multiple_delivery_point" value={true}  onChange={handleChange} className="mr-2 border border-black shadow-md" />
+        <input type="radio" id="multiple_delivery_point_yes" name="multiple_delivery_point" value={true}  onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
         <label htmlFor="multiple_delivery_point_yes" className="mr-4 text-sm text-gray-700">Yes</label>
         
-        <input type="radio" id="multiple_delivery_point_no" name="multiple_delivery_point" value={false}  onChange={handleChange} className="mr-2 border border-black shadow-md" />
+        <input type="radio" id="multiple_delivery_point_no" name="multiple_delivery_point" value={false}  onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
         <label htmlFor="multiple_delivery_point_no" className="text-sm text-gray-700">No</label>
     </div>
 </div>
@@ -317,31 +310,31 @@ const VehicleHire = () => {
     {/* Manifest No */}
     <div className="mb-4">
         <label htmlFor="manifest_no" className="block text-sm font-medium text-gray-700">Manifest No</label>
-        <input type="text" id="manifest_no" name="manifest_no" value={formData.manifest_no} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="text" id="manifest_no" name="manifest_no" value={formData.manifest_no} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Placement No */}
     <div className="mb-4">
         <label htmlFor="placement_no" className="block text-sm font-medium text-gray-700">Placement No</label>
-        <input type="text" id="placement_no" name="placement_no" value={formData.placement_no} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="text" id="placement_no" name="placement_no" value={formData.placement_no} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Contents */}
     <div className="mb-4">
         <label htmlFor="contents" className="block text-sm font-medium text-gray-700">Contents</label>
-        <input type="text" id="contents" name="contents" value={formData.contents} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="text" id="contents" name="contents" value={formData.contents} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Vehicle */}
     <div className="mb-4">
         <label htmlFor="vehicle" className="block text-sm font-medium text-gray-700">Vehicle</label>
-        <input type="text" id="vehicle" name="vehicle" value={formData.vehicle} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="text" id="vehicle" name="vehicle" value={formData.vehicle} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Load Type */}
     <div className="mb-4">
         <label htmlFor="load_type" className="block text-sm font-medium text-gray-700">Load Type</label>
-        <select id="load_type" name="load_type" value={formData.load_type} onChange={handleChange} className="input w-full border border-black shadow-md">
+        <select id="load_type" name="load_type" value={formData.load_type} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
             <option value="">Select Load Type</option>
             {/* Add options based on LoadTypeEnum */}
         </select>
@@ -350,7 +343,7 @@ const VehicleHire = () => {
     {/* Pay to Transporter */}
     <div className="mb-4">
         <label htmlFor="pay_to_transporter" className="block text-sm font-medium text-gray-700">Pay to Transporter</label>
-        <select id="pay_to_transporter" name="pay_to_transporter" value={formData.pay_to_transporter} onChange={handleChange} className="input w-full border border-black shadow-md" required>
+        <select id="pay_to_transporter" name="pay_to_transporter" value={formData.pay_to_transporter} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" required>
             <option value="">Select Pay to Transporter</option>
             {/* Add options based on PayToTransporterEnum */}
         </select>
@@ -359,19 +352,19 @@ const VehicleHire = () => {
     {/* State */}
     <div className="mb-4">
         <label htmlFor="state" className="block text-sm font-medium text-gray-700">State</label>
-        <input type="text" id="state" name="state" value={formData.state} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="text" id="state" name="state" value={formData.state} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* PAN */}
     <div className="mb-4">
         <label htmlFor="pan" className="block text-sm font-medium text-gray-700">PAN</label>
-        <input type="text" id="pan" name="pan" value={formData.pan} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="text" id="pan" name="pan" value={formData.pan} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Reporting */}
     <div className="mb-4">
         <label htmlFor="reporting" className="block text-sm font-medium text-gray-700">Reporting</label>
-        <select id="reporting" name="reporting" value={formData.reporting} onChange={handleChange} className="input w-full border border-black shadow-md">
+        <select id="reporting" name="reporting" value={formData.reporting} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
             <option value="">Select Reporting</option>
             {/* Add options based on ReportingEnum */}
         </select>
@@ -380,13 +373,13 @@ const VehicleHire = () => {
     {/* Expected Delivery Date */}
     <div className="mb-4">
         <label htmlFor="expected_delivery_date" className="block text-sm font-medium text-gray-700">Expected Delivery Date</label>
-        <input type="date" id="expected_delivery_date" name="expected_delivery_date" value={formData.expected_delivery_date} onChange={handleChange} className="input w-full border border-black shadow-md" />
+        <input type="date" id="expected_delivery_date" name="expected_delivery_date" value={formData.expected_delivery_date} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
     </div>
     
     {/* Mode */}
     <div className="mb-4">
         <label htmlFor="mode" className="block text-sm font-medium text-gray-700">Mode</label>
-        <select id="mode" name="mode" value={formData.mode} onChange={handleChange} className="input w-full border border-black shadow-md">
+        <select id="mode" name="mode" value={formData.mode} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
             <option value="">Select Mode</option>
             {/* Add options based on ModeEnum */}
         </select>
@@ -395,11 +388,12 @@ const VehicleHire = () => {
     {/* Placed By */}
     <div className="mb-4">
         <label htmlFor="placed_by" className="block text-sm font-medium text-gray-700">Placed By</label>
-        <select id="placed_by" name="placed_by" value={formData.placed_by} onChange={handleChange} className="input w-full border border-black shadow-md">
+        <select id="placed_by" name="placed_by" value={formData.placed_by} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
             <option value="">Select Placed By</option>
             <option value="BROKER">Broker</option>
             <option value="DIRECT">Direct</option>
         </select>
+    </div>
     </div>
 </div>
 

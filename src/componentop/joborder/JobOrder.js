@@ -466,7 +466,9 @@ const JobOrder = () => {
             </div>
           </TabPanel>
 
-          <div className="mt-4 p-2">
+          
+             <TabPanel>
+             <div className="mt-4 p-2">
               <h3 className="text-lg font-semibold">Vehicle Details</h3>
               <div className="grid grid-cols-6 gap-6 p-2">
                 <div className="mb-4">
@@ -547,7 +549,6 @@ const JobOrder = () => {
               </div>
             </div>
        
-             <TabPanel>
 
              </TabPanel>
         </Tabs>

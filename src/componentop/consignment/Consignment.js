@@ -47,7 +47,22 @@ const Consignment = () => {
         }
     });
 
-    const [submitted, setSubmitted] = useState(false);
+//         container: {
+//             linename: '',
+//             date: '',
+//             loc: '',
+//             cgw: '',
+//             loadingno: '',
+//             loadingdate: '',
+//             remarks: '',
+//         },
+//         cod: {
+//             favouring: '',
+//             amount: 0,
+//             mode: 'CASH',
+//             cancelReason: '',
+//         }
+//     });
 
     const [newItem, setNewItem] = useState({
         from: '',

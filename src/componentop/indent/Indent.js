@@ -39,6 +39,7 @@ function Indent() {
   const [responseMessage, setResponseMessage] = useState('');
   const [customer, setCustomer] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  
 
   const [newItem, setNewItem] = useState({
     from: '',
@@ -131,6 +132,7 @@ function Indent() {
     setShowModal(false);
   };
 
+  const [submitted, setSubmitted] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -163,6 +165,12 @@ function Indent() {
           remark: ''
         }
       });
+      if (!response.ok) {
+        throw new Error('Failed to create registration');
+    }
+    console.log("response", response)
+    const data = await response.json();
+    console.log('Registration created:', data);
       setItems([]);
     } catch (error) {
       setResponseMessage('Error creating indent. Please try again.');

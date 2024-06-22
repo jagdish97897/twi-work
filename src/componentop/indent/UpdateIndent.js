@@ -127,7 +127,7 @@ function UpdateIndent() {
         {/* Temperature */}
         <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
           <label className="text-sm mb-1" htmlFor="temperature">RFQ</label>
-          <input type="number" id="rfq" name="rfq" value={formData.rfq} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+          <input type="text" id="rfq" name="rfq" value={formData.rfq} onChange={handleChange} required className="input w-full border border-black shadow-md" />
         </div>
 
         {/* Expected Date */}

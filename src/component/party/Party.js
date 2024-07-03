@@ -856,17 +856,3 @@ const Party = () => {
 };
 
 export default Party;
-
-
-
-// import React from 'react'
-
-// function Party() {
-//   return (
-//     <div>
-//       bjhjjjhgj
-//     </div>
-//   )
-// }
-
-// export default Party

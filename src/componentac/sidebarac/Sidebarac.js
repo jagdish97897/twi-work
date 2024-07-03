@@ -8,15 +8,34 @@ import Navbarac from '../navbar/Navbarac';
 function Sidebarac() {
   const [isOpenMaster, setIsOpenMaster] = useState(false);
   const [isOpenVoucher, setIsOpenVoucher] = useState(false);
+  const [isOpenBilling, setIsOpenBilling] = useState(false);
+  const [isOpenReconciliation, setIsOpenReconciliation] = useState(false);
 
   const toggleDropdownMaster = () => {
     setIsOpenMaster(!isOpenMaster);
     setIsOpenVoucher(false);
+    setIsOpenBilling(false);
+    setIsOpenReconciliation(false);
+
   };
 
   const toggleDropdownVoucher = () => {
     setIsOpenVoucher(!isOpenVoucher);
     setIsOpenMaster(false);
+    setIsOpenBilling(false);
+    setIsOpenReconciliation(false);
+  };
+  const toggleDropdownBilling = () => {
+    setIsOpenBilling(!isOpenBilling);
+    setIsOpenMaster(false);
+    setIsOpenVoucher(false);
+    setIsOpenReconciliation(false);
+  };
+  const toggleDropdownReconciliation = () => {
+    setIsOpenReconciliation(!isOpenReconciliation);
+    setIsOpenMaster(false);
+    setIsOpenVoucher(false);
+    setIsOpenBilling(false);
   };
 
   return (
@@ -75,6 +94,7 @@ function Sidebarac() {
                     </div>
                   )}
                 </li>
+
                 <li className="px-4">
                   <div
                     className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer"
@@ -86,54 +106,128 @@ function Sidebarac() {
                   {isOpenVoucher && (
                     <div className="ml-6">
                       <Link
-                        to="/sidebar/master/receiptvoucher"
+                        to="/protected/componentac/sidebarac/Sidebarac/voucher/receiptvoucher"
                         className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
                       >
                         <FaRegCircle className="text-sm" />
                         <span className="ml-2">Receipt Voucher</span>
                       </Link>
                       <Link
-                        to="/sidebar/master/paymentvoucher"
+                        to="/protected/componentac/sidebarac/Sidebarac/voucher/paymentvoucher"
                         className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
                       >
                         <FaRegCircle className="text-sm" />
                         <span className="ml-2">Payment Voucher</span>
                       </Link>
                       <Link
-                        to="/sidebar/master/billpassing"
+                        to="/protected/componentac/sidebarac/Sidebarac/voucher/billpassing"
                         className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
                       >
                         <FaRegCircle className="text-sm" />
                         <span className="ml-2">Bill Passing</span>
                       </Link>
                       <Link
-                        to="/sidebar/master/contravoucher"
+                        to="/protected/componentac/sidebarac/Sidebarac/voucher/contravoucher"
                         className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
                       >
                         <FaRegCircle className="text-sm" />
                         <span className="ml-2">Contra Voucher</span>
                       </Link>
                       <Link
-                        to="/sidebar/master/journalvoucher"
+                        to="/protected/componentac/sidebarac/Sidebarac/voucher/journalvoucher"
                         className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
                       >
                         <FaRegCircle className="text-sm" />
                         <span className="ml-2">Journal Voucher</span>
                       </Link>
                       <Link
-                        to="/sidebar/master/billdeduction"
+                        to="/protected/componentac/sidebarac/Sidebarac/voucher/billdeduction"
                         className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
                       >
                         <FaRegCircle className="text-sm" />
                         <span className="ml-2">Bill Deduction</span>
                       </Link>
                       <Link
-                        to="/sidebar/master/chequedeposit"
+                        to="/protected/componentac/sidebarac/Sidebarac/voucher/chequedeposit"
                         className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
                       >
                         <FaRegCircle className="text-sm" />
                         <span className="ml-2">Cheque Deposit</span>
                       </Link>
+                    </div>
+                  )}
+                </li>
+                <li className="px-4">
+                  <div
+                    className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer"
+                    onClick={toggleDropdownBilling}
+                  >
+                    <GiDividedSquare className="text-lg" />
+                    <span className="ml-2">Billing</span>
+                  </div>
+                  {isOpenBilling && (
+                    <div className="ml-6">
+                      <Link
+                        to="/protected/componentac/sidebarac/Sidebarac/billing/bill"
+                        className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
+                      >
+                        <FaRegCircle className="text-sm" />
+                        <span className="ml-2">Bill</span>
+                      </Link>
+
+                      <Link
+                        to="/protected/componentac/sidebarac/Sidebarac/billing/nonfreightbill"
+                        className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
+                      >
+                        <FaRegCircle className="text-sm" />
+                        <span className="ml-2">Non Freight Bill</span>
+                      </Link>
+                      
+                      <Link
+                        to="/protected/componentac/sidebarac/Sidebarac/billing/billsubmission"
+                        className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
+                      >
+                        <FaRegCircle className="text-sm" />
+                        <span className="ml-2">Bill Submission</span>
+                      </Link>
+                      
+                    </div>
+                  )}
+                </li>
+                <li className="px-4">
+                  <div
+                    className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer"
+                    onClick={toggleDropdownReconciliation}
+                  >
+                    <GiDividedSquare className="text-lg" />
+                    <span className="ml-2">Reconciliation</span>
+                  </div>
+                  {isOpenReconciliation && (
+                    <div className="ml-6">
+                      <Link
+                        to="/protected/componentac/sidebarac/Sidebarac/reconciliation/bankreconciliation"
+                        className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
+                      >
+                        <FaRegCircle className="text-sm" />
+                        <span className="ml-2">Bank Reconciliation</span>
+                      </Link>
+                      <Link
+                        to="/protected/componentac/sidebarac/Sidebarac/reconciliation/pandingibr"
+                        className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
+                      >
+                        <FaRegCircle className="text-sm" />
+                        <span className="ml-2">Panding IBR</span>
+                      </Link>
+                      <Link
+                        to="/protected/componentac/sidebarac/Sidebarac/reconciliation/branchreconciliation"
+                        className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200"
+                      >
+                        <FaRegCircle className="text-sm" />
+                        <span className="ml-2">Branch Reconciliation</span>
+                      </Link>
+
+                    
+                      
                     </div>
                   )}
                 </li>

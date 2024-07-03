@@ -188,10 +188,7 @@ function Sidebarop() {
                   {/* Render the Order Management dropdown content if isOpenOrderManagement is true */}
                   {isOpenDeliveryoperation && (
                     <div className="ml-6">
-                      <Link to="/protected/componentop/sidebarop/Sidebarop/deliveryoperation/unloading" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
-                        <FaRegCircle/>
-                        <span className="ml-2">Unloading</span>
-                      </Link>
+                 
                       <Link to="/protected/componentop/sidebarop/Sidebarop/deliveryoperation/pod" className="rounded-md pl-4 flex items-center justify-start py-2 text-white hover:bg-gray-700 hover:text-yellow-400 hover:scale-105 transform transition-all duration-200 cursor-pointer">
                         <FaRegCircle/>
                         <span className="ml-2">POD</span>

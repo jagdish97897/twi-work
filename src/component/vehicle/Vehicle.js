@@ -120,58 +120,60 @@ const Vehicle = () => {
                                 Submit
                             </button>
                         </div>
-                        <div className="space-y-4 bg-[#FFFFFF] p-2 sm:flex sm:flex-wrap gap-2">
+                        <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg">
+                        <div className='sm:flex sm:flex-wrap gap-4'>
                             <div className="mb-4">
                                 <label htmlFor="vehicleNo" className="block text-sm font-medium text-gray-700">Vehicle No</label>
-                                <input type="text" id="vehicleNo" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="vehicleNo" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="segmentCategory" className="block text-sm font-medium text-gray-700">Segment Category</label>
-                                <input type="text" id="segmentCategory" name="segmentCategory" value={formData.segmentCategory} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="segmentCategory" name="segmentCategory" value={formData.segmentCategory} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="businessGroup" className="block text-sm font-medium text-gray-700">Business Group</label>
-                                <input type="text" id="businessGroup" name="businessGroup" value={formData.businessGroup} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="businessGroup" name="businessGroup" value={formData.businessGroup} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="oldRegistration" className="block text-sm font-medium text-gray-700">Old Registration</label>
-                                <input type="text" id="oldRegistration" name="oldRegistration" value={formData.oldRegistration} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="oldRegistration" name="oldRegistration" value={formData.oldRegistration} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="loadType" className="block text-sm font-medium text-gray-700">Load Type</label>
-                                <input type="text" id="loadType" name="loadType" value={formData.loadType} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="loadType" name="loadType" value={formData.loadType} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="controllingBranch" className="block text-sm font-medium text-gray-700">Controlling Branch</label>
-                                <input type="text" id="controllingBranch" name="controllingBranch" value={formData.controllingBranch} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="controllingBranch" name="controllingBranch" value={formData.controllingBranch} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="registrationDate" className="block text-sm font-medium text-gray-700">Registration Date</label>
-                                <input type="date" id="registrationDate" name="registrationDate" value={formData.registrationDate} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="date" id="registrationDate" name="registrationDate" value={formData.registrationDate} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
+
                             <div className="mb-4">
                                 <label htmlFor="manufacturingYear" className="block text-sm font-medium text-gray-700">Manufacturing Year</label>
-                                <input type="text" id="manufacturingYear" name="manufacturingYear" value={formData.manufacturingYear} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="manufacturingYear" name="manufacturingYear" value={formData.manufacturingYear} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="supervisor" className="block text-sm font-medium text-gray-700">Supervisor</label>
-                                <input type="text" id="supervisor" name="supervisor" value={formData.supervisor} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="supervisor" name="supervisor" value={formData.supervisor} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700">Vehicle Type</label>
-                                <input type="text" id="vehicleType" name="vehicleType" value={formData.vehicleType} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="vehicleType" name="vehicleType" value={formData.vehicleType} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="trolleyNo" className="block text-sm font-medium text-gray-700">Trolley No</label>
-                                <input type="text" id="trolleyNo" name="trolleyNo" value={formData.trolleyNo} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="trolleyNo" name="trolleyNo" value={formData.trolleyNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="ownership" className="block text-sm font-medium text-gray-700">Ownership</label>
-                                <input type="text" id="ownership" name="ownership" value={formData.ownership} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="ownership" name="ownership" value={formData.ownership} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="through" className="block text-sm font-medium text-gray-700">Through</label>
-                                <select id="through" name="through" value={formData.through} onChange={handleChange} className="input w-full border border-black shadow-md">
+                                <select id="through" name="through" value={formData.through} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
                                     <option value="">Select Type</option>
                                     <option value="DIRECT">DIRECT</option>
                                     <option value="BROKER">BROKER</option>
@@ -179,11 +181,11 @@ const Vehicle = () => {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="make" className="block text-sm font-medium text-gray-700">Make</label>
-                                <input type="text" id="make" name="make" value={formData.make} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="make" name="make" value={formData.make} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2"/>
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="model" className="block text-sm font-medium text-gray-700">Model</label>
-                                <input type="text" id="model" name="model" value={formData.model} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="model" name="model" value={formData.model} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="owner" className="block text-sm font-medium text-gray-700">Owner</label>
@@ -194,7 +196,7 @@ const Vehicle = () => {
                                     value={formData.owner}
                                     onChange={handleChange}
                                     list="ownerSuggestions"
-                                    className="input w-full border border-black shadow-md"
+                                    className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
                                 />
                                 <datalist id="ownerSuggestions">
                                     {owners.map((owner) => (
@@ -211,7 +213,7 @@ const Vehicle = () => {
                                     value={formData.broker}
                                     onChange={handleChange}
                                     list="brokerSuggestions"
-                                    className="input w-full border border-black shadow-md"
+                                    className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
                                 />
                                 <datalist id="brokerSuggestions">
                                     {brokers.map((broker) => (
@@ -221,27 +223,27 @@ const Vehicle = () => {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="driver" className="block text-sm font-medium text-gray-700">Driver</label>
-                                <input type="text" id="driver" name="driver" value={formData.driver} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="driver" name="driver" value={formData.driver} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="currentRoute" className="block text-sm font-medium text-gray-700">Current Route</label>
-                                <input type="text" id="currentRoute" name="currentRoute" value={formData.currentRoute} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="currentRoute" name="currentRoute" value={formData.currentRoute} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="rtoType" className="block text-sm font-medium text-gray-700">RTO Type</label>
-                                <input type="text" id="rtoType" name="rtoType" value={formData.rtoType} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="rtoType" name="rtoType" value={formData.rtoType} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="validUpto" className="block text-sm font-medium text-gray-700">Valid Upto</label>
-                                <input type="date" id="validUpto" name="validUpto" value={formData.validUpto} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="date" id="validUpto" name="validUpto" value={formData.validUpto} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="rtoAuthority" className="block text-sm font-medium text-gray-700">RTO Authority</label>
-                                <input type="text" id="rtoAuthority" name="rtoAuthority" value={formData.rtoAuthority} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="rtoAuthority" name="rtoAuthority" value={formData.rtoAuthority} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="permitType" className="block text-sm font-medium text-gray-700">Permit Type</label>
-                                <select id="permitType" name="permitType" value={formData.permitType} onChange={handleChange} className="input w-full border border-black shadow-md">
+                                <select id="permitType" name="permitType" value={formData.permitType} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
                                     <option value="">Select Type</option>
                                     <option value="STATE">STATE</option>
                                     <option value="NATIONAL">NATIONAL</option>
@@ -250,31 +252,32 @@ const Vehicle = () => {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="validState" className="block text-sm font-medium text-gray-700">Valid State</label>
-                                <input type="text" id="validState" name="validState" value={formData.validState} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="validState" name="validState" value={formData.validState} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="currentODM" className="block text-sm font-medium text-gray-700">Current ODM</label>
-                                <input type="text" id="currentODM" name="currentODM" value={formData.currentODM} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="currentODM" name="currentODM" value={formData.currentODM} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2"/>
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="oldODM" className="block text-sm font-medium text-gray-700">Old ODM</label>
-                                <input type="text" id="oldODM" name="oldODM" value={formData.oldODM} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="oldODM" name="oldODM" value={formData.oldODM} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700">Service Type</label>
-                                <input type="text" id="serviceType" name="serviceType" value={formData.serviceType} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="serviceType" name="serviceType" value={formData.serviceType} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="expireDate" className="block text-sm font-medium text-gray-700">Expire Date</label>
-                                <input type="date" id="expireDate" name="expireDate" value={formData.expireDate} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="date" id="expireDate" name="expireDate" value={formData.expireDate} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="currentStatus" className="block text-sm font-medium text-gray-700">Current Status</label>
-                                <input type="text" id="currentStatus" name="currentStatus" value={formData.currentStatus} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="currentStatus" name="currentStatus" value={formData.currentStatus} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2"/>
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="currentStation" className="block text-sm font-medium text-gray-700">Current Station</label>
-                                <input type="text" id="currentStation" name="currentStation" value={formData.currentStation} onChange={handleChange} className="input w-full border border-black shadow-md" />
+                                <input type="text" id="currentStation" name="currentStation" value={formData.currentStation} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                            </div>
                             </div>
                         </div>
                     </form>

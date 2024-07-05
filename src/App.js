@@ -36,9 +36,6 @@ import VehicleReport from './component/vehiclereport/VehicleReport';
 import DriverReport from './component/driverreport/DriverReport';
 import BrokerReport from './component/brokerreport/BrokerReport';
 
-
-
-
 import Sidebarop from './componentop/sidebarop/Sidebarop';
 import Rateslab from './componentop/rateslab/Rateslab';
 import Freightrate from './componentop/freightrate/Freightrate';
@@ -69,9 +66,6 @@ import MisReport from './componentop/misreport/MisReport';
 import PendingReport from './componentop/pendingreport/PendingReport';
 import CostingReport from './componentop/costingreport/CostingReport';
 
-
-
-
 import Sidebarac from './componentac/sidebarac/Sidebarac';
 import Groups from './componentac/groups/Groups';
 import Account from './componentac/account/Account';
@@ -96,10 +90,6 @@ import ViewConsignment from './componentop/consignment/ViewConsignment.js';
 import UpdateConsignment from './componentop/consignment/UpdateConsignment.js';
 import AddNewDataInConsignment from './componentop/consignment/AddNewDataInConsignment.js';
 
-
-
-
-
 function App() {
   const isLoggedIn = localStorage.getItem('token'); // Assuming you store user information in localStorage
 
@@ -108,169 +98,163 @@ function App() {
       <Routes>
         <Route path="/" element={isLoggedIn ? <Navigate to="/protected" /> : <Login />} />
         <Route path="/protected" element={<Protected Component={Home} />}></Route>
-          {isLoggedIn ? (
-            <>
+        {isLoggedIn ? (
+          <>
 
             <Route path="protected/component/sidebar/Sidebar" element={<Protected Component={Sidebar} />} >
               <Route path="parties">
-               <Route path="party" element={<Protected Component={Party} />}/>
-               <Route path="supplychainpartner" element={<Protected Component={SupplyChainPartner} />}/>
+                <Route path="party" element={<Protected Component={Party} />} />
+                <Route path="supplychainpartner" element={<Protected Component={SupplyChainPartner} />} />
               </Route>
 
               <Route path="taxes">
-                <Route path="gst" element={<Protected Component={Gst} />}/>
-                <Route path="tds" element={<Protected Component={Tds} />}/>
+                <Route path="gst" element={<Protected Component={Gst} />} />
+                <Route path="tds" element={<Protected Component={Tds} />} />
               </Route>
 
               <Route path="generalmaster">
-                <Route path="route" element={<Protected Component={Route1} />}/>
-                <Route path="station" element={<Protected Component={Station} />}/>
-                <Route path="loadtype" element={<Protected Component={LoadType} />}/>
-                <Route path="vehiclemodel" element={<Protected Component={VehicleModel} />}/>
-                <Route path="vehicle" element={<Protected Component={Vehicle} />}/>
+                <Route path="route" element={<Protected Component={Route1} />} />
+                <Route path="station" element={<Protected Component={Station} />} />
+                <Route path="loadtype" element={<Protected Component={LoadType} />} />
+                <Route path="vehiclemodel" element={<Protected Component={VehicleModel} />} />
+                <Route path="vehicle" element={<Protected Component={Vehicle} />} />
               </Route>
 
               <Route path="warehouse">
-                <Route path="comoditygroup" element={<Protected Component={CommodityGroup} />}/>
-                <Route path="content" element={<Protected Component={Content} />}/>
-                <Route path="checklist" element={<Protected Component={Checklist} />}/>
+                <Route path="comoditygroup" element={<Protected Component={CommodityGroup} />} />
+                <Route path="content" element={<Protected Component={Content} />} />
+                <Route path="checklist" element={<Protected Component={Checklist} />} />
               </Route>
 
               <Route path="miscellaneous">
-                <Route path="country" element={<Protected Component={Country} />}/>
-                <Route path="state" element={<Protected Component={State} />}/>
-                <Route path="city" element={<Protected Component={City} />}/>
-                <Route path="area" element={<Protected Component={Area} />}/>
-                <Route path="zone" element={<Protected Component={Zone} />}/>
-                <Route path="department" element={<Protected Component={Department} />}/>
-                <Route path="ratezone" element={<Protected Component={RateZone} />}/>
-                <Route path="currency" element={<Protected Component={Currency} />}/>
-                <Route path="zipcode" element={<Protected Component={Zipcode} />}/>
-                <Route path="unit" element={<Protected Component={Unit} />}/>
+                <Route path="country" element={<Protected Component={Country} />} />
+                <Route path="state" element={<Protected Component={State} />} />
+                <Route path="city" element={<Protected Component={City} />} />
+                <Route path="area" element={<Protected Component={Area} />} />
+                <Route path="zone" element={<Protected Component={Zone} />} />
+                <Route path="department" element={<Protected Component={Department} />} />
+                <Route path="ratezone" element={<Protected Component={RateZone} />} />
+                <Route path="currency" element={<Protected Component={Currency} />} />
+                <Route path="zipcode" element={<Protected Component={Zipcode} />} />
+                <Route path="unit" element={<Protected Component={Unit} />} />
               </Route>
 
               <Route path="listreports">
-                <Route path="partyreport" element={<Protected Component={PartyReport} />}/>
-                <Route path="branchreport" element={<Protected Component={BranchReport} />}/>
-                <Route path="stationreport" element={<Protected Component={StationReport} />}/>
-                <Route path="godownreport" element={<Protected Component={GodownReport} />}/>
-                <Route path="contentreport" element={<Protected Component={ContentReport} />}/>
-                <Route path="vehiclereport" element={<Protected Component={VehicleReport} />}/>
-                <Route path="driverreport" element={<Protected Component={DriverReport} />}/>
-                <Route path="brokerreport" element={<Protected Component={BrokerReport} />}/>
+                <Route path="partyreport" element={<Protected Component={PartyReport} />} />
+                <Route path="branchreport" element={<Protected Component={BranchReport} />} />
+                <Route path="stationreport" element={<Protected Component={StationReport} />} />
+                <Route path="godownreport" element={<Protected Component={GodownReport} />} />
+                <Route path="contentreport" element={<Protected Component={ContentReport} />} />
+                <Route path="vehiclereport" element={<Protected Component={VehicleReport} />} />
+                <Route path="driverreport" element={<Protected Component={DriverReport} />} />
+                <Route path="brokerreport" element={<Protected Component={BrokerReport} />} />
               </Route>
 
-
-
             </Route>
 
+            <Route path="protected/componentop/sidebarop/Sidebarop" element={<Protected Component={Sidebarop} />}>
+              <Route path="contract">
+                <Route path="rateslab" element={<Protected Component={Rateslab} />} />
+                <Route path="freightrate" element={<Protected Component={Freightrate} />} />
+                <Route path="viewfreightrates" element={<Protected Component={ViewFreightRates} />} />
+              </Route>
 
-
-            <Route  path="protected/componentop/sidebarop/Sidebarop" element={<Protected Component={Sidebarop} />}>
-            <Route path="contract">
-               <Route path="rateslab" element={<Protected Component={Rateslab} />}/>
-               <Route path="freightrate" element={<Protected Component={Freightrate} />}/>
-               <Route path="viewfreightrates" element={<Protected Component={ViewFreightRates} />}/>
-            </Route>
-
-            <Route path="managedocument">
-               <Route path="documentissue" element={<Protected Component={DocumentIssue} />}/>
-               <Route path="documentcancel" element={<Protected Component={DocumentCancel} />}/>
-            </Route>
+              <Route path="managedocument">
+                <Route path="documentissue" element={<Protected Component={DocumentIssue} />} />
+                <Route path="documentcancel" element={<Protected Component={DocumentCancel} />} />
+              </Route>
 
               <Route path="ordermanagement">
-               <Route path="indent" element={<Protected Component={Indent} />}/>
-               <Route path="viewindents" element={<Protected Component={ViewIndents} />}/>
-               <Route path="updateindent/:id" element={<Protected Component={UpdateIndent} />}/>
-               <Route path="joborder" element={<Protected Component={JobOrder} />}/>
-               <Route path="viewjoborders" element={<Protected Component={ViewJobOrders} />}/>
-               <Route path="updateJobOrder/:id" element={<Protected Component={UpdateJobOrder} />}/>
-               <Route path="AddNewDataInJobOrder/:id" element={<Protected Component={AddNewDataInJobOrder} />}/>
-               <Route path="vahicleplacement" element={<Protected Component={VehiclePlacement} />}/>
-               <Route path="viewvahicleplacement" element={<Protected Component={ViewVehiclePlacement} />}/>
-               <Route path="updateVehiclePlacement/:id" element={<Protected Component={UpdateVehiclePlacement} />}/>
-               <Route path="AddToJoborder/:id" element={<Protected Component={AddToJoborder} />}/>
+                <Route path="indent" element={<Protected Component={Indent} />} />
+                <Route path="viewindents" element={<Protected Component={ViewIndents} />} />
+                <Route path="updateindent/:id" element={<Protected Component={UpdateIndent} />} />
+                <Route path="joborder" element={<Protected Component={JobOrder} />} />
+                <Route path="viewjoborders" element={<Protected Component={ViewJobOrders} />} />
+                <Route path="updateJobOrder/:id" element={<Protected Component={UpdateJobOrder} />} />
+                <Route path="AddNewDataInJobOrder/:id" element={<Protected Component={AddNewDataInJobOrder} />} />
+                <Route path="vahicleplacement" element={<Protected Component={VehiclePlacement} />} />
+                <Route path="viewvahicleplacement" element={<Protected Component={ViewVehiclePlacement} />} />
+                <Route path="updateVehiclePlacement/:id" element={<Protected Component={UpdateVehiclePlacement} />} />
+                <Route path="AddToJoborder/:id" element={<Protected Component={AddToJoborder} />} />
               </Route>
 
               <Route path="bookingoperation">
-               <Route path="consignment" element={<Protected Component={Consignment} />}/>
-               <Route path="viewconsignment" element={<Protected Component={ViewConsignment} />}/>
-               <Route path="updateconsignment/:id" element={<Protected Component={UpdateConsignment} />}/>
-               <Route path="AddNewDataInConsignment/:id" element={<Protected Component={AddNewDataInConsignment} />}/>
-               <Route path="vehiclehire" element={<Protected Component={VehicleHire} />}/>
+                <Route path="consignment" element={<Protected Component={Consignment} />} />
+                <Route path="viewconsignment" element={<Protected Component={ViewConsignment} />} />
+                <Route path="updateconsignment/:id" element={<Protected Component={UpdateConsignment} />} />
+                <Route path="AddNewDataInConsignment/:id" element={<Protected Component={AddNewDataInConsignment} />} />
+                <Route path="vehiclehire" element={<Protected Component={VehicleHire} />} />
               </Route>
 
               <Route path="deliveryoperation">
-               <Route path="unloading" element={<Protected Component={Unloading} />}/>
-               <Route path="pod" element={<Protected Component={Pod} />}/>
+                <Route path="unloading" element={<Protected Component={Unloading} />} />
+                <Route path="pod" element={<Protected Component={Pod} />} />
               </Route>
 
               <Route path="enquiry">
-               <Route path="byconsignment" element={<Protected Component={ByConsignment} />}/>
-               <Route path="multiple" element={<Protected Component={Multiple} />}/>
-               <Route path="bill" element={<Protected Component={Bill} />}/>
+                <Route path="byconsignment" element={<Protected Component={ByConsignment} />} />
+                <Route path="multiple" element={<Protected Component={Multiple} />} />
+                <Route path="bill" element={<Protected Component={Bill} />} />
               </Route>
 
 
               <Route path="reports">
-               <Route path="registerreport" element={<Protected Component={RegisterReport} />}/>
-               <Route path="analysisreport" element={<Protected Component={AnalysisReport} />}/>
-               <Route path="stockreport" element={<Protected Component={StockReport} />}/>
-               <Route path="misreport" element={<Protected Component={MisReport} />}/>
-               <Route path="pendingreport" element={<Protected Component={PendingReport} />}/>
-               <Route path="costingreport" element={<Protected Component={CostingReport} />}/>
+                <Route path="registerreport" element={<Protected Component={RegisterReport} />} />
+                <Route path="analysisreport" element={<Protected Component={AnalysisReport} />} />
+                <Route path="stockreport" element={<Protected Component={StockReport} />} />
+                <Route path="misreport" element={<Protected Component={MisReport} />} />
+                <Route path="pendingreport" element={<Protected Component={PendingReport} />} />
+                <Route path="costingreport" element={<Protected Component={CostingReport} />} />
               </Route>
-
 
             </Route>
 
 
             <Route path="protected/componentac/sidebarac/Sidebarac" element={<Protected Component={Sidebarac} />}>
-            <Route path="master">
-               <Route path="groups" element={<Protected Component={Groups} />}/>
-               <Route path="account" element={<Protected Component={Account} />}/>
-               <Route path="type" element={<Protected Component={Type} />}/>
-               <Route path="openingbalance" element={<Protected Component={OpeningBlance} />}/>
-               <Route path="cheque" element={<Protected Component={Cheque} />}/>
-            </Route>
-            <Route path="voucher">
-               <Route path="receiptvoucher" element={<Protected Component={ReceiptVoucher} />}/>
-               <Route path="paymentvoucher" element={<Protected Component={PaymentVoucher} />}/>
-               <Route path="billpassing" element={<Protected Component={BillPassing} />}/>
-               <Route path="contravoucher" element={<Protected Component={ContraVoucher} />}/>
-               <Route path="journalvoucher" element={<Protected Component={JournalVoucher} />}/>
-               <Route path="billdeduction" element={<Protected Component={BillDeducation} />}/>
-               <Route path="chequedeposit" element={<Protected Component={ChequeDeposit} />}/>
-           
-            </Route>
-            <Route path="billing">
-               <Route path="bill" element={<Protected Component={BillAc} />}/>
-               <Route path="nonfreightbill" element={<Protected Component={NonFreightbill} />}/>
-               <Route path="billsubmission" element={<Protected Component={BillSubmission} />}/>
-            </Route>
-            <Route path="reconciliation">
-               <Route path="bankreconciliation" element={<Protected Component={BankReconciliation} />}/>
-               <Route path="pandingibr" element={<Protected Component={PIbr} />}/>
-               <Route path="branchreconciliation" element={<Protected Component={Branchreconciliation} />}/>
-              
+              <Route path="master">
+                <Route path="groups" element={<Protected Component={Groups} />} />
+                <Route path="account" element={<Protected Component={Account} />} />
+                <Route path="type" element={<Protected Component={Type} />} />
+                <Route path="openingbalance" element={<Protected Component={OpeningBlance} />} />
+                <Route path="cheque" element={<Protected Component={Cheque} />} />
+              </Route>
+              <Route path="voucher">
+                <Route path="receiptvoucher" element={<Protected Component={ReceiptVoucher} />} />
+                <Route path="paymentvoucher" element={<Protected Component={PaymentVoucher} />} />
+                <Route path="billpassing" element={<Protected Component={BillPassing} />} />
+                <Route path="contravoucher" element={<Protected Component={ContraVoucher} />} />
+                <Route path="journalvoucher" element={<Protected Component={JournalVoucher} />} />
+                <Route path="billdeduction" element={<Protected Component={BillDeducation} />} />
+                <Route path="chequedeposit" element={<Protected Component={ChequeDeposit} />} />
+
+              </Route>
+              <Route path="billing">
+                <Route path="bill" element={<Protected Component={BillAc} />} />
+                <Route path="nonfreightbill" element={<Protected Component={NonFreightbill} />} />
+                <Route path="billsubmission" element={<Protected Component={BillSubmission} />} />
+              </Route>
+              <Route path="reconciliation">
+                <Route path="bankreconciliation" element={<Protected Component={BankReconciliation} />} />
+                <Route path="pandingibr" element={<Protected Component={PIbr} />} />
+                <Route path="branchreconciliation" element={<Protected Component={Branchreconciliation} />} />
+
+              </Route>
+
             </Route>
 
-
-            </Route>
-
-{/* 
+            {/* 
               <Route path="component2" element={<Protected Component={Component2} />} />
               <Route path="component3" element={<Component3 />} /> */}
-            
-             {/* <Route path="component3" element={<Protected Component={Component3} />} /> */}
-            </>
-          ) : (
-            <>
+
+            {/* <Route path="component3" element={<Protected Component={Component3} />} /> */}
+          </>
+        ) : (
+          <>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            </>
-          )}
-    
+          </>
+        )}
+
       </Routes>
     </Router>
   );

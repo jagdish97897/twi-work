@@ -213,7 +213,7 @@ const Consignment = () => {
      // Initialize charges state for each sundry
      useEffect(() => {
         const initialCharges = sundries.map(sundry => ({
-            sundry,
+            sundry:sundry,
             taxable: 'true',
             calcOn: 'FIXED',
             addDed: 'A',

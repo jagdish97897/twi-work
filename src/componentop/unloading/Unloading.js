@@ -223,7 +223,7 @@ export default Unloading
 
 //     try {
 //       const response = await fetch(
-//         "http://localhost:5000/partiesregistrations",
+//         "https://twi-e-logistics.onrender.com/partiesregistrations",
 //         {
 //           method: "POST",
 //           headers: {

@@ -38,6 +38,7 @@ const Vehicle = () => {
     const [submitted, setSubmitted] = useState(false);
     const [owners, setOwners] = useState([]);
     const [brokers, setBrokers] = useState([]);
+    const [drivers, setDrivers] = useState([]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -51,7 +52,7 @@ const Vehicle = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:5000/vehicle-registrations', {
+            const response = await fetch('https://twi-e-logistics.onrender.com/vehicle-registrations', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -74,7 +75,7 @@ const Vehicle = () => {
     useEffect(() => {
         const fetchOwners = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/supply-chain-partners/owners', {
+                const response = await axios.get('https://twi-e-logistics.onrender.com/supply-chain-partners/owners', {
                     params: { name: formData.owner }
                 });
                 setOwners(response.data);
@@ -90,10 +91,30 @@ const Vehicle = () => {
         }
     }, [formData.owner]);
 
+
+    useEffect(() => {
+        const fetchDrivers = async () => {
+            try {
+                const response = await axios.get('https://twi-e-logistics.onrender.com/supply-chain-partners/brokers', {
+                    params: { name: formData.driver }
+                });
+                setDrivers(response.data);
+            } catch (error) {
+                console.error('Error fetching brokers:', error);
+            }
+        };
+
+        if (formData.driver) {
+            fetchDrivers();
+        } else {
+            setBrokers([]);
+        }
+    }, [formData.driver]);
+
     useEffect(() => {
         const fetchBrokers = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/supply-chain-partners/brokers', {
+                const response = await axios.get('https://twi-e-logistics.onrender.com/supply-chain-partners/brokers', {
                     params: { name: formData.broker }
                 });
                 setBrokers(response.data);
@@ -223,8 +244,25 @@ const Vehicle = () => {
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="driver" className="block text-sm font-medium text-gray-700">Driver</label>
-                                <input type="text" id="driver" name="driver" value={formData.driver} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                <input
+                                    type="text"
+                                    id="driver"
+                                    name="driver"
+                                    value={formData.driver}
+                                    onChange={handleChange}
+                                    list="driverSuggestions"
+                                    className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+                                />
+                                <datalist id="driverSuggestions">
+                                    {drivers.map((driver) => (
+                                        <option key={driver._id} value={driver.name} />
+                                    ))}
+                                </datalist>
                             </div>
+                            {/* <div className="mb-4">
+                                <label htmlFor="driver" className="block text-sm font-medium text-gray-700">Driver</label>
+                                <input type="text" id="driver" name="driver" value={formData.driver} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                            </div> */}
                             <div className="mb-4">
                                 <label htmlFor="currentRoute" className="block text-sm font-medium text-gray-700">Current Route</label>
                                 <input type="text" id="currentRoute" name="currentRoute" value={formData.currentRoute} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />

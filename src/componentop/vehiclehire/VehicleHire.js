@@ -8,9 +8,7 @@ const VehicleHire = () => {
         vehiclehire_no: '',
         consignmentno: '',
         type: '',
-        payto: '',
         state: '',
-        PAN: '',
         date: '',
         loadType: '',
         customer: '',
@@ -35,6 +33,8 @@ const VehicleHire = () => {
         consignee: '',
         consigneeGSTIN: '',
         consigneeAddress: '',
+        PAN: '',
+        paymentto:'',
         charges: []
     });
 
@@ -98,12 +98,12 @@ const VehicleHire = () => {
 
     const fetchJobOrderDetails = async (consignmentno) => {
         try {
-            const response = await axios.get(`http://localhost:5000/goodsReceipts/consignmentno/${consignmentno}`);
+            const response = await axios.get(`https://twi-e-logistics.onrender.com/goodsReceipts/consignmentno/${consignmentno}`);
             const {
                 loadType, customer, customerGSTIN, customerAddress, from, to,
                 orderNo, orderDate, orderMode, serviceMode, expectedDate,
                 employee, consignor, consignorGSTIN, consignorAddress,
-                consignee, consigneeGSTIN, consigneeAddress
+                consignee, consigneeGSTIN, consigneeAddress,paymentto,PAN
             } = response.data;
             setFormData((prevFormData) => ({
                 ...prevFormData,
@@ -124,7 +124,9 @@ const VehicleHire = () => {
                 consignorAddress,
                 consignee,
                 consigneeGSTIN,
-                consigneeAddress
+                consigneeAddress,
+                PAN,
+                paymentto
             }));
         } catch (error) {
             console.error('Error fetching job order details:', error);
@@ -143,7 +145,7 @@ const VehicleHire = () => {
         console.log(formData);
 
         try {
-            const response = await fetch('http://localhost:5000/vehicle-hires', {
+            const response = await fetch('https://twi-e-logistics.onrender.com/vehicle-hires', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -207,22 +209,12 @@ const VehicleHire = () => {
                                         <option value="SUPPLYMENTRY">SUPPLYMENTRY</option>
                                     </select>
                                 </div>
-                                <div className="mb-4">
-                                    <label htmlFor="payto" className="block text-sm font-medium text-gray-700">Pay To</label>
-                                    <select id="payto" name="payto" value={formData.payto} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
-                                        <option value="">Select Payee</option>
-                                        <option value="OWNER">OWNER</option>
-                                        <option value="TRANSPORTER">TRANSPORTER</option>
-                                    </select>
-                                </div>
+
                                 <div className="mb-4">
                                     <label htmlFor="state" className="block text-sm font-medium text-gray-700">State</label>
                                     <input type="text" id="state" name="state" value={formData.state} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                                 </div>
-                                <div className="mb-4">
-                                    <label htmlFor="PAN" className="block text-sm font-medium text-gray-700">PAN</label>
-                                    <input type="text" id="PAN" name="PAN" value={formData.PAN} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                                </div>
+
                                 <div className="mb-4">
                                     <label htmlFor="consignmentno" className="block text-sm font-medium text-gray-700">Consignment No</label>
                                     <input type="text" id="consignmentno" name="consignmentno" value={formData.consignmentno} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
@@ -230,6 +222,14 @@ const VehicleHire = () => {
                                 <div className="mb-4">
                                     <label htmlFor="loadType" className="block text-sm font-medium text-gray-700">Load Type</label>
                                     <input type="text" id="loadType" name="loadType" value={formData.loadType} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="PAN" className="block text-sm font-medium text-gray-700">PAN</label>
+                                    <input type="text" id="PAN" name="PAN" value={formData.PAN} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="paymentto" className="block text-sm font-medium text-gray-700">paymentto</label>
+                                    <input type="text" id="paymentto" name="paymentto" value={formData.paymentto} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
                                 </div>
                                 <div className="mb-4">
                                     <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>

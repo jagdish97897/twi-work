@@ -122,7 +122,7 @@ const Consignment = () => {
     ];
     const fetchJobOrderDetails = async (jobOrderNo) => {
         try {
-            const response = await axios.get(`http://localhost:5000/job-orders/${jobOrderNo}`);
+            const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrderNo}`);
             const { customer,customerGSTIN,customerAddress, from, to, orderNo, orderDate, orderMode, serviceMode, expectedDate, employee, consignor,consignorGSTIN,consignorAddress, consignee,consigneeGSTIN,consigneeAddress } = response.data;
             setFormData((prevFormData) => ({
                 ...prevFormData,
@@ -187,7 +187,7 @@ const Consignment = () => {
         console.log(formData);
 
         try {
-            const response = await fetch('http://localhost:5000/goods-receipts', {
+            const response = await fetch('https://twi-e-logistics.onrender.com/goods-receipts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -236,18 +236,18 @@ const Consignment = () => {
                 <>
                     <h1 className="text-3xl font-bold mb-4 text-indigo-800">Consignment/ Create</h1>
                     <form onSubmit={handleSubmit}>
-                    <div className="mt-1 mb-4 flex justify-between">
+                        <div className="mt-1 mb-4 flex justify-between">
                             <button type="submit" className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Submit
                             </button>
 
                             <button
-            type="button"
-            onClick={handleListClick}
-            className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600"
-          >
-            List view
-          </button>
+                                type="button"
+                                onClick={handleListClick}
+                                className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                List view
+                            </button>
                         </div>
                         <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg">
                         <div className='sm:flex sm:flex-wrap gap-4'>

@@ -136,7 +136,7 @@ function Indent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/indents', { ...formData, additem: items });
+      const response = await axios.post('https://twi-e-logistics.onrender.com/indents', { ...formData, additem: items });
       setResponseMessage(`Indent created successfully. Indent ID: ${response.data._id}`);
       setFormData({
         indentNo: '',
@@ -185,7 +185,7 @@ function Indent() {
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getcustomer1', {
+        const response = await axios.get('https://twi-e-logistics.onrender.com/getcustomer1', {
           params: { name: formData.customer }
         });
         setCustomer(response.data);
@@ -208,7 +208,7 @@ function Indent() {
     const fetchConsignorAndConsignee = async () => {
       try {
         if (formData.other.consignor) {
-          const consignorResponse = await axios.get('http://localhost:5000/getcustomer2', {
+          const consignorResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
             params: { name: formData.other.consignor }
           });
           setConsignorData(consignorResponse.data);
@@ -217,7 +217,7 @@ function Indent() {
         }
 
         if (formData.other.consignee) {
-          const consigneeResponse = await axios.get('http://localhost:5000/getcustomer2', {
+          const consigneeResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
             params: { name: formData.other.consignee }
           });
           setConsigneeData(consigneeResponse.data);
@@ -292,7 +292,7 @@ function Indent() {
           <button
             type="button"
             onClick={handleListClick}
-            className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600"
+           className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             List view
           </button>
@@ -832,7 +832,7 @@ export default Indent;
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.post('http://localhost:5000/indents', { ...formData, additem: items });
+//       const response = await axios.post('https://twi-e-logistics.onrender.com/indents', { ...formData, additem: items });
 //       setResponseMessage(`Indent created successfully. Indent ID: ${response.data._id}`);
 //       setFormData({
 //         indentNo: '',
@@ -883,7 +883,7 @@ export default Indent;
 //   useEffect(() => {
 //     const fetchCustomer = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:5000/getcustomer1', {
+//         const response = await axios.get('https://twi-e-logistics.onrender.com/getcustomer1', {
 //           params: { name: formData.customer }
 //         });
 //         setCustomer(response.data);
@@ -907,7 +907,7 @@ export default Indent;
 //     const fetchConsignorAndConsignee = async () => {
 //       try {
 //         if (formData.other.consignor) {
-//           const consignorResponse = await axios.get('http://localhost:5000/getcustomer2', {
+//           const consignorResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
 //             params: { name: formData.other.consignor }
 //           });
 //           setConsignorData(consignorResponse.data);
@@ -916,7 +916,7 @@ export default Indent;
 //         }
 
 //         if (formData.other.consignee) {
-//           const consigneeResponse = await axios.get('http://localhost:5000/getcustomer2', {
+//           const consigneeResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
 //             params: { name: formData.other.consignee }
 //           });
 //           setConsigneeData(consigneeResponse.data);

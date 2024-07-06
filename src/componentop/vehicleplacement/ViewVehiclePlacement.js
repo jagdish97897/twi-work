@@ -19,7 +19,7 @@ const ViewVehiclePlacement = () => {
 
   const fetchVehiclePlacements = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/vehicle-placements');
+      const response = await axios.get('https://twi-e-logistics.onrender.com/vehicle-placements');
       setVehiclePlacements(response.data);
     } catch (error) {
       console.error('Error fetching vehicle placements:', error);
@@ -51,8 +51,8 @@ const ViewVehiclePlacement = () => {
           </div>
         </div>
         <div class="bg-black-300 flex p-4 justify-between h-full w-full">
-          <p><strong class="font-bold">Placement No:</strong> ${vehiclePlacement.placement_no}</p>
-          <p><strong class="font-bold">Date:</strong> ${moment(vehiclePlacement.placementDate.$date).format('DD-MM-YYYY')}</p>
+          <p><strong class="font-bold">Placement No:</strong> ${vehiclePlacement.vehicle_placement_no}</p>
+          <p><strong class="font-bold">Date:</strong> ${moment(vehiclePlacement.date).format('DD-MM-YYYY')}</p>
         </div>
         <div class="bg-black-300 flex p-4 justify-between h-full w-full">
           <div class="flex flex-col text-black border border-black pb-4 h-full w-1/2">
@@ -132,7 +132,7 @@ const ViewVehiclePlacement = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
-      <h1 className="text-3xl font-bold mb-4">Vehicle Placements</h1>
+      <h1 className="text-2xl font-bold mb-4 text-indigo-800">Vehicle Placements</h1>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
@@ -216,7 +216,7 @@ export default ViewVehiclePlacement;
 //   useEffect(() => {
 //     const fetchVehiclePlacements = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:5000/vehicle-placements');
+//         const response = await axios.get('https://twi-e-logistics.onrender.com/vehicle-placements');
 //         setVehiclePlacements(response.data);
 //       } catch (error) {
 //         setError('Error fetching vehicle placements');

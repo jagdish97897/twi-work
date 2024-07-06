@@ -19,7 +19,7 @@ const ViewConsignment = () => {
 
   const fetchConsignment = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/goods-receipts');
+      const response = await axios.get('https://twi-e-logistics.onrender.com/goods-receipts');
       setConsignment(response.data); // Assuming response.data is an array
     } catch (error) {
       console.error('Error fetching consignment:', error);
@@ -135,7 +135,7 @@ const ViewConsignment = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
-      <h1 className="text-3xl font-bold mb-4">Consignment</h1>
+      <h1 className="text-2xl font-bold mb-4 text-indigo-800">Consignment</h1>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
@@ -230,7 +230,7 @@ export default ViewConsignment;
 
 //   const fetchConsignment = async () => {
 //     try {
-//       const response = await axios.get('http://localhost:5000/goods-receipts');
+//       const response = await axios.get('https://twi-e-logistics.onrender.com/goods-receipts');
 //       setConsignment(response.data);
 //     } catch (error) {
 //       console.error('Error fetching job orders:', error);

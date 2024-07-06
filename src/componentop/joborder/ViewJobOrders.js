@@ -19,7 +19,7 @@ const ViewJobOrders = () => {
 
   const fetchJobOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/get-all-job-orders');
+      const response = await axios.get('https://twi-e-logistics.onrender.com/get-all-job-orders');
       setJobOrders(response.data);
     } catch (error) {
       console.error('Error fetching job orders:', error);
@@ -138,7 +138,7 @@ const ViewJobOrders = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
-      <h1 className="text-3xl font-bold mb-4">Job Orders</h1>
+      <h1 className="text-2xl font-bold mb-4 text-indigo-800">Job Orders</h1>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">

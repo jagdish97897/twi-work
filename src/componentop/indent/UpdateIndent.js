@@ -27,7 +27,7 @@ function UpdateIndent() {
   useEffect(() => {
     const fetchIndent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getindent/${id}`);
+        const response = await axios.get(`https://twi-e-logistics.onrender.com/getindent/${id}`);
         const indentData = response.data;
   
         // Format date values before setting them in the form data
@@ -58,7 +58,7 @@ function UpdateIndent() {
 
     try {
       // Send a PUT request to update the indent
-      await axios.put(`http://localhost:5000/update/${id}`, formData);
+      await axios.put(`https://twi-e-logistics.onrender.com/update/${id}`, formData);
       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewindents`); // Redirect to viewindents page after successful update
     } catch (error) {
       console.error(error);
@@ -67,17 +67,19 @@ function UpdateIndent() {
 
   return (
     <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
-      <h2 className="text-2xl font-bold mb-4">Update Indent</h2>
-      <form onSubmit={handleSubmit} className="space-y-4 bg-[#FFFFFF] p-2 sm:flex sm:flex-wrap">
+      <h2 className="text-2xl font-bold mb-4 text-indigo-800">Update Indent</h2>
+      <form onSubmit={handleSubmit} className="space-y-4  p-2 sm:flex sm:flex-wrap">
         {/* Form fields */}
         {/* Indent No */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="indentNo">Indent No</label>
-          <input type="text" id="indentNo" name="indentNo" value={formData.indentNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+        <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg">
+        <div className='sm:flex sm:flex-wrap gap-4'>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="indentNo">Indent No</label>
+          <input type="text" id="indentNo" name="indentNo" value={formData.indentNo} onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
         </div>
         {/* Date */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="date">Date</label>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="date">Date</label>
           <input 
             type="date" 
             id="date" 
@@ -85,28 +87,28 @@ function UpdateIndent() {
             value={formData.date}  // Format date value
             onChange={handleChange} 
             required 
-            className="input w-full border border-black shadow-md" 
+            className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
         </div>
         {/* Customer */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="customer">Customer</label>
-          <input type="text" id="customer" name="customer" value={formData.customer} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="customer">Customer</label>
+          <input type="text" id="customer" name="customer" value={formData.customer} onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
         </div>
         {/* Order No */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="orderNo">Order No</label>
-          <input type="text" id="orderNo" name="orderNo" value={formData.orderNo} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="orderNo">Order No</label>
+          <input type="text" id="orderNo" name="orderNo" value={formData.orderNo} onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
         </div>
         {/* Order Date */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="orderDate">Order Date</label>
-          <input type="date" id="orderDate" name="orderDate"  value={formData.orderDate}  onChange={handleChange} required className="input w-full border border-black shadow-md" />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="orderDate">Order Date</label>
+          <input type="date" id="orderDate" name="orderDate"  value={formData.orderDate}  onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2"/>
         </div>
         {/* Order Mode */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="orderMode">Order Mode</label>
-          <select id="orderMode" name="orderMode" value={formData.orderMode} onChange={handleChange} required className="input w-full border border-black shadow-md">
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="orderMode">Order Mode</label>
+          <select id="orderMode" name="orderMode" value={formData.orderMode} onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
             <option value="">Select Order Mode</option>
             <option value="MAIL">Mail</option>
             <option value="PHONE">Phone</option>
@@ -115,9 +117,9 @@ function UpdateIndent() {
           </select>
         </div>
         {/* Service Mode */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="serviceMode">Service Mode</label>
-          <select id="serviceMode" name="serviceMode" value={formData.serviceMode} onChange={handleChange} required className="input w-full border border-black shadow-md">
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="serviceMode">Service Mode</label>
+          <select id="serviceMode" name="serviceMode" value={formData.serviceMode} onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2">
             <option value="">Select Service Mode</option>
             <option value="AIR">AIR</option>
             <option value="SEA">SEA</option>
@@ -125,23 +127,25 @@ function UpdateIndent() {
           </select>
         </div>
         {/* Temperature */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="temperature">RFQ</label>
-          <input type="text" id="rfq" name="rfq" value={formData.rfq} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="temperature">RFQ</label>
+          <input type="text" id="rfq" name="rfq" value={formData.rfq} onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
         </div>
 
         {/* Expected Date */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="expectedDate">Expected Date</label>
-          <input type="date" id="expectedDate" name="expectedDate"  value={formData.expectedDate}  onChange={handleChange} required className="input w-full border border-black shadow-md" />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="expectedDate">Expected Date</label>
+          <input type="date" id="expectedDate" name="expectedDate"  value={formData.expectedDate}  onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2"/>
         </div>
         {/* Employee */}
-        <div className="w-full sm:w-1/2 flex flex-col sm:pr-4">
-          <label className="text-sm mb-1" htmlFor="employee">Employee</label>
-          <input type="text" id="employee" name="employee" value={formData.employee} onChange={handleChange} required className="input w-full border border-black shadow-md" />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700" htmlFor="employee">Employee</label>
+          <input type="text" id="employee" name="employee" value={formData.employee} onChange={handleChange} required className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+        </div>
+        </div>
         </div>
   
-        <button type="submit" className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600 mb-4">Update</button>
+        <button type="submit"  className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Update</button>
       </form>
     </div>
   );
@@ -181,7 +185,7 @@ export default UpdateIndent;
 //   useEffect(() => {
 //     const fetchIndent = async () => {
 //       try {
-//         const response = await axios.get(`http://localhost:5000/indent/${id}`);
+//         const response = await axios.get(`https://twi-e-logistics.onrender.com/indent/${id}`);
 //         const indentData = response.data;
 //         // Update the form data with fetched data only if the form is empty
 //         if (Object.values(formData).every(value => value === '')) {
@@ -207,7 +211,7 @@ export default UpdateIndent;
 
 //     try {
 //       // Send a PUT request to update the indent
-//       await axios.put(`http://localhost:5000/updateindent${id}`, formData);
+//       await axios.put(`https://twi-e-logistics.onrender.com/updateindent${id}`, formData);
 //       navigate(`/sidebar/ordermanagement/viewindents`); // Redirect to viewindents page after successful update
 //     } catch (error) {
 //       console.error(error);

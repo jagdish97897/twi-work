@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import 'react-tabs/style/react-tabs.css';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import axios from 'axios';
 
 const Pod = () => {
@@ -33,6 +34,7 @@ const Pod = () => {
         consigneeGSTIN: '',
         consigneeAddress: '',
         vehicleNo: '',
+        vhcharges: []
 
     });
 
@@ -58,9 +60,56 @@ const Pod = () => {
             });
         }
     };
+
+    
+    const handleChargesChange = (index, e) => {
+        const { name, value } = e.target;
+        const updatedCharges = formData.vhcharges.map((charge, i) => {
+            if (i === index) {
+                const rate = parseFloat(value); // Convert rate to float
+                const taxable = charge.taxable === 'true'; // Assuming taxable is a string 'true' or 'false'
+                let amount = 0.00;
+                let gst = 0.00;
+                let total = 0.00;
+    
+                if (!isNaN(rate)) { // Check if rate is a valid number
+                    if (taxable) {
+                        amount = rate; // Example calculation based on taxable
+                        total = amount; // Example total calculation
+                    }
+                } else {
+                    console.error('Invalid rate value:', value);
+                }
+    
+                return {
+                    ...charge,
+                    [name]: value,
+                    amount: amount.toFixed(2), // Format amount to 2 decimal places
+                    gst: gst.toFixed(2), // Format GST to 2 decimal places
+                    total: total.toFixed(2) // Format total to 2 decimal places
+                };
+            }
+            return charge;
+        });
+    
+        setFormData({
+            ...formData,
+            vhcharges: updatedCharges
+        });
+    };
+
+    const sundries = [
+        'STATISTICAL CHARGES',
+        'Loading Charge',
+        'OTHER CHARGES',
+        'LOADING DETENTION',
+        'ODC LENGTH',
+    ];
+
+
     const fetchJobOrderDetails = async (consignmentno) => {
         try {
-            const response = await axios.get(`http://localhost:5000/goodsReceipts/consignmentno/${consignmentno}`);
+            const response = await axios.get(`https://twi-e-logistics.onrender.com/goodsReceipts/consignmentno/${consignmentno}`);
             const { customer,customerGSTIN,customerAddress, from, to, orderNo, orderDate, orderMode, serviceMode, expectedDate, employee, consignor,consignorGSTIN,consignorAddress, consignee,consigneeGSTIN,consigneeAddress,vehicleNo } = response.data;
             setFormData((prevFormData) => ({
                 ...prevFormData,
@@ -102,7 +151,7 @@ const Pod = () => {
         console.log(formData);
 
         try {
-            const response = await fetch('http://localhost:5000/pods', {
+            const response = await fetch('https://twi-e-logistics.onrender.com/addpods', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -125,6 +174,24 @@ const Pod = () => {
         }
     };
 
+
+
+        // Initialize charges state for each sundry
+        useEffect(() => {
+            const initialCharges = sundries.map(sundry => ({
+                sundry,
+                taxable: 'true',
+                calcOn: 'FIXED',
+                addDed: 'A',
+                rate: 0.00,
+                amount: 0.00,
+                gst: 0.00,
+                total: 0.00,
+                remarks: ''
+            }));
+            setFormData(prevFormData => ({ ...prevFormData, vhcharges: initialCharges }));
+        }, []);
+
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
             {!submitted ? ( // Render form only if not submitted
@@ -136,7 +203,8 @@ const Pod = () => {
                                 Submit
                             </button>
                         </div>
-                        <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg sm:flex sm:flex-wrap gap-4">
+                        <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg">
+                        <div className='sm:flex sm:flex-wrap gap-4'>
                             <div className="mb-4">
                                 <label htmlFor="podNo" className="block text-sm font-medium text-gray-700">pod No</label>
                                 <input type="text" id="podNo" name="podNo" value={formData.podNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
@@ -180,6 +248,103 @@ const Pod = () => {
                             </div>
                           
                         </div>
+                        </div>
+
+
+
+
+                        
+                        <Tabs className="bg-white mt-4 rounded-lg shadow-lg">
+                            <TabList className="flex flex-wrap border-b border-gray-200 bg-indigo-100 rounded-t-lg">
+                                <Tab className="py-2 px-4 cursor-pointer hover:bg-gray-100 w-full sm:w-auto text-indigo-800">Charges</Tab>
+                            </TabList>
+
+                            <TabPanel>
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full bg-white border-collapse">
+                                        <thead>
+                                            <tr>
+                                                <th className="px-4 py-2 border">Sundries</th>
+                                                <th className="px-4 py-2 border">Taxable</th>
+                                                <th className="px-4 py-2 border">Calc. On</th>
+                                                <th className="px-4 py-2 border">Add/Ded</th>
+                                                <th className="px-4 py-2 border">Rate</th>
+                                                <th className="px-4 py-2 border">Amount</th>
+                                                <th className="px-4 py-2 border">GST</th>
+                                                <th className="px-4 py-2 border">Total</th>
+                                                <th className="px-4 py-2 border">Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {formData.vhcharges.map((charge, index) => (
+                                                <tr key={index}>
+                                                    <td className="px-4 py-2 border">{charge.sundry}</td>
+                                                    <td className="px-4 py-2 border">
+                                                        <input type="text" name="taxable" value={charge.taxable} onChange={(e) => handleChargesChange(index, e)} className="w-full p-2 border rounded" />
+                                                    </td>
+                                                    <td className="px-4 py-2 border">
+                                                        <select name="calcOn" value={charge.calcOn} onChange={(e) => handleChargesChange(index, e)} className="w-full p-2 border rounded">
+                                                            <option value="FIXED">FIXED</option>
+                                                        </select>
+                                                    </td>
+                                                    <td className="px-4 py-2 border">
+                                                        <select name="addDed" value={charge.addDed} onChange={(e) => handleChargesChange(index, e)} className="w-full p-2 border rounded">
+                                                            <option value="A">A</option>
+                                                            <option value="D">D</option>
+                                                        </select>
+                                                    </td>
+                                                    <td className="px-4 py-2 border">
+                                                        <input
+                                                            type="text"
+                                                            name="rate"
+                                                            value={charge.rate}
+                                                            onChange={(e) => handleChargesChange(index, e)}
+                                                            className="w-full p-2 border rounded"
+                                                        />
+
+                                                        {/* <input type="text" name="rate" value={charge.rate} onChange={(e) => handleChargesChange(index, e)} className="w-full p-2 border rounded" /> */}
+                                                    </td>
+                                                    <td className="px-4 py-2 border">
+                                                        {/* <input type="text" name="amount" value={charge.amount} onChange={(e) => handleChargesChange(index, e)} className="w-full p-2 border rounded" /> */}
+                                                        <input
+                                                            type="text"
+                                                            name="amount"
+                                                            value={charge.amount}
+                                                            readOnly // Make amount read-only as it's calculated
+                                                            className="w-full p-2 border rounded"
+                                                        />
+                                                    </td>
+                                                    <td className="px-4 py-2 border">
+                                                        {/* <input type="text" name="gst" value={charge.gst} onChange={(e) => handleChargesChange(index, e)} className="w-full p-2 border rounded" /> */}
+                                                        <input
+                                                            type="text"
+                                                            name="gst"
+                                                            value={charge.gst}
+                                                            readOnly // Make GST read-only as it's calculated
+                                                            className="w-full p-2 border rounded"
+                                                        />
+
+                                                    </td>
+                                                    <td className="px-4 py-2 border">
+                                                        {/* <input type="text" name="total" value={charge.total} onChange={(e) => handleChargesChange(index, e)} className="w-full p-2 border rounded" /> */}
+                                                        <input
+                                                            type="text"
+                                                            name="total"
+                                                            value={charge.total}
+                                                            readOnly // Make total read-only as it's calculated
+                                                            className="w-full p-2 border rounded"
+                                                        />
+                                                    </td>
+                                                    <td className="px-4 py-2 border">
+                                                        <input type="text" name="remarks" value={charge.remarks} onChange={(e) => handleChargesChange(index, e)} className="w-full p-2 border rounded" />
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </TabPanel>
+                        </Tabs>
 
 
 

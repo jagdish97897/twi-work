@@ -20,18 +20,7 @@ function NavbarMain() {
                         </a>
                     </div>
 
-                    <div className="flex items-center">
-                        <div className="ml-auto flex items-center">
-                            <div className="flex items-center mr-4">
-                                <FaPhone className="mr-1" />
-                                <span>+91 81006 41006</span>
-                            </div>
-                            <div className="flex items-center" onClick={handleEmailClick} style={{cursor: 'pointer'}}>
-                                <FaEnvelope className="mr-1" />
-                                <span>support@bng.co.in</span>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </nav>

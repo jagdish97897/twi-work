@@ -34,7 +34,7 @@ const VehicleHire = () => {
         consigneeGSTIN: '',
         consigneeAddress: '',
         PAN: '',
-        paymentto:'',
+        paymentto: '',
         charges: []
     });
 
@@ -60,7 +60,7 @@ const VehicleHire = () => {
                 let amount = 0.00;
                 let gst = 0.00;
                 let total = 0.00;
-    
+
                 if (!isNaN(rate)) { // Check if rate is a valid number
                     if (taxable) {
                         amount = rate; // Example calculation based on taxable
@@ -69,7 +69,7 @@ const VehicleHire = () => {
                 } else {
                     console.error('Invalid rate value:', value);
                 }
-    
+
                 return {
                     ...charge,
                     [name]: value,
@@ -80,13 +80,13 @@ const VehicleHire = () => {
             }
             return charge;
         });
-    
+
         setFormData({
             ...formData,
             charges: updatedCharges
         });
     };
-    
+
 
     const sundries = [
         'Loading On Hire',
@@ -103,7 +103,7 @@ const VehicleHire = () => {
                 loadType, customer, customerGSTIN, customerAddress, from, to,
                 orderNo, orderDate, orderMode, serviceMode, expectedDate,
                 employee, consignor, consignorGSTIN, consignorAddress,
-                consignee, consigneeGSTIN, consigneeAddress,paymentto,PAN
+                consignee, consigneeGSTIN, consigneeAddress, paymentto, PAN
             } = response.data;
             setFormData((prevFormData) => ({
                 ...prevFormData,
@@ -170,7 +170,7 @@ const VehicleHire = () => {
     // Initialize charges state for each sundry
     useEffect(() => {
         const initialCharges = sundries.map(sundry => ({
-            sundry:sundry,
+            sundry: sundry,
             taxable: 'true',
             calcOn: 'FIXED',
             addDed: 'A',
@@ -181,7 +181,7 @@ const VehicleHire = () => {
             remarks: ''
         }));
         setFormData(prevFormData => ({ ...prevFormData, charges: initialCharges }));
-    }, []);
+    }, [sundries]);
 
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">

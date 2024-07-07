@@ -132,7 +132,7 @@ function Indent() {
     setShowModal(false);
   };
 
-  const [submitted, setSubmitted] = useState(false);
+  // const [submitted, setSubmitted] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -242,9 +242,6 @@ function Indent() {
     setItems(updatedItems);
   };
 
-  useEffect(() => {
-    calculateTotals();
-  }, [items]);
 
   const calculateTotals = () => {
     let weight = 0;
@@ -269,6 +266,10 @@ function Indent() {
       }
     }));
   };
+
+  useEffect(() => {
+    calculateTotals();
+  }, [calculateTotals]);
 
   const vehicletype = [
     'TRUCK', 'TROLLEY', 'CONTAINER', 'TANKER', 'OTHER'

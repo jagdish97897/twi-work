@@ -24,8 +24,8 @@ const VehiclePlacement = () => {
     loadType: '',
     ownerPhone: '',
     ownerAddress: '',
-    brokerPhone:'',
-    brokerAddress:'',
+    brokerPhone: '',
+    brokerAddress: '',
     brokerdetails: {
       name: '',
       Address: '',
@@ -47,19 +47,19 @@ const VehiclePlacement = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.includes('.')) {
-        const [fieldName, nestedFieldName] = name.split('.');
-        setFormData({
-            ...formData,
-            [fieldName]: {
-                ...formData[fieldName],
-                [nestedFieldName]: value
-            }
-        });
+      const [fieldName, nestedFieldName] = name.split('.');
+      setFormData({
+        ...formData,
+        [fieldName]: {
+          ...formData[fieldName],
+          [nestedFieldName]: value
+        }
+      });
     } else {
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+      setFormData({
+        ...formData,
+        [name]: value
+      });
     }
   };
 
@@ -67,11 +67,11 @@ const VehiclePlacement = () => {
     const { name, value } = e.target;
     const [parentField, fieldName] = name.split('.');
     setFormData({
-        ...formData,
-        [parentField]: {
-            ...formData[parentField],
-            [fieldName]: value
-        }
+      ...formData,
+      [parentField]: {
+        ...formData[parentField],
+        [fieldName]: value
+      }
     });
   };
 
@@ -129,11 +129,10 @@ const VehiclePlacement = () => {
     e.preventDefault();
     setMessage('');
     setError('');
-    
-
 
     try {
-      const response = await axios.post('https://twi-e-logistics.onrender.com/vehicle-placements', formData);
+      // create vehicle placement
+      await axios.post('https://twi-e-logistics.onrender.com/vehicle-placements', formData);
       setMessage('Vehicle Placement created successfully');
       setFormData({
         vehicle_placement_no: '',
@@ -153,8 +152,8 @@ const VehiclePlacement = () => {
         loadType: '',
         ownerPhone: '',
         ownerAddress: '',
-        brokerPhone:'',
-        brokerAddress:'',
+        brokerPhone: '',
+        brokerAddress: '',
         brokerdetails: {
           name: '',
           Address: '',
@@ -199,112 +198,112 @@ const VehiclePlacement = () => {
           </button>
         </div>
         <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg">
-         <div className='sm:flex sm:flex-wrap gap-4'>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Vehicle Placement No:</label>
-            <input
-              type="text"
-              name="vehicle_placement_no"
-              value={formData.vehicle_placement_no}
-              onChange={handleChange}
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Date:</label>
-            <input
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Job Order No:</label>
-            <input
-              type="text"
-              name="jobOrder_no"
-              value={formData.jobOrder_no}
-              onChange={handleChange}
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Dimensions:</label>
-            <input
-              type="text"
-              name="dimensions"
-              value={formData.dimensions}
-              onChange={handleChange}
-              readOnly
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Weight:</label>
-            <input
-              type="text"
-              name="weight"
-              value={formData.weight}
-              onChange={handleChange}
-              readOnly
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Quantumrate:</label>
-            <input
-              type="text"
-              name="quantumrate"
-              value={formData.quantumrate}
-              onChange={handleChange}
-              readOnly
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Effectiverate:</label>
-            <input
-              type="text"
-              name="effectiverate"
-              value={formData.effectiverate}
-              onChange={handleChange}
-              readOnly
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Cost:</label>
-            <input
-              type="text"
-              name="cost"
-              value={formData.cost}
-              onChange={handleChange}
-              readOnly
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">From:</label>
-            <input
-              type="text"
-              name="from"
-              value={formData.from}
-              onChange={handleChange}
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">To:</label>
-            <input
-              type="text"
-              name="to"
-              value={formData.to}
-              onChange={handleChange}
-              className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
-            />
-          </div>
+          <div className='sm:flex sm:flex-wrap gap-4'>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Vehicle Placement No:</label>
+              <input
+                type="text"
+                name="vehicle_placement_no"
+                value={formData.vehicle_placement_no}
+                onChange={handleChange}
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Date:</label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Job Order No:</label>
+              <input
+                type="text"
+                name="jobOrder_no"
+                value={formData.jobOrder_no}
+                onChange={handleChange}
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Dimensions:</label>
+              <input
+                type="text"
+                name="dimensions"
+                value={formData.dimensions}
+                onChange={handleChange}
+                readOnly
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Weight:</label>
+              <input
+                type="text"
+                name="weight"
+                value={formData.weight}
+                onChange={handleChange}
+                readOnly
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Quantumrate:</label>
+              <input
+                type="text"
+                name="quantumrate"
+                value={formData.quantumrate}
+                onChange={handleChange}
+                readOnly
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Effectiverate:</label>
+              <input
+                type="text"
+                name="effectiverate"
+                value={formData.effectiverate}
+                onChange={handleChange}
+                readOnly
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Cost:</label>
+              <input
+                type="text"
+                name="cost"
+                value={formData.cost}
+                onChange={handleChange}
+                readOnly
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">From:</label>
+              <input
+                type="text"
+                name="from"
+                value={formData.from}
+                onChange={handleChange}
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">To:</label>
+              <input
+                type="text"
+                name="to"
+                value={formData.to}
+                onChange={handleChange}
+                className="input w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
           </div>
         </div>
 
@@ -354,7 +353,7 @@ const VehiclePlacement = () => {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="ownerPhone" className="block text-sm font-medium text-gray-700">
-                  Transporter Phone
+                    Transporter Phone
                   </label>
                   <input
                     type="text"
@@ -368,7 +367,7 @@ const VehiclePlacement = () => {
                 </div>
                 <div className="mb-4">
                   <label htmlFor="ownerAddress" className="block text-sm font-medium text-gray-700">
-                  Transporter Address
+                    Transporter Address
                   </label>
                   <input
                     type="text"
@@ -416,7 +415,7 @@ const VehiclePlacement = () => {
             <div className="grid grid-cols-6 gap-6 p-2">
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="brokerdetails.name" className="block text-sm font-medium text-gray-700">Name</label>
-                <input type="text" id="brokerdetails.name" name="brokerdetails.name" value={formData.brokerdetails.name} onChange={handleBrokerdetailChange}   className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                <input type="text" id="brokerdetails.name" name="brokerdetails.name" value={formData.brokerdetails.name} onChange={handleBrokerdetailChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="brokerdetails.Address" className="block text-sm font-medium text-gray-700">Address</label>
@@ -425,7 +424,7 @@ const VehiclePlacement = () => {
 
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="brokerdetails.City" className="block text-sm font-medium text-gray-700">City</label>
-                <input type="text" id="brokerdetails.City" name="brokerdetails.City" value={formData.brokerdetails.City} onChange={handleBrokerdetailChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2"/>
+                <input type="text" id="brokerdetails.City" name="brokerdetails.City" value={formData.brokerdetails.City} onChange={handleBrokerdetailChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
               </div>
 
               <div className="col-span-6 sm:col-span-3">
@@ -452,7 +451,7 @@ const VehiclePlacement = () => {
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="brokerdetails.PAN" className="block text-sm font-medium text-gray-700">PAN</label>
-                <input type="text" id="brokerdetails.PAN" name="brokerdetails.PAN" value={formData.brokerdetails.PAN} onChange={handleBrokerdetailChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2"/>
+                <input type="text" id="brokerdetails.PAN" name="brokerdetails.PAN" value={formData.brokerdetails.PAN} onChange={handleBrokerdetailChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="brokerdetails.photo" className="block text-sm font-medium text-gray-700">photo</label>
@@ -460,7 +459,7 @@ const VehiclePlacement = () => {
               </div>
               <div className="col-span-6">
                 <label htmlFor="brokerdetails.Remarks" className="block text-sm font-medium text-gray-700">Remarks</label>
-                <textarea id="brokerdetails.Remarks" name="brokerdetails.Remarks" value={formData.brokerdetails.Remarks} onChange={handleBrokerdetailChange} rows="3" className="input w-full border border-gray-300 rounded-md shadow-sm p-2"/>
+                <textarea id="brokerdetails.Remarks" name="brokerdetails.Remarks" value={formData.brokerdetails.Remarks} onChange={handleBrokerdetailChange} rows="3" className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
               </div>
             </div>
           </TabPanel>

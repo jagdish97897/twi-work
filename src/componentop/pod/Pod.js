@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const Pod = () => {
     const [formData, setFormData] = useState({
-        podNo:'',
+        podNo: '',
         consignmentno: '',
         date: '',
         jobOrder_no: '',
@@ -61,7 +61,7 @@ const Pod = () => {
         }
     };
 
-    
+
     const handleChargesChange = (index, e) => {
         const { name, value } = e.target;
         const updatedCharges = formData.vhcharges.map((charge, i) => {
@@ -71,7 +71,7 @@ const Pod = () => {
                 let amount = 0.00;
                 let gst = 0.00;
                 let total = 0.00;
-    
+
                 if (!isNaN(rate)) { // Check if rate is a valid number
                     if (taxable) {
                         amount = rate; // Example calculation based on taxable
@@ -80,7 +80,7 @@ const Pod = () => {
                 } else {
                     console.error('Invalid rate value:', value);
                 }
-    
+
                 return {
                     ...charge,
                     [name]: value,
@@ -91,7 +91,7 @@ const Pod = () => {
             }
             return charge;
         });
-    
+
         setFormData({
             ...formData,
             vhcharges: updatedCharges
@@ -110,7 +110,7 @@ const Pod = () => {
     const fetchJobOrderDetails = async (consignmentno) => {
         try {
             const response = await axios.get(`https://twi-e-logistics.onrender.com/goodsReceipts/consignmentno/${consignmentno}`);
-            const { customer,customerGSTIN,customerAddress, from, to, orderNo, orderDate, orderMode, serviceMode, expectedDate, employee, consignor,consignorGSTIN,consignorAddress, consignee,consigneeGSTIN,consigneeAddress,vehicleNo } = response.data;
+            const { customer, customerGSTIN, customerAddress, from, to, orderNo, orderDate, orderMode, serviceMode, expectedDate, employee, consignor, consignorGSTIN, consignorAddress, consignee, consigneeGSTIN, consigneeAddress, vehicleNo } = response.data;
             setFormData((prevFormData) => ({
                 ...prevFormData,
                 customer,
@@ -176,21 +176,21 @@ const Pod = () => {
 
 
 
-        // Initialize charges state for each sundry
-        useEffect(() => {
-            const initialCharges = sundries.map(sundry => ({
-                sundry:sundry,
-                taxable: 'true',
-                calcOn: 'FIXED',
-                addDed: 'A',
-                rate: 0.00,
-                amount: 0.00,
-                gst: 0.00,
-                total: 0.00,
-                remarks: ''
-            }));
-            setFormData(prevFormData => ({ ...prevFormData, vhcharges: initialCharges }));
-        }, []);
+    // Initialize charges state for each sundry
+    useEffect(() => {
+        const initialCharges = sundries.map(sundry => ({
+            sundry: sundry,
+            taxable: 'true',
+            calcOn: 'FIXED',
+            addDed: 'A',
+            rate: 0.00,
+            amount: 0.00,
+            gst: 0.00,
+            total: 0.00,
+            remarks: ''
+        }));
+        setFormData(prevFormData => ({ ...prevFormData, vhcharges: initialCharges }));
+    }, [sundries]);
 
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
@@ -204,56 +204,56 @@ const Pod = () => {
                             </button>
                         </div>
                         <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg">
-                        <div className='sm:flex sm:flex-wrap gap-4'>
-                            <div className="mb-4">
-                                <label htmlFor="podNo" className="block text-sm font-medium text-gray-700">pod No</label>
-                                <input type="text" id="podNo" name="podNo" value={formData.podNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="consignmentno" className="block text-sm font-medium text-gray-700">Consignment No</label>
-                                <input type="text" id="consignmentno" name="consignmentno" value={formData.consignmentno} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
+                            <div className='sm:flex sm:flex-wrap gap-4'>
+                                <div className="mb-4">
+                                    <label htmlFor="podNo" className="block text-sm font-medium text-gray-700">pod No</label>
+                                    <input type="text" id="podNo" name="podNo" value={formData.podNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="consignmentno" className="block text-sm font-medium text-gray-700">Consignment No</label>
+                                    <input type="text" id="consignmentno" name="consignmentno" value={formData.consignmentno} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
 
 
-                            <div className="mb-4">
+                                <div className="mb-4">
                                     <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
-                                    <input type="date"  name="date" value={formData.date} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="customer" className="block text-sm font-medium text-gray-700">Billing Party</label>
-                                <input type="text" id="customer" name="customer" value={formData.customer} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
+                                    <input type="date" name="date" value={formData.date} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="customer" className="block text-sm font-medium text-gray-700">Billing Party</label>
+                                    <input type="text" id="customer" name="customer" value={formData.customer} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
 
-                            <div className="mb-4">
-                                <label htmlFor="consignor" className="block text-sm font-medium text-gray-700">Consignor</label>
-                                <input type="text" id="consignor" name="consignor" value={formData.consignor} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
+                                <div className="mb-4">
+                                    <label htmlFor="consignor" className="block text-sm font-medium text-gray-700">Consignor</label>
+                                    <input type="text" id="consignor" name="consignor" value={formData.consignor} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
 
-                            <div className="mb-4">
-                                <label htmlFor="consignee" className="block text-sm font-medium text-gray-700">Consignee</label>
-                                <input type="text" id="consignee" name="consignee" value={formData.consignee} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                <div className="mb-4">
+                                    <label htmlFor="consignee" className="block text-sm font-medium text-gray-700">Consignee</label>
+                                    <input type="text" id="consignee" name="consignee" value={formData.consignee} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+
+                                <div className="mb-4">
+                                    <label htmlFor="from" className="block text-sm font-medium text-gray-700">From</label>
+                                    <input type="text" id="from" name="from" value={formData.from} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="to" className="block text-sm font-medium text-gray-700">To</label>
+                                    <input type="text" id="to" name="to" value={formData.to} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="vehicleNo" className="block text-sm font-medium text-gray-700">vehicleNo</label>
+                                    <input type="text" id="vehicleNo" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+
                             </div>
-                      
-                            <div className="mb-4">
-                                <label htmlFor="from" className="block text-sm font-medium text-gray-700">From</label>
-                                <input type="text" id="from" name="from" value={formData.from} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="to" className="block text-sm font-medium text-gray-700">To</label>
-                                <input type="text" id="to" name="to" value={formData.to} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="vehicleNo" className="block text-sm font-medium text-gray-700">vehicleNo</label>
-                                <input type="text" id="vehicleNo" name="vehicleNo" value={formData.vehicleNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                          
                         </div>
-                        </div>
 
 
 
 
-                        
+
                         <Tabs className="bg-white mt-4 rounded-lg shadow-lg">
                             <TabList className="flex flex-wrap border-b border-gray-200 bg-indigo-100 rounded-t-lg">
                                 <Tab className="py-2 px-4 cursor-pointer hover:bg-gray-100 w-full sm:w-auto text-indigo-800">Charges</Tab>
@@ -348,7 +348,7 @@ const Pod = () => {
 
 
 
-                       
+
                     </form>
                 </>
             ) : (

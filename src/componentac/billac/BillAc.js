@@ -98,13 +98,7 @@ const BillAc = () => {
         });
     };
 
-    const sundries = [
-        'STATISTICAL CHARGES',
-        'Loading Charge',
-        'OTHER CHARGES',
-        'LOADING DETENTION',
-        'ODC LENGTH',
-    ];
+
 
 
     const fetchJobOrderDetails = async (consignmentno) => {
@@ -179,7 +173,14 @@ const BillAc = () => {
 
     // Initialize charges state for each sundry
     useEffect(() => {
-        const initialCharges = sundries.map(sundry => ({
+        const sundries = [
+            'STATISTICAL CHARGES',
+            'Loading Charge',
+            'OTHER CHARGES',
+            'LOADING DETENTION',
+            'ODC LENGTH',
+        ];
+         const initialCharges = sundries.map(sundry => ({
             sundry: sundry,
             taxable: 'true',
             calcOn: 'FIXED',
@@ -191,7 +192,7 @@ const BillAc = () => {
             remarks: ''
         }));
         setFormData(prevFormData => ({ ...prevFormData, billcharges: initialCharges }));
-    }, [sundries]); // Add 'sundries' to the dependency array
+    }, []); // Add 'sundries' to the dependency array
 
 
     return (

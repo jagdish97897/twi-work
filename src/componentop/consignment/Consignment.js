@@ -110,13 +110,7 @@ const Consignment = () => {
         });
     };
 
-    const sundries = [
-        'STATISTICAL CHARGES',
-        'Loading Charge',
-        'OTHER CHARGES',
-        'LOADING DETENTION',
-        'ODC LENGTH',
-    ];
+
     const fetchJobOrderDetails = async (jobOrderNo) => {
         try {
             const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrderNo}`);
@@ -209,6 +203,13 @@ const Consignment = () => {
 
     // Initialize charges state for each sundry
     useEffect(() => {
+        const sundries = [
+            'STATISTICAL CHARGES',
+            'Loading Charge',
+            'OTHER CHARGES',
+            'LOADING DETENTION',
+            'ODC LENGTH',
+        ];
         const initialCharges = sundries.map(sundry => ({
             sundry: sundry,
             taxable: 'true',
@@ -221,7 +222,7 @@ const Consignment = () => {
             remarks: ''
         }));
         setFormData(prevFormData => ({ ...prevFormData, charges: initialCharges }));
-    }, [sundries]);
+    }, []);
 
     const handleListClick = () => {
         navigate('/protected/componentop/sidebarop/Sidebarop/bookingoperation/viewconsignment');

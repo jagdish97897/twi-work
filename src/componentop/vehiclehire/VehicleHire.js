@@ -87,15 +87,6 @@ const VehicleHire = () => {
         });
     };
 
-
-    const sundries = [
-        'Loading On Hire',
-        'Other Charges On Hire',
-        'TRANSACTION CHARGES',
-        'STAFF FUND',
-        'RTO',
-    ];
-
     const fetchJobOrderDetails = async (consignmentno) => {
         try {
             const response = await axios.get(`https://twi-e-logistics.onrender.com/goodsReceipts/consignmentno/${consignmentno}`);
@@ -169,6 +160,13 @@ const VehicleHire = () => {
 
     // Initialize charges state for each sundry
     useEffect(() => {
+        const sundries = [
+            'Loading On Hire',
+            'Other Charges On Hire',
+            'TRANSACTION CHARGES',
+            'STAFF FUND',
+            'RTO',
+        ];
         const initialCharges = sundries.map(sundry => ({
             sundry: sundry,
             taxable: 'true',
@@ -181,7 +179,7 @@ const VehicleHire = () => {
             remarks: ''
         }));
         setFormData(prevFormData => ({ ...prevFormData, charges: initialCharges }));
-    }, [sundries]);
+    }, []);
 
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">

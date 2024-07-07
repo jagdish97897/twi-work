@@ -98,14 +98,6 @@ const Pod = () => {
         });
     };
 
-    const sundries = [
-        'STATISTICAL CHARGES',
-        'Loading Charge',
-        'OTHER CHARGES',
-        'LOADING DETENTION',
-        'ODC LENGTH',
-    ];
-
 
     const fetchJobOrderDetails = async (consignmentno) => {
         try {
@@ -178,6 +170,13 @@ const Pod = () => {
 
     // Initialize charges state for each sundry
     useEffect(() => {
+        const sundries = [
+            'STATISTICAL CHARGES',
+            'Loading Charge',
+            'OTHER CHARGES',
+            'LOADING DETENTION',
+            'ODC LENGTH',
+        ];
         const initialCharges = sundries.map(sundry => ({
             sundry: sundry,
             taxable: 'true',
@@ -190,7 +189,7 @@ const Pod = () => {
             remarks: ''
         }));
         setFormData(prevFormData => ({ ...prevFormData, vhcharges: initialCharges }));
-    }, [sundries]);
+    }, []);
 
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">

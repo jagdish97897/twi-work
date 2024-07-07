@@ -465,6 +465,9 @@ const VehiclePlacement = () => {
           </TabPanel>
         </Tabs>
       </form>
+
+      {message && <div className="text-green-500 mt-4">{message}</div>}
+      {error && <div className="text-red-500 mt-4">{error}</div>}
     </div>
   );
 };

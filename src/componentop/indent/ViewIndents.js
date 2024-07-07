@@ -149,7 +149,10 @@ function ViewIndents() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4 text-indigo-800">All Indents</h2>
-      <div className="overflow-x-auto">
+      {loading && <p>Loading...</p>}
+      {error && <p className="text-red-600">{error}</p>}
+      {!loading && !error && (
+        <>
         <table className="min-w-full divide-y divide-black-200">
           <thead className="bg-black-50">
             <tr>
@@ -187,7 +190,7 @@ function ViewIndents() {
             ))}
           </tbody>
         </table>
-      </div>
+
       <ReactPaginate
         previousLabel={'Previous'}
         nextLabel={'Next'}
@@ -207,6 +210,8 @@ function ViewIndents() {
         breakLinkClassName={'px-3 py-2 border border-gray-300 rounded-md text-gray-700'}
         activeClassName={'bg-blue-500 text-white'}
       />
+           </>
+      )}
     </div>
   );
 }

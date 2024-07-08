@@ -63,7 +63,7 @@ const VehicleHire = () => {
                 let amount = 0.00;
                 let gst = 0.00;
                 let total = 0.00;
-    
+
                 if (!isNaN(rate)) { // Check if rate is a valid number
                     if (taxable) {
                         amount = rate; // Example calculation based on taxable
@@ -72,7 +72,7 @@ const VehicleHire = () => {
                 } else {
                     console.error('Invalid rate value:', value);
                 }
-    
+
                 return {
                     ...charge,
                     [name]: value,
@@ -83,21 +83,12 @@ const VehicleHire = () => {
             }
             return charge;
         });
-    
+
         setFormData({
             ...formData,
             charges: updatedCharges
         });
     };
-    
-
-    const sundries = [
-        'Loading On Hire',
-        'Other Charges On Hire',
-        'TRANSACTION CHARGES',
-        'STAFF FUND',
-        'RTO',
-    ];
 
     const fetchJobOrderDetails = async (consignmentno) => {
         try {
@@ -172,8 +163,15 @@ const VehicleHire = () => {
 
     // Initialize charges state for each sundry
     useEffect(() => {
+        const sundries = [
+            'Loading On Hire',
+            'Other Charges On Hire',
+            'TRANSACTION CHARGES',
+            'STAFF FUND',
+            'RTO',
+        ];
         const initialCharges = sundries.map(sundry => ({
-            sundry,
+            sundry: sundry,
             taxable: 'true',
             calcOn: 'FIXED',
             addDed: 'A',

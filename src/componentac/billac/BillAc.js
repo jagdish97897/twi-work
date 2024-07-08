@@ -100,13 +100,6 @@ const BillAc = () => {
         });
     };
 
-    const sundries = [
-        'STATISTICAL CHARGES',
-        'Loading Charge',
-        'OTHER CHARGES',
-        'LOADING DETENTION',
-        'ODC LENGTH',
-    ];
 
 
     const fetchJobOrderDetails = async (consignmentno) => {
@@ -179,25 +172,29 @@ const BillAc = () => {
 
 
 
-        // Initialize charges state for each sundry
-        useEffect(() => {
-            const initialCharges = sundries.map(sundry => ({
-                sundry,
-                taxable: 'true',
-                calcOn: 'FIXED',
-                addDed: 'A',
-                rate: 0.00,
-                amount: 0.00,
-                gst: 0.00,
-                total: 0.00,
-                remarks: ''
-            }));
-            setFormData(prevFormData => ({ ...prevFormData, billcharges: initialCharges }));
-        }, []);
+    // Initialize charges state for each sundry
+    useEffect(() => {
+        const sundries = [
+            'STATISTICAL CHARGES',
+            'Loading Charge',
+            'OTHER CHARGES',
+            'LOADING DETENTION',
+            'ODC LENGTH',
+        ];
+         const initialCharges = sundries.map(sundry => ({
+            sundry: sundry,
+            taxable: 'true',
+            calcOn: 'FIXED',
+            addDed: 'A',
+            rate: 0.00,
+            amount: 0.00,
+            gst: 0.00,
+            total: 0.00,
+            remarks: ''
+        }));
+        setFormData(prevFormData => ({ ...prevFormData, billcharges: initialCharges }));
+    }, []); // Add 'sundries' to the dependency array
 
-        const handleListClick = () => {
-            navigate('/protected/componentac/sidebarac/Sidebarac/billing/viewbill');
-          };
 
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">

@@ -1,10 +1,7 @@
 import React from 'react';
-import { FaPhone, FaEnvelope } from 'react-icons/fa';
 
 function NavbarMain() {
-    const handleEmailClick = () => {
-        window.location.href = "mailto:support@bng.co.in";
-    };
+
 
     return (
         <nav className="bg-gradient-to-b from-gray-50 to-green-500">

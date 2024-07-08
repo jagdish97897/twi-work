@@ -132,7 +132,6 @@ function Indent() {
     setShowModal(false);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -242,33 +241,36 @@ function Indent() {
     setItems(updatedItems);
   };
 
+
   useEffect(() => {
-    calculateTotals();
-  }, [items]);
-
-  const calculateTotals = () => {
-    let weight = 0;
-    let quantumrate = 0;
-    let cost = 0;
-    let effectiverate = 0;
-
-    items.forEach(item => {
-      weight += parseInt(item.WEIGHT) || 0;
-      quantumrate += parseInt(item.QUANTUMRATE) || 0;
-      effectiverate += parseInt(item.EFFECTIVERATE) || 0;
-      cost += parseInt(item.COST) || 0;
-    });
-
-    setFormData(prevState => ({
-      ...prevState,
-      total: {
-        weight,
-        quantumrate,
-        effectiverate,
-        cost
-      }
-    }));
-  };
+    const calculateTotals = () => {
+      let weight = 0;
+      let quantumrate = 0;
+      let cost = 0;
+      let effectiverate = 0;
+  
+      items.forEach(item => {
+        weight += parseInt(item.WEIGHT) || 0;
+        quantumrate += parseInt(item.QUANTUMRATE) || 0;
+        effectiverate += parseInt(item.EFFECTIVERATE) || 0;
+        cost += parseInt(item.COST) || 0;
+      });
+  
+      setFormData(prevState => ({
+        ...prevState,
+        total: {
+          weight,
+          quantumrate,
+          effectiverate,
+          cost
+        }
+      }));
+    };
+  
+    calculateTotals(); // Call calculateTotals immediately when items changes
+  
+  }, [items]); // Depend on items only
+  
 
   const vehicletype = [
     'TRUCK', 'TROLLEY', 'CONTAINER', 'TANKER', 'OTHER'

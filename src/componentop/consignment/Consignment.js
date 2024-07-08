@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -76,7 +73,7 @@ const Consignment = () => {
         }
     };
 
-    
+
     const handleChargesChange = (index, e) => {
         const { name, value } = e.target;
         const updatedCharges = formData.charges.map((charge, i) => {
@@ -86,7 +83,7 @@ const Consignment = () => {
                 let amount = 0.00;
                 let gst = 0.00;
                 let total = 0.00;
-    
+
                 if (!isNaN(rate)) { // Check if rate is a valid number
                     if (taxable) {
                         amount = rate; // Example calculation based on taxable
@@ -95,7 +92,7 @@ const Consignment = () => {
                 } else {
                     console.error('Invalid rate value:', value);
                 }
-    
+
                 return {
                     ...charge,
                     [name]: value,
@@ -106,20 +103,14 @@ const Consignment = () => {
             }
             return charge;
         });
-    
+
         setFormData({
             ...formData,
             charges: updatedCharges
         });
     };
 
-    const sundries = [
-        'STATISTICAL CHARGES',
-        'Loading Charge',
-        'OTHER CHARGES',
-        'LOADING DETENTION',
-        'ODC LENGTH',
-    ];
+
     const fetchJobOrderDetails = async (jobOrderNo) => {
         try {
             const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrderNo}`);
@@ -210,10 +201,17 @@ const Consignment = () => {
         }
     };
 
-     // Initialize charges state for each sundry
-     useEffect(() => {
+    // Initialize charges state for each sundry
+    useEffect(() => {
+        const sundries = [
+            'STATISTICAL CHARGES',
+            'Loading Charge',
+            'OTHER CHARGES',
+            'LOADING DETENTION',
+            'ODC LENGTH',
+        ];
         const initialCharges = sundries.map(sundry => ({
-            sundry,
+            sundry: sundry,
             taxable: 'true',
             calcOn: 'FIXED',
             addDed: 'A',
@@ -228,7 +226,7 @@ const Consignment = () => {
 
     const handleListClick = () => {
         navigate('/protected/componentop/sidebarop/Sidebarop/bookingoperation/viewconsignment');
-      };
+    };
 
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
@@ -250,89 +248,89 @@ const Consignment = () => {
                             </button>
                         </div>
                         <div className="space-y-4 bg-white p-4 rounded-lg shadow-lg">
-                        <div className='sm:flex sm:flex-wrap gap-4'>
-                            <div className="mb-4">
-                                <label htmlFor="consignmentno" className="block text-sm font-medium text-gray-700">Consignment No</label>
-                                <input type="text" id="consignmentno" name="consignmentno" value={formData.consignmentno} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="jobOrder_no" className="block text-sm font-medium text-gray-700">Job Order No</label>
-                                <input type="text" id="jobOrder_no" name="jobOrder_no" value={formData.jobOrder_no} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
+                            <div className='sm:flex sm:flex-wrap gap-4'>
+                                <div className="mb-4">
+                                    <label htmlFor="consignmentno" className="block text-sm font-medium text-gray-700">Consignment No</label>
+                                    <input type="text" id="consignmentno" name="consignmentno" value={formData.consignmentno} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="jobOrder_no" className="block text-sm font-medium text-gray-700">Job Order No</label>
+                                    <input type="text" id="jobOrder_no" name="jobOrder_no" value={formData.jobOrder_no} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
 
-                            <div className="mb-4">
+                                <div className="mb-4">
                                     <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
-                                    <input type="date"  name="date" value={formData.date} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                    <input type="date" name="date" value={formData.date} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="customer" className="block text-sm font-medium text-gray-700">Billing Party</label>
+                                    <input type="text" id="customer" name="customer" value={formData.customer} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="customerGSTIN" className="block text-sm font-medium text-gray-700">Billing customer GSTIN</label>
+                                    <input type="text" id="customerGSTIN" name="customerGSTIN" value={formData.customerGSTIN} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="customerAddress" className="block text-sm font-medium text-gray-700">Billing customer Address</label>
+                                    <input type="text" id="customerAddress" name="customerAddress" value={formData.customerAddress} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="consignor" className="block text-sm font-medium text-gray-700">Consignor</label>
+                                    <input type="text" id="consignor" name="consignor" value={formData.consignor} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="consignorGSTIN" className="block text-sm font-medium text-gray-700">consignor GSTIN</label>
+                                    <input type="text" id="consignorGSTIN" name="consignorGSTIN" value={formData.consignorGSTIN} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="consignorAddress" className="block text-sm font-medium text-gray-700">consignor Address</label>
+                                    <input type="text" id="consignorAddress" name="consignorAddress" value={formData.consignorAddress} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="consignee" className="block text-sm font-medium text-gray-700">Consignee</label>
+                                    <input type="text" id="consignee" name="consignee" value={formData.consignee} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="consigneeGSTIN" className="block text-sm font-medium text-gray-700">consignee GSTIN</label>
+                                    <input type="text" id="consigneeGSTIN" name="consigneeGSTIN" value={formData.consigneeGSTIN} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="consigneeAddress" className="block text-sm font-medium text-gray-700">consignee Address</label>
+                                    <input type="text" id="consigneeAddress" name="consigneeAddress" value={formData.consigneeAddress} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="from" className="block text-sm font-medium text-gray-700">From</label>
+                                    <input type="text" id="from" name="from" value={formData.from} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="to" className="block text-sm font-medium text-gray-700">To</label>
+                                    <input type="text" id="to" name="to" value={formData.to} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="orderNo" className="block text-sm font-medium text-gray-700">Order No</label>
+                                    <input type="text" id="orderNo" name="orderNo" value={formData.orderNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="orderDate" className="block text-sm font-medium text-gray-700">Order Date</label>
+                                    <input type="text" id="orderDate" name="orderDate" value={formData.orderDate} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="orderMode" className="block text-sm font-medium text-gray-700">Order Mode</label>
+                                    <input type="text" id="orderMode" name="orderMode" value={formData.orderMode} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="serviceMode" className="block text-sm font-medium text-gray-700">Service Mode</label>
+                                    <input type="text" id="serviceMode" name="serviceMode" value={formData.serviceMode} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="expectedDate" className="block text-sm font-medium text-gray-700">Expected Date</label>
+                                    <input type="text" id="expectedDate" name="expectedDate" value={formData.expectedDate} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="employee" className="block text-sm font-medium text-gray-700">Employee</label>
+                                    <input type="text" id="employee" name="employee" value={formData.employee} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
+                                </div>
                             </div>
-                            <div className="mb-4">
-                                <label htmlFor="customer" className="block text-sm font-medium text-gray-700">Billing Party</label>
-                                <input type="text" id="customer" name="customer" value={formData.customer} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="customerGSTIN" className="block text-sm font-medium text-gray-700">Billing customer GSTIN</label>
-                                <input type="text" id="customerGSTIN" name="customerGSTIN" value={formData.customerGSTIN} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="customerAddress" className="block text-sm font-medium text-gray-700">Billing customer Address</label>
-                                <input type="text" id="customerAddress" name="customerAddress" value={formData.customerAddress} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="consignor" className="block text-sm font-medium text-gray-700">Consignor</label>
-                                <input type="text" id="consignor" name="consignor" value={formData.consignor} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="consignorGSTIN" className="block text-sm font-medium text-gray-700">consignor GSTIN</label>
-                                <input type="text" id="consignorGSTIN" name="consignorGSTIN" value={formData.consignorGSTIN} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="consignorAddress" className="block text-sm font-medium text-gray-700">consignor Address</label>
-                                <input type="text" id="consignorAddress" name="consignorAddress" value={formData.consignorAddress} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="consignee" className="block text-sm font-medium text-gray-700">Consignee</label>
-                                <input type="text" id="consignee" name="consignee" value={formData.consignee} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="consigneeGSTIN" className="block text-sm font-medium text-gray-700">consignee GSTIN</label>
-                                <input type="text" id="consigneeGSTIN" name="consigneeGSTIN" value={formData.consigneeGSTIN} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="consigneeAddress" className="block text-sm font-medium text-gray-700">consignee Address</label>
-                                <input type="text" id="consigneeAddress" name="consigneeAddress" value={formData.consigneeAddress} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="from" className="block text-sm font-medium text-gray-700">From</label>
-                                <input type="text" id="from" name="from" value={formData.from} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="to" className="block text-sm font-medium text-gray-700">To</label>
-                                <input type="text" id="to" name="to" value={formData.to} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="orderNo" className="block text-sm font-medium text-gray-700">Order No</label>
-                                <input type="text" id="orderNo" name="orderNo" value={formData.orderNo} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="orderDate" className="block text-sm font-medium text-gray-700">Order Date</label>
-                                <input type="text" id="orderDate" name="orderDate" value={formData.orderDate} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="orderMode" className="block text-sm font-medium text-gray-700">Order Mode</label>
-                                <input type="text" id="orderMode" name="orderMode" value={formData.orderMode} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="serviceMode" className="block text-sm font-medium text-gray-700">Service Mode</label>
-                                <input type="text" id="serviceMode" name="serviceMode" value={formData.serviceMode} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="expectedDate" className="block text-sm font-medium text-gray-700">Expected Date</label>
-                                <input type="text" id="expectedDate" name="expectedDate" value={formData.expectedDate} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="employee" className="block text-sm font-medium text-gray-700">Employee</label>
-                                <input type="text" id="employee" name="employee" value={formData.employee} onChange={handleChange} className="input w-full border border-gray-300 rounded-md shadow-sm p-2" />
-                            </div>
-                        </div>
                         </div>
                         <Tabs className="bg-white mt-4 rounded-lg shadow-lg">
                             <TabList className="flex flex-wrap border-b border-gray-200 bg-indigo-100 rounded-t-lg">

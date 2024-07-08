@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarMain from './NavbarMain';
+import Navbar from './component/navbar/Navbar';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Home = () => {
   return (
     <>
     <div className='bg-gradient-to-b from-gray-50 to-blue-300 h-screen'>
-      <NavbarMain />
+      <Navbar />
   
       <div className="flex flex-wrap justify-center m-20 gap-10 ">
         <div className="w-1/3 sm:w-1/5 md:w-1/6 lg:w-1/8 xl:w-1/10 mx-2 my-4">

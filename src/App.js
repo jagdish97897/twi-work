@@ -95,6 +95,13 @@ import AddToJoborder from './componentop/vehicleplacement/AddToJoborder.js';
 import ViewConsignment from './componentop/consignment/ViewConsignment.js';
 import UpdateConsignment from './componentop/consignment/UpdateConsignment.js';
 import AddNewDataInConsignment from './componentop/consignment/AddNewDataInConsignment.js';
+import ViewVehicleHire from './componentop/vehiclehire/ViewVehicleHire.js';
+import UpdateVehicleHire from './componentop/vehiclehire/UpdateVehicleHire.js';
+import ViewPod from './componentop/pod/ViewPod.js';
+import UpdatePod from './componentop/pod/UpdatePod.js';
+import ViewBillAc from './componentac/billac/ViewBillAc.js';
+import UpdateBillAc from './componentac/billac/UpdateBillAc.js';
+
 
 
 
@@ -102,12 +109,14 @@ import AddNewDataInConsignment from './componentop/consignment/AddNewDataInConsi
 
 function App() {
   const isLoggedIn = localStorage.getItem('token'); // Assuming you store user information in localStorage
+  const username = localStorage.getItem('username');
 
   return (
     <Router>
+    
       <Routes>
         <Route path="/" element={isLoggedIn ? <Navigate to="/protected" /> : <Login />} />
-        <Route path="/protected" element={<Protected Component={Home} />}></Route>
+        <Route path="/protected" element={<Protected username={username} Component={Home} />}></Route>
           {isLoggedIn ? (
             <>
 
@@ -198,11 +207,15 @@ function App() {
                <Route path="updateconsignment/:id" element={<Protected Component={UpdateConsignment} />}/>
                <Route path="AddNewDataInConsignment/:id" element={<Protected Component={AddNewDataInConsignment} />}/>
                <Route path="vehiclehire" element={<Protected Component={VehicleHire} />}/>
+               <Route path="viewvehiclehire" element={<Protected Component={ViewVehicleHire} />}/>
+               <Route path="updatevehiclehire/:id" element={<Protected Component={UpdateVehicleHire} />}/>
               </Route>
 
               <Route path="deliveryoperation">
                <Route path="unloading" element={<Protected Component={Unloading} />}/>
                <Route path="pod" element={<Protected Component={Pod} />}/>
+               <Route path="viewpod" element={<Protected Component={ViewPod} />}/>
+               <Route path="updatepod/:id" element={<Protected Component={UpdatePod} />}/>
               </Route>
 
               <Route path="enquiry">
@@ -245,6 +258,8 @@ function App() {
             </Route>
             <Route path="billing">
                <Route path="bill" element={<Protected Component={BillAc} />}/>
+               <Route path="viewbill" element={<Protected Component={ViewBillAc} />}/>
+               <Route path="updateBill/:id" element={<Protected Component={UpdateBillAc} />}/>
                <Route path="nonfreightbill" element={<Protected Component={NonFreightbill} />}/>
                <Route path="billsubmission" element={<Protected Component={BillSubmission} />}/>
             </Route>

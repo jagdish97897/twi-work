@@ -24,11 +24,11 @@ function NavbarMain() {
                         <div className="ml-auto flex items-center">
                             <div className="flex items-center mr-4">
                                 <FaPhone className="mr-1" />
-                                <span>+91 81006 41006</span>
+                                <span>+91 97558 56913</span>
                             </div>
                             <div className="flex items-center" onClick={handleEmailClick} style={{cursor: 'pointer'}}>
                                 <FaEnvelope className="mr-1" />
-                                <span>support@bng.co.in</span>
+                                <span>jagdish0000singh@gmail.com</span>
                             </div>
                         </div>
                     </div>

@@ -6,41 +6,38 @@ import moment from 'moment';
 import { FaEdit, FaPrint } from 'react-icons/fa';
 import ReactPaginate from 'react-paginate';
 
-const ViewJobOrders = () => {
-  const [jobOrders, setJobOrders] = useState([]);
+const ViewBillAc = () => {
+  const [bills, setBills] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const itemsPerPage = 5; // Number of job orders per page
+  const itemsPerPage = 5; 
 
   useEffect(() => {
-    fetchJobOrders();
+    fetchBills();
   }, []);
 
-  const fetchJobOrders = async () => {
+  const fetchBills = async () => {
     try {
-      const response = await axios.get('https://twi-e-logistics.onrender.com/get-all-job-orders');
-      setJobOrders(response.data);
+      const response = await axios.get('https://twi-e-logistics.onrender.com/getbills');
+      setBills(response.data);
     } catch (error) {
-      console.error('Error fetching job orders:', error);
-      setErrorMessage('Error fetching job orders');
+      console.error('Error fetching bill:', error);
+      setErrorMessage('Error fetching bill');
     }
   };
 
-  const handleEdit = (joborderId) => {
-    navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/updateJobOrder/${joborderId}`);
-  };
-  const handleEdit1 = (joborderId) => {
-    navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/AddNewDataInJobOrder/${joborderId}`);
+  const handleEdit = (billId) => {
+    navigate(`/protected/componentac/sidebarac/Sidebarac/billing/updateBill/${billId}`);
   };
 
-  const handlePrint = (joborderId) => {
-    const jobOrder = jobOrders.find((jobOrder) => jobOrder._id === joborderId);
+  const handlePrint = (billId) => {
+    const bill = bills.find((bill) => bill._id === billId);
 
     const pdfTemplate = `
       <div class="font-sans p-4 border">
         <div class="bg-green-500 p-4 text-center">
-          <h2 class="text-2xl font-bold text-black mb-4">Job Order Details</h2>
+          <h2 class="text-2xl font-bold text-black mb-4">Bill Details</h2>
         </div>
         <div class="flex bg-black-300 p-6">
           <img src="/twcpl.png" class="h-60 w-60 mr-4">
@@ -54,32 +51,32 @@ const ViewJobOrders = () => {
           </div>
         </div>
         <div class="bg-black-300 flex p-4 justify-between h-full w-full">
-          <p><strong class="font-bold">Job Order No:</strong> ${jobOrder.jobOrder_no}</p>
-          <p><strong class="font-bold">Date:</strong> ${moment(jobOrder.orderDate.$date).format('DD-MM-YYYY')}</p>
+          <p><strong class="font-bold">billNo No:</strong> ${bill.billNo}</p>
+          <p><strong class="font-bold">Date:</strong> ${moment(bill.orderDate.$date).format('DD-MM-YYYY')}</p>
         </div>
         <div class="bg-black-300 flex p-4 justify-between h-full w-full">
           <div class="flex flex-col text-black border border-black pb-4 h-full w-1/2">
             <div class="w-full pl-2">
-              <p><strong class="font-bold">Customer:</strong> ${jobOrder.customer}</p>
-              <p><strong class="font-bold">Customer GSTIN:</strong> ${jobOrder.customerGSTIN}</p>
-              <p><strong class="font-bold">Customer Address:</strong> ${jobOrder.customerAddress}</p>
-              <p><strong class="font-bold">Consignor:</strong> ${jobOrder.consignor}</p>
-              <p><strong class="font-bold">Consignor GSTIN:</strong> ${jobOrder.consignorGSTIN}</p>
-              <p><strong class="font-bold">Consignor Address:</strong> ${jobOrder.consignorAddress}</p>
-              <p><strong class="font-bold">Employee:</strong> ${jobOrder.employee}</p>
+              <p><strong class="font-bold">Customer:</strong> ${bill.customer}</p>
+              <p><strong class="font-bold">Customer GSTIN:</strong> ${bill.customerGSTIN}</p>
+              <p><strong class="font-bold">Customer Address:</strong> ${bill.customerAddress}</p>
+              <p><strong class="font-bold">Consignor:</strong> ${bill.consignor}</p>
+              <p><strong class="font-bold">Consignor GSTIN:</strong> ${bill.consignorGSTIN}</p>
+              <p><strong class="font-bold">Consignor Address:</strong> ${bill.consignorAddress}</p>
+              <p><strong class="font-bold">Employee:</strong> ${bill.employee}</p>
 
 
             </div>
           </div>
           <div class="flex flex-col text-black border border-black pb-4 h-full w-1/2">
             <div class="w-full pl-2">
-            <p><strong class="font-bold">Consignee:</strong> ${jobOrder.consignee}</p>
-            <p><strong class="font-bold">Consignee GSTIN:</strong> ${jobOrder.consigneeGSTIN}</p>
-            <p><strong class="font-bold">Consignee Address:</strong> ${jobOrder.consigneeAddress}</p>
-              <p><strong class="font-bold">Order No:</strong> ${jobOrder.orderNo}</p>
-              <p><strong class="font-bold">Order Mode:</strong> ${jobOrder.orderMode}</p>
-              <p><strong class="font-bold">Service Mode:</strong> ${jobOrder.serviceMode}</p>
-              <p><strong class="font-bold">Expected Date:</strong> ${moment(jobOrder.expectedDate.$date).format('DD-MM-YYYY')}</p>
+            <p><strong class="font-bold">Consignee:</strong> ${bill.consignee}</p>
+            <p><strong class="font-bold">Consignee GSTIN:</strong> ${bill.consigneeGSTIN}</p>
+            <p><strong class="font-bold">Consignee Address:</strong> ${bill.consigneeAddress}</p>
+              <p><strong class="font-bold">Order No:</strong> ${bill.orderNo}</p>
+              <p><strong class="font-bold">Order Mode:</strong> ${bill.orderMode}</p>
+              <p><strong class="font-bold">Service Mode:</strong> ${bill.serviceMode}</p>
+              <p><strong class="font-bold">Expected Date:</strong> ${moment(bill.expectedDate.$date).format('DD-MM-YYYY')}</p>
 
             </div>
           </div>
@@ -100,13 +97,13 @@ const ViewJobOrders = () => {
             </thead>
             <tbody class="bg-white divide-y divide-black-200">
               <tr>
-                <td class="border px-2 py-1 text-xs">${jobOrder.from}</td>
-                <td class="border px-2 py-1 text-xs">${jobOrder.to}</td>
-                <td class="border px-2 py-1 text-xs">${jobOrder.dimensions}</td>
-                <td class="border px-2 py-1 text-xs">${jobOrder.weight}</td>
-                <td class="border px-2 py-1 text-xs">${jobOrder.quantumrate}</td>
-                <td class="border px-2 py-1 text-xs">${jobOrder.effectiverate}</td>
-                <td class="border px-2 py-1 text-xs">${jobOrder.cost}</td>
+                <td class="border px-2 py-1 text-xs">${bill.from}</td>
+                <td class="border px-2 py-1 text-xs">${bill.to}</td>
+                <td class="border px-2 py-1 text-xs">${bill.dimensions}</td>
+                <td class="border px-2 py-1 text-xs">${bill.weight}</td>
+                <td class="border px-2 py-1 text-xs">${bill.quantumrate}</td>
+                <td class="border px-2 py-1 text-xs">${bill.effectiverate}</td>
+                <td class="border px-2 py-1 text-xs">${bill.cost}</td>
               </tr>
             </tbody>
           </table>
@@ -133,19 +130,19 @@ const ViewJobOrders = () => {
   };
 
   const offset = currentPage * itemsPerPage;
-  const currentJobOrders = jobOrders.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(jobOrders.length / itemsPerPage);
+  const currentBills = bills.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(bills.length / itemsPerPage);
 
   return (
     <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
-      <h1 className="text-2xl font-bold mb-4 text-indigo-800">Job Orders</h1>
+      <h1 className="text-2xl font-bold mb-4 text-indigo-800">Bill</h1>
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-medium text-gray-500 uppercase">Job Order No</th>
-              <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-medium text-gray-500 uppercase">Indent No</th>
+              <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-medium text-gray-500 uppercase">bill No</th>
+              <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-medium text-gray-500 uppercase">consignment No</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-medium text-gray-500 uppercase">Customer</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-medium text-gray-500 uppercase">Order No</th>
               <th className="px-4 md:px-6 py-3 text-left text-xs md:text-sm font-medium text-gray-500 uppercase">Order Date</th>
@@ -157,25 +154,23 @@ const ViewJobOrders = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {currentJobOrders.map((jobOrder) => (
-              <tr key={jobOrder._id}>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{jobOrder.jobOrder_no}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{jobOrder.indentNo}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{jobOrder.customer}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{jobOrder.orderNo}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{new Date(jobOrder.orderDate).toLocaleDateString()}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{jobOrder.orderMode}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{jobOrder.serviceMode}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{new Date(jobOrder.expectedDate).toLocaleDateString()}</td>
-                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{jobOrder.employee}</td>
+            {currentBills.map((bill) => (
+              <tr key={bill._id}>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{bill.billNo}</td>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{bill.consignmentno}</td>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{bill.customer}</td>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{bill.orderNo}</td>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{new Date(bill.orderDate).toLocaleDateString()}</td>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{bill.orderMode}</td>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{bill.serviceMode}</td>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{new Date(bill.expectedDate).toLocaleDateString()}</td>
+                <td className="px-4 md:px-6 py-4 whitespace-nowrap">{bill.employee}</td>
                 <td className="px-4 md:px-6 py-4 whitespace-nowrap">
-                  <button onClick={() => handleEdit(jobOrder._id)} className="text-indigo-600 hover:text-indigo-900">
+                  <button onClick={() => handleEdit(bill._id)} className="text-indigo-600 hover:text-indigo-900">
                     <FaEdit className="mr-1" />Edit
                   </button>
-                  <button onClick={() => handleEdit1(jobOrder._id)} className="text-indigo-600 hover:text-indigo-900">
-                    <FaEdit className="mr-1" />Edit
-                  </button>
-                  <button onClick={() => handlePrint(jobOrder._id)} className="ml-4 text-green-600 hover:text-green-900">
+
+                  <button onClick={() => handlePrint(bill._id)} className="ml-4 text-green-600 hover:text-green-900">
                     <FaPrint className="mr-1" />Print
                   </button>
                 </td>
@@ -207,5 +202,19 @@ const ViewJobOrders = () => {
   );
 };
 
-export default ViewJobOrders;
+export default ViewBillAc;
 
+
+
+
+// import React from 'react'
+
+// function ViewBillAc() {
+//   return (
+//     <div>
+      
+//     </div>
+//   )
+// }
+
+// export default ViewBillAc

@@ -42,7 +42,7 @@ const JobOrder = () => {
 
   const fetchIndentDetails = async (indentNo) => {
     try {
-      const response = await axios.get(`http://localhost:5000/getsingleindentdetails/${indentNo}`);
+      const response = await axios.get(`https://twi-e-logistics.onrender.com/getsingleindentdetails/${indentNo}`);
       const indent = response.data;
 
       setJobOrder((prevOrder) => ({
@@ -131,7 +131,7 @@ const JobOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/createJobOrder', jobOrder);
+      await axios.post('https://twi-e-logistics.onrender.com/createJobOrder', jobOrder);
       alert('Job order created successfully!');
       setJobOrder({
         jobOrder_no: '',
@@ -164,7 +164,7 @@ const JobOrder = () => {
     const fetchConsignorSuggestions = async () => {
       try {
         if (jobOrder.consignor) {
-          const consignorResponse = await axios.get('http://localhost:5000/getcustomer2', {
+          const consignorResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
             params: { name: jobOrder.consignor }
           });
           setConsignorData(consignorResponse.data);
@@ -183,7 +183,7 @@ const JobOrder = () => {
     const fetchConsigneeSuggestions = async () => {
       try {
         if (jobOrder.consignee) {
-          const consigneeResponse = await axios.get('http://localhost:5000/getcustomer2', {
+          const consigneeResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
             params: { name: jobOrder.consignee }
           });
           setConsigneeData(consigneeResponse.data);
@@ -204,7 +204,7 @@ const JobOrder = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
-      <h1 className="text-3xl font-bold mb-4">Create Job Order</h1>
+      <h1 className="text-3xl font-bold mb-4 text-indigo-800">Create Job Order</h1>
       <form onSubmit={handleSubmit}>
         <div className="mt-1 mb-4 flex justify-between">
           <button
@@ -216,7 +216,7 @@ const JobOrder = () => {
           <button
             type="button"
             onClick={handleListClick}
-            className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600"
+            className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             List view
           </button>

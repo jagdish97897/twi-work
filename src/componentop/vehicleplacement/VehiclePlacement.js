@@ -77,7 +77,7 @@ const VehiclePlacement = () => {
 
   const fetchJobOrderDetails = async (jobOrderNo) => {
     try {
-      const response = await axios.get(`http://localhost:5000/job-orders/${jobOrderNo}`);
+      const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrderNo}`);
       const { from, to, dimensions, weight, quantumrate, effectiverate, cost } = response.data;
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -96,7 +96,7 @@ const VehiclePlacement = () => {
 
   const fetchVehicleDetails = async (vehicleNo) => {
     try {
-      const response = await axios.get(`http://localhost:5000/getvehicle-registrations/${vehicleNo}`);
+      const response = await axios.get(`https://twi-e-logistics.onrender.com/getvehicle-registrations/${vehicleNo}`);
       const { broker, owner, loadType, ownerPhone, ownerAddress, brokerPhone, brokerAddress } = response.data.data.vehicleRegistration;
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -133,7 +133,7 @@ const VehiclePlacement = () => {
 
 
     try {
-      const response = await axios.post('http://localhost:5000/vehicle-placements', formData);
+      const response = await axios.post('https://twi-e-logistics.onrender.com/vehicle-placements', formData);
       setMessage('Vehicle Placement created successfully');
       setFormData({
         vehicle_placement_no: '',
@@ -193,7 +193,7 @@ const VehiclePlacement = () => {
           <button
             type="button"
             onClick={handleListClick}
-            className="btn bg-blue-500 text-white py-2 px-4 border border-black hover:bg-blue-600"
+            className="w-small flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             List view
           </button>
@@ -466,6 +466,8 @@ const VehiclePlacement = () => {
           </TabPanel>
         </Tabs>
       </form>
+      {message && <div className="text-green-500 mt-4">{message}</div>}
+      {error && <div className="text-red-500 mt-4">{error}</div>}
     </div>
   );
 };

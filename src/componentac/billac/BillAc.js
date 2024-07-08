@@ -196,6 +196,11 @@ const BillAc = () => {
     }, []); // Add 'sundries' to the dependency array
 
 
+    const handleListClick = () => {
+        navigate('/protected/componentac/sidebarac/Sidebarac/billing/viewbill');
+      };
+
+
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
             {!submitted ? ( // Render form only if not submitted

@@ -194,6 +194,11 @@ const Pod = () => {
         setFormData(prevFormData => ({ ...prevFormData, vhcharges: initialCharges }));
     }, []);
 
+    
+    const handleListClick = () => {
+        navigate('/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders');
+      };
+
     return (
         <div className="container mx-auto px-4 py-8 h-screen overflow-y-auto">
             {!submitted ? ( // Render form only if not submitted

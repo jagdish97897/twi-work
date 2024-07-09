@@ -12,7 +12,7 @@ function ViewFreightRates() {
   useEffect(() => {
     const fetchFreightRates = async () => {
       try {
-        const response = await axios.get('https://twi-e-logistics.onrender.com/viewfreightrates');
+        const response = await axios.get('http://localhost:5000/viewfreightrates');
         setFreightRates(response.data);
         setLoading(false);
       } catch (error) {

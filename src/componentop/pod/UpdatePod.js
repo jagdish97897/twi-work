@@ -18,7 +18,7 @@ function UpdatePod() {
   useEffect(() => {
     const fetchPod = async () => {
       try {
-        const response = await axios.get(`https://twi-e-logistics.onrender.com/pods/${id}`);
+        const response = await axios.get(`http://localhost:5000/pods/${id}`);
         const podData = response.data;
         setFormData(podData); // Update the form data with fetched data
       } catch (error) {
@@ -40,7 +40,7 @@ function UpdatePod() {
 
     try {
       // Send a PUT request to update the job order
-      await axios.patch(`https://twi-e-logistics.onrender.com/pods/${id}`, formData);
+      await axios.patch(`http://localhost:5000/pods/${id}`, formData);
       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`); // Redirect to viewjoborders page after successful update
       console.log(formData);
     } catch (error) {

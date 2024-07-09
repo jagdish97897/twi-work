@@ -104,7 +104,7 @@ const BillAc = () => {
 
     const fetchJobOrderDetails = async (consignmentno) => {
         try {
-            const response = await axios.get(`https://twi-e-logistics.onrender.com/goodsReceipts/consignmentno/${consignmentno}`);
+            const response = await axios.get(`http://localhost:5000/goodsReceipts/consignmentno/${consignmentno}`);
             const { customer,customerGSTIN,customerAddress, from, to, orderNo, orderDate, orderMode, serviceMode, expectedDate, employee, consignor,consignorGSTIN,consignorAddress, consignee,consigneeGSTIN,consigneeAddress,vehicleNo } = response.data;
             setFormData((prevFormData) => ({
                 ...prevFormData,
@@ -147,7 +147,7 @@ const BillAc = () => {
         console.log(formData);
 
         try {
-            const response = await fetch('https://twi-e-logistics.onrender.com/bills', {
+            const response = await fetch('http://localhost:5000/bills', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -425,7 +425,7 @@ export default BillAc;
 
 //     const fetchJobOrderDetails = async (podNo) => {
 //         try {
-//             const response = await axios.get(`https://twi-e-logistics.onrender.com/pods/podno/${podNo}`);
+//             const response = await axios.get(`http://localhost:5000/pods/podno/${podNo}`);
 //             const { customer, customerGSTIN, customerAddress, from, to, dimensions, weight, quantumrate, effectiverate, cost, orderNo, orderDate, orderMode, serviceMode, expectedDate, employee, consignor, consignorGSTIN, consignorAddress, consignee, consigneeGSTIN, consigneeAddress } = response.data;
 //             setFormData((prevFormData) => ({
 //                 ...prevFormData,
@@ -469,7 +469,7 @@ export default BillAc;
 //         console.log(formData);
 
 //         try {
-//             const response = await fetch('https://twi-e-logistics.onrender.com/bills', {
+//             const response = await fetch('http://localhost:5000/bills', {
 //                 method: 'POST',
 //                 headers: {
 //                     'Content-Type': 'application/json'

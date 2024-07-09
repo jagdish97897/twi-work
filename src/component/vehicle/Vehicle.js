@@ -52,7 +52,7 @@ const Vehicle = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('https://twi-e-logistics.onrender.com/vehicle-registrations', {
+            const response = await fetch('http://localhost:5000/vehicle-registrations', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ const Vehicle = () => {
     useEffect(() => {
         const fetchOwners = async () => {
             try {
-                const response = await axios.get('https://twi-e-logistics.onrender.com/supply-chain-partners/owners', {
+                const response = await axios.get('http://localhost:5000/supply-chain-partners/owners', {
                     params: { name: formData.owner }
                 });
                 setOwners(response.data);
@@ -95,7 +95,7 @@ const Vehicle = () => {
     useEffect(() => {
         const fetchDrivers = async () => {
             try {
-                const response = await axios.get('https://twi-e-logistics.onrender.com/supply-chain-partners/brokers', {
+                const response = await axios.get('http://localhost:5000/supply-chain-partners/brokers', {
                     params: { name: formData.driver }
                 });
                 setDrivers(response.data);
@@ -114,7 +114,7 @@ const Vehicle = () => {
     useEffect(() => {
         const fetchBrokers = async () => {
             try {
-                const response = await axios.get('https://twi-e-logistics.onrender.com/supply-chain-partners/brokers', {
+                const response = await axios.get('http://localhost:5000/supply-chain-partners/brokers', {
                     params: { name: formData.broker }
                 });
                 setBrokers(response.data);

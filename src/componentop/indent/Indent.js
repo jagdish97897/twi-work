@@ -135,7 +135,7 @@ function Indent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://twi-e-logistics.onrender.com/indents', { ...formData, additem: items });
+      const response = await axios.post('http://localhost:5000/indents', { ...formData, additem: items });
       setResponseMessage(`Indent created successfully. Indent ID: ${response.data._id}`);
       setFormData({
         indentNo: '',
@@ -184,7 +184,7 @@ function Indent() {
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
-        const response = await axios.get('https://twi-e-logistics.onrender.com/getcustomer1', {
+        const response = await axios.get('http://localhost:5000/getcustomer1', {
           params: { name: formData.customer }
         });
         setCustomer(response.data);
@@ -207,7 +207,7 @@ function Indent() {
     const fetchConsignorAndConsignee = async () => {
       try {
         if (formData.other.consignor) {
-          const consignorResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
+          const consignorResponse = await axios.get('http://localhost:5000/getcustomer2', {
             params: { name: formData.other.consignor }
           });
           setConsignorData(consignorResponse.data);
@@ -216,7 +216,7 @@ function Indent() {
         }
 
         if (formData.other.consignee) {
-          const consigneeResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
+          const consigneeResponse = await axios.get('http://localhost:5000/getcustomer2', {
             params: { name: formData.other.consignee }
           });
           setConsigneeData(consigneeResponse.data);
@@ -834,7 +834,7 @@ export default Indent;
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.post('https://twi-e-logistics.onrender.com/indents', { ...formData, additem: items });
+//       const response = await axios.post('http://localhost:5000/indents', { ...formData, additem: items });
 //       setResponseMessage(`Indent created successfully. Indent ID: ${response.data._id}`);
 //       setFormData({
 //         indentNo: '',
@@ -885,7 +885,7 @@ export default Indent;
 //   useEffect(() => {
 //     const fetchCustomer = async () => {
 //       try {
-//         const response = await axios.get('https://twi-e-logistics.onrender.com/getcustomer1', {
+//         const response = await axios.get('http://localhost:5000/getcustomer1', {
 //           params: { name: formData.customer }
 //         });
 //         setCustomer(response.data);
@@ -909,7 +909,7 @@ export default Indent;
 //     const fetchConsignorAndConsignee = async () => {
 //       try {
 //         if (formData.other.consignor) {
-//           const consignorResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
+//           const consignorResponse = await axios.get('http://localhost:5000/getcustomer2', {
 //             params: { name: formData.other.consignor }
 //           });
 //           setConsignorData(consignorResponse.data);
@@ -918,7 +918,7 @@ export default Indent;
 //         }
 
 //         if (formData.other.consignee) {
-//           const consigneeResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
+//           const consigneeResponse = await axios.get('http://localhost:5000/getcustomer2', {
 //             params: { name: formData.other.consignee }
 //           });
 //           setConsigneeData(consigneeResponse.data);

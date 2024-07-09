@@ -77,7 +77,7 @@ const VehiclePlacement = () => {
 
   const fetchJobOrderDetails = async (jobOrderNo) => {
     try {
-      const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrderNo}`);
+      const response = await axios.get(`http://localhost:5000/job-orders/${jobOrderNo}`);
       const { from, to, dimensions, weight, quantumrate, effectiverate, cost } = response.data;
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -96,7 +96,7 @@ const VehiclePlacement = () => {
 
   const fetchVehicleDetails = async (vehicleNo) => {
     try {
-      const response = await axios.get(`https://twi-e-logistics.onrender.com/getvehicle-registrations/${vehicleNo}`);
+      const response = await axios.get(`http://localhost:5000/getvehicle-registrations/${vehicleNo}`);
       const { broker, owner, loadType, ownerPhone, ownerAddress, brokerPhone, brokerAddress } = response.data.data.vehicleRegistration;
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -132,7 +132,7 @@ const VehiclePlacement = () => {
 
     try {
       // create vehicle placement
-      await axios.post('https://twi-e-logistics.onrender.com/vehicle-placements', formData);
+      await axios.post('http://localhost:5000/vehicle-placements', formData);
       setMessage('Vehicle Placement created successfully');
       setFormData({
         vehicle_placement_no: '',

@@ -27,7 +27,7 @@ function UpdateIndent() {
   useEffect(() => {
     const fetchIndent = async () => {
       try {
-        const response = await axios.get(`https://twi-e-logistics.onrender.com/getindent/${id}`);
+        const response = await axios.get(`http://localhost:5000/getindent/${id}`);
         const indentData = response.data;
   
         // Format date values before setting them in the form data
@@ -58,7 +58,7 @@ function UpdateIndent() {
 
     try {
       // Send a PUT request to update the indent
-      await axios.put(`https://twi-e-logistics.onrender.com/update/${id}`, formData);
+      await axios.put(`http://localhost:5000/update/${id}`, formData);
       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewindents`); // Redirect to viewindents page after successful update
     } catch (error) {
       console.error(error);
@@ -185,7 +185,7 @@ export default UpdateIndent;
 //   useEffect(() => {
 //     const fetchIndent = async () => {
 //       try {
-//         const response = await axios.get(`https://twi-e-logistics.onrender.com/indent/${id}`);
+//         const response = await axios.get(`http://localhost:5000/indent/${id}`);
 //         const indentData = response.data;
 //         // Update the form data with fetched data only if the form is empty
 //         if (Object.values(formData).every(value => value === '')) {
@@ -211,7 +211,7 @@ export default UpdateIndent;
 
 //     try {
 //       // Send a PUT request to update the indent
-//       await axios.put(`https://twi-e-logistics.onrender.com/updateindent${id}`, formData);
+//       await axios.put(`http://localhost:5000/updateindent${id}`, formData);
 //       navigate(`/sidebar/ordermanagement/viewindents`); // Redirect to viewindents page after successful update
 //     } catch (error) {
 //       console.error(error);

@@ -21,7 +21,7 @@ function AddNewDataInJobOrder() {
   useEffect(() => {
     const fetchJobOrder = async () => {
       try {
-        const response = await axios.get(`https://twi-e-logistics.onrender.com/getjoborderbyid/${id}`);
+        const response = await axios.get(`http://localhost:5000/getjoborderbyid/${id}`);
         const jobOrderData = response.data;
         setFormData(jobOrderData); 
         setLoading(false); // Set loading to false after data is fetched
@@ -43,7 +43,7 @@ function AddNewDataInJobOrder() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`https://twi-e-logistics.onrender.com/updatejoborder/${id}`, formData);
+      await axios.patch(`http://localhost:5000/updatejoborder/${id}`, formData);
       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`);
       console.log(formData);
     } catch (error) {
@@ -123,7 +123,7 @@ export default AddNewDataInJobOrder;
 //   useEffect(() => {
 //     const fetchJobOrder = async () => {
 //       try {
-//         const response = await axios.get(`https://twi-e-logistics.onrender.com/getjoborderbyid/${id}`);
+//         const response = await axios.get(`http://localhost:5000/getjoborderbyid/${id}`);
 //         const jobOrderData = response.data;
 //         setFormData(jobOrderData); 
 //       } catch (error) {
@@ -145,7 +145,7 @@ export default AddNewDataInJobOrder;
 
 //     try {
 //       // Send a PUT request to update the job order
-//       await axios.patch(`https://twi-e-logistics.onrender.com/updatejoborder/${id}`, formData);
+//       await axios.patch(`http://localhost:5000/updatejoborder/${id}`, formData);
 //       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`); // Redirect to viewjoborders page after successful update
 //       console.log(formData);
 //     } catch (error) {
@@ -243,7 +243,7 @@ export default AddNewDataInJobOrder;
 //   useEffect(() => {
 //     const fetchJobOrder = async () => {
 //       try {
-//         const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrder_no}`);
+//         const response = await axios.get(`http://localhost:5000/job-orders/${jobOrder_no}`);
 //         const jobOrderData = response.data;
 //         setFormData(jobOrderData); // Update the form data with fetched data
 //       } catch (error) {
@@ -265,7 +265,7 @@ export default AddNewDataInJobOrder;
 //     setError('');
     
 //     try {
-//       const response = await axios.post('https://twi-e-logistics.onrender.com/vehicle-placements', formData);
+//       const response = await axios.post('http://localhost:5000/vehicle-placements', formData);
 //       setMessage('Vehicle Placement created successfully');
 //       setFormData({
 //         jobOrder_no: '',
@@ -371,7 +371,7 @@ export default AddNewDataInJobOrder;
 //   useEffect(() => {
 //     const fetchJobOrder = async () => {
 //       try {
-//         const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrder_no}`);
+//         const response = await axios.get(`http://localhost:5000/job-orders/${jobOrder_no}`);
 //         const jobOrderData = response.data;
 //         console.log('Fetched Job Order Data:', jobOrderData); // Debug log
 //         setFormData(jobOrderData); // Update the form data with fetched data
@@ -393,7 +393,7 @@ export default AddNewDataInJobOrder;
 
 //     try {
 //       // Send a PUT request to update the job order by jobOrder_no
-//       await axios.put(`https://twi-e-logistics.onrender.com/updatejoborder/${jobOrder_no}`, formData);
+//       await axios.put(`http://localhost:5000/updatejoborder/${jobOrder_no}`, formData);
 //       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`); // Redirect to viewjoborders page after successful update
 //     } catch (error) {
 //       console.error('Error updating job order:', error);
@@ -471,7 +471,7 @@ export default AddNewDataInJobOrder;
 //   useEffect(() => {
 //     const fetchJobOrder = async () => {
 //       try {
-//         const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrder_no}`);
+//         const response = await axios.get(`http://localhost:5000/job-orders/${jobOrder_no}`);
 //         const jobOrderData = response.data;
 //         console.log('Fetched Job Order Data:', jobOrderData); // Debug log
 //         setFormData(jobOrderData); // Update the form data with fetched data
@@ -493,7 +493,7 @@ export default AddNewDataInJobOrder;
 
 //     try {
 //       // Send a PUT request to update the job order by jobOrder_no
-//       await axios.put(`https://twi-e-logistics.onrender.com/updatejoborder/${jobOrder_no}`, formData);
+//       await axios.put(`http://localhost:5000/updatejoborder/${jobOrder_no}`, formData);
 //       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`); // Redirect to viewjoborders page after successful update
 //     } catch (error) {
 //       console.error('Error updating job order:', error);
@@ -552,7 +552,7 @@ export default AddNewDataInJobOrder;
 //   useEffect(() => {
 //     const fetchJobOrder = async () => {
 //       try {
-//         const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrder_no}`);
+//         const response = await axios.get(`http://localhost:5000/job-orders/${jobOrder_no}`);
 //         const jobOrderData = response.data;
 //         console.log('Fetched Job Order Data:', jobOrderData); // Debug log
 //         setFormData(jobOrderData); // Update the form data with fetched data
@@ -574,7 +574,7 @@ export default AddNewDataInJobOrder;
 
 //     try {
 //       // Send a PUT request to update the job order by jobOrder_no
-//       await axios.put(`https://twi-e-logistics.onrender.com/updatejoborder/${jobOrder_no}`, formData);
+//       await axios.put(`http://localhost:5000/updatejoborder/${jobOrder_no}`, formData);
 //       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`); // Redirect to viewjoborders page after successful update
 //     } catch (error) {
 //       console.error('Error updating job order:', error);
@@ -644,7 +644,7 @@ export default AddNewDataInJobOrder;
 //   useEffect(() => {
 //     const fetchJobOrder = async () => {
 //       try {
-//         const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrder_no}`);
+//         const response = await axios.get(`http://localhost:5000/job-orders/${jobOrder_no}`);
 //         const jobOrderData = response.data;
 //         setFormData(jobOrderData); // Update the form data with fetched data
 //       } catch (error) {
@@ -665,7 +665,7 @@ export default AddNewDataInJobOrder;
 
 //     try {
 //       // Send a PUT request to update the job order by jobOrder_no
-//       await axios.put(`https://twi-e-logistics.onrender.com/updatejoborder/${jobOrder_no}`, formData);
+//       await axios.put(`http://localhost:5000/updatejoborder/${jobOrder_no}`, formData);
 //       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`); // Redirect to viewjoborders page after successful update
 //     } catch (error) {
 //       console.error(error);
@@ -734,7 +734,7 @@ export default AddNewDataInJobOrder;
 //   useEffect(() => {
 //     const fetchJobOrder = async () => {
 //       try {
-//         const response = await axios.get(`https://twi-e-logistics.onrender.com/getjoborderbyid/${id}`);
+//         const response = await axios.get(`http://localhost:5000/getjoborderbyid/${id}`);
 //         const jobOrderData = response.data;
 //         setFormData(jobOrderData); // Update the form data with fetched data
 //       } catch (error) {
@@ -755,7 +755,7 @@ export default AddNewDataInJobOrder;
 
 //     try {
 //       // Send a PUT request to update the job order
-//       await axios.put(`https://twi-e-logistics.onrender.com/updatejoborder/${id}`, formData);
+//       await axios.put(`http://localhost:5000/updatejoborder/${id}`, formData);
 //       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`); // Redirect to viewjoborders page after successful update
 //     } catch (error) {
 //       console.error(error);

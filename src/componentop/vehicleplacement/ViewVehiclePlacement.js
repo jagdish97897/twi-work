@@ -19,7 +19,7 @@ const ViewVehiclePlacement = () => {
 
   const fetchVehiclePlacements = async () => {
     try {
-      const response = await axios.get('https://twi-e-logistics.onrender.com/vehicle-placements');
+      const response = await axios.get('http://localhost:5000/vehicle-placements');
       setVehiclePlacements(response.data);
     } catch (error) {
       console.error('Error fetching vehicle placements:', error);
@@ -216,7 +216,7 @@ export default ViewVehiclePlacement;
 //   useEffect(() => {
 //     const fetchVehiclePlacements = async () => {
 //       try {
-//         const response = await axios.get('https://twi-e-logistics.onrender.com/vehicle-placements');
+//         const response = await axios.get('http://localhost:5000/vehicle-placements');
 //         setVehiclePlacements(response.data);
 //       } catch (error) {
 //         setError('Error fetching vehicle placements');

@@ -18,7 +18,7 @@ function UpdateJobOrder() {
   useEffect(() => {
     const fetchJobOrder = async () => {
       try {
-        const response = await axios.get(`https://twi-e-logistics.onrender.com/getjoborderbyid/${id}`);
+        const response = await axios.get(`http://localhost:5000/getjoborderbyid/${id}`);
         const jobOrderData = response.data;
         setFormData(jobOrderData); // Update the form data with fetched data
       } catch (error) {
@@ -40,7 +40,7 @@ function UpdateJobOrder() {
 
     try {
       // Send a PUT request to update the job order
-      await axios.patch(`https://twi-e-logistics.onrender.com/updatejoborder/${id}`, formData);
+      await axios.patch(`http://localhost:5000/updatejoborder/${id}`, formData);
       navigate(`/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewjoborders`); // Redirect to viewjoborders page after successful update
       console.log(formData);
     } catch (error) {

@@ -97,6 +97,7 @@ import ViewBillAc from './componentac/billac/ViewBillAc.js';
 import UpdateBillAc from './componentac/billac/UpdateBillAc.js';
 
 
+
 function App() {
   const isLoggedIn = localStorage.getItem('token'); // Assuming you store user information in localStorage
   const username = localStorage.getItem('username');
@@ -109,7 +110,7 @@ function App() {
         <Route path="/protected" element={<Protected username={username} Component={Home} />}></Route>
           {isLoggedIn ? (
             <>
-
+        
             <Route path="protected/component/sidebar/Sidebar" element={<Protected Component={Sidebar} />} >
               <Route path="parties">
                 <Route path="party" element={<Protected Component={Party} />} />

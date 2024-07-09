@@ -13,7 +13,7 @@
 
 //   const fetchVehiclePlacement = async () => {
 //     try {
-//       const response = await axios.get(`http://localhost:5000/vehicle-placements/${id}`);
+//       const response = await axios.get(`https://twi-e-logistics.onrender.com/vehicle-placements/${id}`);
 //       setVehiclePlacement(response.data);
 //     } catch (error) {
 //       console.error('Error fetching vehicle placement:', error);
@@ -36,7 +36,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       await axios.put(`http://localhost:5000/vehicle-placements/${id}`, vehiclePlacement);
+//       await axios.put(`https://twi-e-logistics.onrender.com/vehicle-placements/${id}`, vehiclePlacement);
 //       navigate('/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewvahicleplacement');
 //     } catch (error) {
 //       console.error('Error updating vehicle placement:', error);
@@ -230,7 +230,7 @@ const UpdateVehiclePlacement = () => {
   useEffect(() => {
     const fetchVehiclePlacement = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/vehicle-placements/${id}`);
+        const response = await axios.get(`https://twi-e-logistics.onrender.com/vehicle-placements/${id}`);
         setVehiclePlacement(response.data);
       } catch (error) {
         console.error('Error fetching vehicle placement:', error);
@@ -252,7 +252,7 @@ const UpdateVehiclePlacement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/vehicle-placements/${id}`, vehiclePlacement);
+      await axios.put(`https://twi-e-logistics.onrender.com/vehicle-placements/${id}`, vehiclePlacement);
       navigate('/protected/componentop/sidebarop/Sidebarop/ordermanagement/viewvahicleplacement');
     } catch (error) {
       console.error('Error updating vehicle placement:', error);

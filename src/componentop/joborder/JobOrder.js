@@ -42,7 +42,7 @@ const JobOrder = () => {
 
   const fetchIndentDetails = async (indentNo) => {
     try {
-      const response = await axios.get(`http://localhost:5000/getsingleindentdetails/${indentNo}`);
+      const response = await axios.get(`https://twi-e-logistics.onrender.com/getsingleindentdetails/${indentNo}`);
       const indent = response.data;
 
       setJobOrder((prevOrder) => ({
@@ -131,7 +131,7 @@ const JobOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/createJobOrder', jobOrder);
+      await axios.post('https://twi-e-logistics.onrender.com/createJobOrder', jobOrder);
       alert('Job order created successfully!');
       setJobOrder({
         jobOrder_no: '',
@@ -164,7 +164,7 @@ const JobOrder = () => {
     const fetchConsignorSuggestions = async () => {
       try {
         if (jobOrder.consignor) {
-          const consignorResponse = await axios.get('http://localhost:5000/getcustomer2', {
+          const consignorResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
             params: { name: jobOrder.consignor }
           });
           setConsignorData(consignorResponse.data);
@@ -183,7 +183,7 @@ const JobOrder = () => {
     const fetchConsigneeSuggestions = async () => {
       try {
         if (jobOrder.consignee) {
-          const consigneeResponse = await axios.get('http://localhost:5000/getcustomer2', {
+          const consigneeResponse = await axios.get('https://twi-e-logistics.onrender.com/getcustomer2', {
             params: { name: jobOrder.consignee }
           });
           setConsigneeData(consigneeResponse.data);

@@ -8,8 +8,6 @@ import ReactPaginate from 'react-paginate';
 
 function ViewIndents() {
   const [indents, setIndents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
   const navigate = useNavigate();
@@ -17,12 +15,12 @@ function ViewIndents() {
   useEffect(() => {
     const fetchIndents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getallindents');
+        const response = await axios.get('https://twi-e-logistics.onrender.com/getallindents');
         setIndents(response.data);
-        setLoading(false);
+      
       } catch (error) {
-        setError('Error fetching indents. Please try again.');
-        setLoading(false);
+    
+      
         console.error(error);
       }
     };

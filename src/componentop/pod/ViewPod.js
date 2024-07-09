@@ -20,7 +20,7 @@ const ViewPod = () => {
 
   const fetchPod = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/pods');
+      const response = await axios.get('https://twi-e-logistics.onrender.com/pods');
       setPods(response.data);
     } catch (error) {
       console.error('Error fetching Pod:', error);

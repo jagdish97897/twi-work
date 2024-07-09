@@ -19,7 +19,7 @@ const ViewVehicleHire = () => {
 
   const fetchVehicleHires = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/vehicle-hires');
+      const response = await axios.get('https://twi-e-logistics.onrender.com/vehicle-hires');
       setVeicleHires(response.data);
     } catch (error) {
       console.error('Error fetching Vehicle Hires:', error);

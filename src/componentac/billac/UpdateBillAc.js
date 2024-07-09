@@ -19,7 +19,7 @@ function UpdateBillAc() {
   useEffect(() => {
     const fetchBills = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/bills/${id}`);
+        const response = await axios.get(`https://twi-e-logistics.onrender.com/bills/${id}`);
         const billData = response.data;
         setFormData(billData); // Update the form data with fetched data
       } catch (error) {
@@ -41,7 +41,7 @@ function UpdateBillAc() {
 
     try {
       // Send a PUT request to update the job order
-      await axios.patch(`http://localhost:5000/bills/${id}`, formData);
+      await axios.patch(`https://twi-e-logistics.onrender.com/bills/${id}`, formData);
       navigate(`/protected/componentac/sidebarac/Sidebarac/billing/viewbill`); // Redirect to viewjoborders page after successful update
       console.log(formData);
     } catch (error) {

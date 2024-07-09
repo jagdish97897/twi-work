@@ -113,7 +113,7 @@ const Consignment = () => {
 
     const fetchJobOrderDetails = async (jobOrderNo) => {
         try {
-            const response = await axios.get(`http://localhost:5000/job-orders/${jobOrderNo}`);
+            const response = await axios.get(`https://twi-e-logistics.onrender.com/job-orders/${jobOrderNo}`);
             const { customer,customerGSTIN,customerAddress, from, to, orderNo, orderDate, orderMode, serviceMode, expectedDate, employee, consignor,consignorGSTIN,consignorAddress, consignee,consigneeGSTIN,consigneeAddress } = response.data;
             setFormData((prevFormData) => ({
                 ...prevFormData,
@@ -178,7 +178,7 @@ const Consignment = () => {
         console.log(formData);
 
         try {
-            const response = await fetch('http://localhost:5000/goods-receipts', {
+            const response = await fetch('https://twi-e-logistics.onrender.com/goods-receipts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

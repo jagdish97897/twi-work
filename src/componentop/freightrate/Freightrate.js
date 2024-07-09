@@ -62,7 +62,7 @@ export default Freightrate
 //     e.preventDefault();
 
 //     try {
-//       const response = await axios.post('http://localhost:5000/freightrate', formData);
+//       const response = await axios.post('https://twi-e-logistics.onrender.com/freightrate', formData);
 //       setResponseMessage(`Freight rate created successfully. Freight rate ID: ${response.data._id}`);
 //       setFormData({
 //         contractNo: '',
@@ -321,7 +321,7 @@ export default Freightrate
 //     e.preventDefault();
 
 //     try {
-//       const response = await axios.post('http://localhost:5000/freightrate', formData);
+//       const response = await axios.post('https://twi-e-logistics.onrender.com/freightrate', formData);
 //       setResponseMessage(`freight rate created successfully. Freight rate ID: ${response.data._id}`);
 //       setFormData({
 //         contractNo: '',

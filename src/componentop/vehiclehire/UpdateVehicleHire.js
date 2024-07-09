@@ -18,7 +18,7 @@ function UpdateVehicleHire() {
   useEffect(() => {
     const fetchJobOrder = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/vehicle-hires/${id}`);
+        const response = await axios.get(`https://twi-e-logistics.onrender.com/vehicle-hires/${id}`);
         const vehicleHireData = response.data;
         setFormData(vehicleHireData); 
       } catch (error) {
@@ -40,7 +40,7 @@ function UpdateVehicleHire() {
 
     try {
       // Send a PUT request to update the job order
-      await axios.patch(`http://localhost:5000/vehicle-hires/${id}`, formData);
+      await axios.patch(`https://twi-e-logistics.onrender.com/vehicle-hires/${id}`, formData);
       navigate(`/protected/componentop/sidebarop/Sidebarop/bookingoperation/viewvehiclehire`); // Redirect to viewjoborders page after successful update
       console.log(formData);
     } catch (error) {

@@ -19,7 +19,7 @@ const ViewJobOrders = () => {
 
   const fetchJobOrders = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/get-all-job-orders');
+      const response = await axios.get('https://twi-e-logistics.onrender.com/get-all-job-orders');
       setJobOrders(response.data);
     } catch (error) {
       console.error('Error fetching job orders:', error);

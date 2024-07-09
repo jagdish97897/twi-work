@@ -17,7 +17,7 @@ const UpdateConsignment = () => {
       useEffect(() => {
         const fetchConsignment = async () => {
           try {
-            const response = await axios.get(`http://localhost:5000/goods-receipts/${id}`);
+            const response = await axios.get(`https://twi-e-logistics.onrender.com/goods-receipts/${id}`);
             const consignmentData = response.data;
             setFormData(consignmentData); // Update the form data with fetched data
           } catch (error) {
@@ -38,7 +38,7 @@ const UpdateConsignment = () => {
     
         try {
           // Send a PUT request to update the job order
-          await axios.patch(`http://localhost:5000/goods-receipts/${id}`, formData);
+          await axios.patch(`https://twi-e-logistics.onrender.com/goods-receipts/${id}`, formData);
           navigate(`/protected/componentop/sidebarop/Sidebarop/bookingoperation/viewconsignment`); // Redirect to viewjoborders page after successful update
           console.log(formData);
         } catch (error) {
